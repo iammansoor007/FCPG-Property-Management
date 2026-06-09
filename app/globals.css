@@ -4,6 +4,27 @@
   color-scheme: light;
   --background: #ffffff;
   --foreground: #072642;
+  --primary-navy: #052946;
+  --midnight-navy: #031b31;
+  --midnight-navy-95: rgba(3, 27, 49, 0.95);
+  --midnight-navy-30: rgba(3, 27, 49, 0.3);
+  --brand-gold: #c99b31;
+  --brand-gold-90: rgba(201, 155, 49, 0.9);
+  --tagline-gold: #d3a438;
+  --text-navy: #082642;
+  --text-slate: #43566a;
+  --light-gray: #f7f8fa;
+}
+
+@theme {
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --color-primary-navy: var(--primary-navy);
+  --color-midnight-navy: var(--midnight-navy);
+  --color-brand-gold: var(--brand-gold);
+  --color-tagline-gold: var(--tagline-gold);
+  --color-text-navy: var(--text-navy);
+  --color-text-slate: var(--text-slate);
+  --color-light-gray: var(--light-gray);
 }
 
 * {
@@ -18,7 +39,6 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
   letter-spacing: 0;
 }
 
