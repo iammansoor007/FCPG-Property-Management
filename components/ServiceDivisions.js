@@ -3,246 +3,266 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { UsersRound, Home, Building2, HardHat, BadgeDollarSign, ArrowRight, ShieldCheck, MapPin, TrendingUp } from "lucide-react";
+import {
+  UsersRound, Home, Building2, HardHat, BadgeDollarSign,
+  ArrowUpRight, ShieldCheck, MapPin, TrendingUp,
+} from "lucide-react";
 
-/* ── Shared card atom ─────────────────────────────────── */
-function ServiceCard({ title, text, icon: Icon, image, badge, featured = false, breakpoint = "md", delay = 0 }) {
-  // Safe Responsive Layout with Minimum Heights (No clipping / overflow-safe / collapse-safe):
-  // - Mobile: auto height (stacked image h-52 + text auto)
-  // - Desktop: minimum heights to guarantee uniformity while allowing natural growth if needed:
-  //   - Featured: sm:min-h-[280px]
-  //   - Commercial / HOA: md:min-h-[240px]
-  //   - Developer / Financial: lg:min-h-[240px]
-  const wrapperClass = `flex flex-col ${
-    breakpoint === "sm"
-      ? "sm:flex-row sm:min-h-[280px]"
-      : breakpoint === "lg"
-      ? "lg:flex-row lg:min-h-[240px]"
-      : "md:flex-row md:min-h-[240px]"
-  }`;
-
-  const contentClass = `w-full ${
-    breakpoint === "sm"
-      ? "sm:w-[55%]"
-      : breakpoint === "lg"
-      ? "lg:w-[55%]"
-      : "md:w-[55%]"
-  } p-6`;
-
-  // On desktop:
-  // - w-[45%] gives it the correct width.
-  // - h-auto resets the mobile h-52 height.
-  // - self-stretch stretches the container vertically to fill the card.
-  const imageClass = `relative w-full h-52 ${
-    breakpoint === "sm"
-      ? "sm:w-[45%] sm:h-auto sm:self-stretch"
-      : breakpoint === "lg"
-      ? "lg:w-[45%] lg:h-auto lg:self-stretch"
-      : "md:w-[45%] md:h-auto md:self-stretch"
-  }`;
-
-  // Brightened Image Overlays (Softened middle stop to 10% opacity):
-  const gradientClass = `bg-gradient-to-t from-midnight-navy/90 via-midnight-navy/10 to-transparent ${
-    breakpoint === "sm"
-      ? "sm:bg-gradient-to-r sm:from-midnight-navy sm:via-midnight-navy/10 sm:to-transparent"
-      : breakpoint === "lg"
-      ? "lg:bg-gradient-to-r lg:from-midnight-navy lg:via-midnight-navy/10 lg:to-transparent"
-      : "md:bg-gradient-to-r md:from-midnight-navy md:via-midnight-navy/10 md:to-transparent"
-  }`;
-
-  const isExploreCta = title.includes("Financial") || title.includes("Developer") || featured;
-
+/* ─────────────────────────────────────────────────────────────
+   FULL-BLEED CARD
+   • Image fills entire card background
+   • Content always visible at bottom (no hide/show on hover)
+   • Hover: image zooms, icon fills gold, border glows, CTA arrow brightens
+   ───────────────────────────────────────────────────────────── */
+function FullBleedCard({
+  title, text, icon: Icon, image, badge, index, delay = 0,
+  className = "", contentPadding = "p-7",
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ delay, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className={`group ${wrapperClass} items-stretch w-full overflow-hidden rounded-2xl bg-midnight-navy text-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl`}
-      style={{
-        boxShadow: "0 12px 30px rgba(3,27,49,0.15)",
-      }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className={`group relative overflow-hidden rounded-2xl ${className}`}
+      style={{ boxShadow: "0 16px 48px rgba(3,27,49,0.15)" }}
     >
-      {/* Content Column */}
-      <div className={`${contentClass} flex flex-col justify-between z-20 relative flex-grow`}>
-        <div>
-          {badge && (
-            <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-brand-gold mb-3">
-              {badge}
-            </p>
-          )}
+      {/* Background image */}
+      <Image
+        src={image}
+        alt={title}
+        fill
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.07]"
+        priority={index === 1}
+      />
 
-          {/* Icon + Title Row */}
-          <div className="flex items-center gap-4 mb-4">
-            <div className="flex items-center justify-center rounded-full border border-brand-gold bg-brand-gold/10 text-brand-gold w-12 h-12 flex-shrink-0 transition-all duration-300 group-hover:bg-brand-gold group-hover:text-midnight-navy">
-              <Icon size={20} strokeWidth={1.8} />
-            </div>
-            <h3 className={`font-display font-bold text-white leading-tight ${featured ? "text-xl sm:text-2xl" : "text-lg md:text-xl"}`}>
-              {title}
-            </h3>
+      {/* Dark gradient — heavier at bottom for legibility, lightens toward top */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#021321]/88 via-[#021321]/35 to-transparent z-10 pointer-events-none" />
+
+      {/* Subtle hover tint overlay */}
+      <div className="absolute inset-0 bg-[#031b31]/0 group-hover:bg-[#031b31]/15 transition-colors duration-700 z-10 pointer-events-none" />
+
+      {/* Index number badge — solid dark navy pill */}
+      <div className="absolute top-5 right-5 z-20 pointer-events-none">
+        <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-midnight-navy/90 backdrop-blur-sm border border-white/[0.08] text-brand-gold font-display font-black text-[13px] leading-none select-none">
+          {String(index).padStart(2, "0")}
+        </span>
+      </div>
+
+      {/* Badge pill */}
+      {badge && (
+        <div className="absolute top-5 left-5 z-30">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-gold text-midnight-navy text-[9px] font-black tracking-[0.15em] uppercase shadow-lg">
+            <span className="w-1.5 h-1.5 rounded-full bg-midnight-navy/40 animate-pulse" />
+            {badge}
+          </span>
+        </div>
+      )}
+
+      {/* Content — pinned to bottom, always fully visible */}
+      <div className={`absolute bottom-0 left-0 right-0 z-20 ${contentPadding} flex flex-col gap-3.5`}>
+        {/* Icon + Title row */}
+        <div className="flex items-center gap-3">
+          <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl border border-brand-gold/25 bg-brand-gold/10 text-brand-gold transition-all duration-500 group-hover:bg-brand-gold group-hover:text-midnight-navy group-hover:border-brand-gold group-hover:shadow-[0_0_22px_rgba(201,155,49,0.4)]">
+            <Icon size={17} strokeWidth={2.2} />
           </div>
-
-          {/* Divider */}
-          <div className="w-12 h-[1px] bg-brand-gold/50 mb-4" />
-
-          {/* Description */}
-          <p className="text-xs sm:text-sm text-gray-200/90 leading-relaxed mb-6 font-sans">
-            {text}
-          </p>
+          <h3 className="font-display font-bold text-white leading-tight tracking-tight text-lg">
+            {title}
+          </h3>
         </div>
 
-        {/* CTA Link */}
-        {featured ? (
-          <Link
-            href="#contact"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-brand-gold text-midnight-navy font-bold text-xs tracking-wider uppercase transition-all duration-300 hover:bg-tagline-gold hover:shadow-lg self-start group/cta"
-          >
+        {/* Description — always shown, clamp to 2 lines to prevent overflow */}
+        <p className="text-[13px] text-white/70 leading-[1.6] font-sans line-clamp-2 group-hover:text-white/90 transition-colors duration-500">
+          {text}
+        </p>
+
+        {/* CTA — always shown */}
+        <Link
+          href="#contact"
+          className="inline-flex items-center gap-2 self-start mt-0.5 group/cta"
+        >
+          <span className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-gold/90 group-hover/cta:text-brand-gold transition-colors duration-300">
             Explore Service
-            <ArrowRight size={13} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
-          </Link>
-        ) : (
-          <Link
-            href="#contact"
-            className="inline-flex items-center gap-1.5 text-brand-gold hover:text-tagline-gold font-bold text-xs tracking-wider uppercase transition-all duration-300 self-start group/cta"
-          >
-            {isExploreCta ? "Explore Service" : "View Details"}
-            <ArrowRight size={13} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
-          </Link>
-        )}
+          </span>
+          <span className="flex items-center justify-center w-6 h-6 rounded-full border border-brand-gold/30 text-brand-gold/70 transition-all duration-300 group-hover/cta:bg-brand-gold group-hover/cta:text-midnight-navy group-hover/cta:border-brand-gold group-hover/cta:shadow-[0_0_10px_rgba(201,155,49,0.4)]">
+            <ArrowUpRight size={11} strokeWidth={2.5} />
+          </span>
+        </Link>
       </div>
 
-      {/* Image Column */}
-      <div className={`${imageClass} overflow-hidden flex-shrink-0 relative`}>
-        <Image
-          src={image}
-          alt={title}
-          fill
-          sizes="(min-width: 1024px) 30vw, 50vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        />
-        {/* Dynamic Gradient Overlay */}
-        <div className={`absolute inset-0 ${gradientClass} z-10 pointer-events-none`} />
-      </div>
+      {/* Animated border overlay */}
+      <div className="absolute inset-0 rounded-2xl border border-white/[0.07] group-hover:border-brand-gold/30 transition-colors duration-500 z-30 pointer-events-none" />
     </motion.div>
   );
 }
 
+/* ─────────────────────────────────────────────────────────────
+   SECTION
+   Layout (desktop, 3-col grid):
+     Col 1     : Featured Residential — spans 2 rows (tall)
+     Col 2–3   : 2 × 2 grid  (Commercial | HOA | Developer | Financial)
+
+   Mobile: single column stack, each card has explicit min-height.
+   ───────────────────────────────────────────────────────────── */
 export default function ServiceDivisions() {
   return (
-    <section id="services" className="bg-light-gray">
-      <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-24">
+    <section
+      id="services"
+      className="bg-light-gray relative overflow-hidden"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(8,38,66,0.038) 1px, transparent 0)",
+        backgroundSize: "26px 26px",
+      }}
+    >
+      {/* Ambient glow blobs */}
+      <div className="absolute top-0 left-0 w-[520px] h-[520px] bg-brand-gold/[0.05] rounded-full blur-[130px] pointer-events-none -translate-x-1/2 -translate-y-1/3" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#052946]/[0.04] rounded-full blur-[150px] pointer-events-none translate-x-1/4 translate-y-1/4" />
 
-        {/* 2-column layout on md and up */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-24 relative z-10">
 
-          {/* Left Column: Header + Residential (Featured) + Developer & Builder */}
-          <div className="flex flex-col gap-6">
+        {/* ── Section Header ── */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
 
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <p className="text-[11px] font-bold tracking-[0.22em] uppercase text-brand-gold mb-3">
+          {/* Left — heading + accent bar */}
+          <motion.div
+            initial={{ opacity: 0, x: -18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex gap-4 items-start"
+          >
+            <div
+              className="flex-shrink-0 w-[3px] self-stretch rounded-full mt-1"
+              style={{ background: "linear-gradient(180deg, #c99b31 0%, rgba(201,155,49,0.4) 60%, transparent 100%)" }}
+            />
+            <div>
+              <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold mb-3">
                 Our Services
               </p>
-              <h2 className="text-4xl md:text-5xl font-bold font-display text-text-navy leading-[1.15] mb-5 tracking-tight">
-                Property Management<br />Solutions That Perform
+              <h2 className="text-4xl md:text-[2.7rem] lg:text-5xl font-bold font-display text-text-navy leading-[1.1] tracking-tight">
+                Property Management<br />
+                Solutions That{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
+                  Perform
+                </span>
               </h2>
-              <p className="text-[14px] text-text-slate leading-relaxed max-w-[460px] mb-6 font-sans">
-                From residential communities to commercial assets, we deliver expertise, transparency, and peace of mind at every step.
-              </p>
-              
-              {/* Gold rule */}
-              <div className="w-12 h-[2px] bg-brand-gold rounded-full mb-6" />
-              
-              {/* Trust badges */}
-              <div className="flex flex-wrap gap-x-8 gap-y-4">
-                {[
-                  { icon: ShieldCheck, text1: "Trusted", text2: "By Communities" },
-                  { icon: MapPin, text1: "Local Expertise", text2: "You Can Rely On" },
-                  { icon: TrendingUp, text1: "Results That", text2: "Matter" },
-                ].map(({ icon: I, text1, text2 }) => (
-                  <div key={text1} className="flex items-center gap-3">
-                    <I size={20} className="text-brand-gold" strokeWidth={1.8} />
-                    <div>
-                      <p className="text-xs font-bold text-text-navy leading-tight">{text1}</p>
-                      <p className="text-[11px] text-text-slate leading-tight">{text2}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* Featured card: Residential */}
-            <ServiceCard
-              title="Residential Management"
-              text="Comprehensive management that protects your investment and ensures tenant satisfaction."
-              icon={Home}
-              image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85"
-              badge="Featured Service"
-              featured
-              breakpoint="sm"
-              delay={0.1}
-            />
-
-            {/* Developer & Builder Services */}
-            <ServiceCard
-              title="Developer & Builder Services"
-              text="Partnering with developers and builders to transition projects seamlessly from development to long-term operations."
-              icon={HardHat}
-              image="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=700&q=85"
-              breakpoint="lg"
-              delay={0.25}
-            />
-          </div>
-
-          {/* Right Column: Commercial + HOA + Financial */}
-          <div className="flex flex-col gap-6">
-            {/* Commercial Management */}
-            <ServiceCard
-              title="Commercial Management"
-              text="Strategic management for office, retail, and mixed-use properties focused on performance and long-term value."
-              icon={Building2}
-              image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=85"
-              breakpoint="md"
-              delay={0.15}
-            />
-
-            {/* HOA Management */}
-            <ServiceCard
-              title="HOA Management"
-              text="Expert governance, compliance, and community support for well-managed associations."
-              icon={UsersRound}
-              image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=85"
-              breakpoint="md"
-              delay={0.2}
-            />
-
-            {/* Financial Management */}
-            <ServiceCard
-              title="Financial Management"
-              text="Transparent reporting, budgeting, and financial oversight you can always rely on."
-              icon={BadgeDollarSign}
-              image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=700&q=85"
-              breakpoint="lg"
-              delay={0.3}
-            />
-          </div>
+          {/* Right — description + trust pills */}
+          <motion.div
+            initial={{ opacity: 0, x: 18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="md:max-w-[360px] flex flex-col gap-5"
+          >
+            <p className="text-[14px] text-text-slate leading-relaxed font-sans">
+              From residential communities to commercial assets, we deliver expertise, transparency, and peace of mind at every step.
+            </p>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              {[
+                { icon: ShieldCheck, label: "Trusted Communities" },
+                { icon: MapPin,      label: "Carolina Local"      },
+                { icon: TrendingUp,  label: "Proven ROI"          },
+              ].map(({ icon: I, label }) => (
+                <div key={label} className="flex items-center gap-1.5">
+                  <I size={14} className="text-brand-gold flex-shrink-0" strokeWidth={2.2} />
+                  <span className="text-[10.5px] font-semibold text-text-slate">{label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Footer badge */}
+        {/* ── Bento Grid ──────────────────────────────────────── */}
+        {/*
+          Desktop (3 cols):
+            ┌──────────────┬────────────┬──────────────┐
+            │  Residential │ Commercial │     HOA      │
+            │  (row-span-2)├────────────┼──────────────┤
+            │              │ Developer  │  Financial   │
+            └──────────────┴────────────┴──────────────┘
+
+          The left card spans both rows.
+          Right 4 cards each occupy 1 cell in a 2×2 arrangement.
+          Heights are driven by padding + min-h (not fixed px rows).
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+
+          {/* ── Featured: Residential ── */}
+          {/* On mobile: min-h-[340px]. On desktop: row-span-2 so it fills both grid rows naturally. */}
+          <FullBleedCard
+            title="Residential Management"
+            text="Comprehensive management that protects your investment and ensures tenant satisfaction at every level."
+            icon={Home}
+            image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85"
+            badge="Featured"
+            index={1}
+            delay={0.05}
+            contentPadding="p-8"
+            className="min-h-[340px] md:min-h-[440px] lg:row-span-2"
+          />
+
+          {/* ── Commercial ── */}
+          <FullBleedCard
+            title="Commercial Management"
+            text="Strategic management for office, retail, and mixed-use properties focused on performance and long-term value."
+            icon={Building2}
+            image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=85"
+            index={2}
+            delay={0.12}
+            className="min-h-[260px]"
+          />
+
+          {/* ── HOA ── */}
+          <FullBleedCard
+            title="HOA Management"
+            text="Expert governance, compliance, and community support for well-managed associations."
+            icon={UsersRound}
+            image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=85"
+            index={3}
+            delay={0.18}
+            className="min-h-[260px]"
+          />
+
+          {/* ── Developer ── */}
+          <FullBleedCard
+            title="Developer & Builder Services"
+            text="Partnering with developers and builders to transition projects seamlessly into long-term operations."
+            icon={HardHat}
+            image="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=700&q=85"
+            index={4}
+            delay={0.24}
+            className="min-h-[260px]"
+          />
+
+          {/* ── Financial ── */}
+          <FullBleedCard
+            title="Financial Management"
+            text="Transparent reporting, budgeting, and financial oversight you can always count on."
+            icon={BadgeDollarSign}
+            image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=700&q=85"
+            index={5}
+            delay={0.3}
+            className="min-h-[260px]"
+          />
+        </div>
+
+        {/* ── Footer strip ── */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="flex items-center justify-center gap-2 mt-12 border-t border-gray-200/50 pt-8"
+          transition={{ delay: 0.35, duration: 0.5 }}
+          className="flex items-center justify-center gap-2.5 mt-10 border-t border-gray-200/60 pt-8"
         >
-          <ShieldCheck size={16} className="text-brand-gold" strokeWidth={2} />
-          <p className="text-xs text-text-slate font-medium">Serving homeowners, investors, and developers across South Carolina.</p>
+          <ShieldCheck size={15} className="text-brand-gold" strokeWidth={2} />
+          <p className="text-[11px] text-text-slate font-medium tracking-wide">
+            Serving homeowners, investors &amp; developers across South Carolina
+          </p>
         </motion.div>
 
       </div>
