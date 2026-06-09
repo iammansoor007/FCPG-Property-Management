@@ -19,7 +19,9 @@
 }
 
 @theme {
-  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-serif: ui-serif, Georgia, serif;
   --color-primary-navy: var(--primary-navy);
   --color-midnight-navy: var(--midnight-navy);
   --color-brand-gold: var(--brand-gold);
@@ -42,6 +44,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom branded scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--midnight-navy);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-gold);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tagline-gold);
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--brand-gold);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
 a {
@@ -56,10 +82,11 @@ select {
 }
 
 ::selection {
-  background: #c99b31;
+  background: var(--brand-gold);
   color: #ffffff;
 }
 
 img {
   max-width: 100%;
 }
+
