@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -50,24 +51,43 @@ function FeatureCell({ icon: Icon, title, text, index, totalCols = 3, total = 6 
   const isLastCol = col === totalCols - 1;
   const isLastRow = row === totalRows - 1;
 
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.06, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={handleMouseMove}
       className={[
-        "group relative flex flex-col gap-5 p-8 cursor-default",
-        "transition-colors duration-300 hover:bg-[#fdfaf3]",
+        "group relative flex flex-col gap-5 p-8 cursor-default overflow-hidden",
+        "transition-all duration-300 hover:bg-[rgba(201,155,49,0.02)]",
         !isLastCol ? "border-r border-[rgba(201,155,49,0.18)]" : "",
         !isLastRow ? "border-b border-[rgba(201,155,49,0.18)]" : "",
       ].join(" ")}
     >
+      {/* Dynamic Cursor Spotlight Effect */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, rgba(201, 155, 49, 0.075), transparent 80%)`
+        }}
+      />
+
       {/* Gold top-sweep line on hover */}
       <span className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-gold/0 via-brand-gold to-brand-gold/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
 
       {/* Top row: number + icon */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between relative z-10">
         <span className="text-[10.5px] font-black tracking-[0.2em] text-brand-gold/60 group-hover:text-brand-gold transition-colors duration-300">
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -77,12 +97,12 @@ function FeatureCell({ icon: Icon, title, text, index, totalCols = 3, total = 6 
       </div>
 
       {/* Title */}
-      <h3 className="text-[15px] font-bold text-text-navy leading-snug tracking-tight group-hover:text-primary-navy transition-colors duration-300">
+      <h3 className="text-[15px] font-bold text-text-navy leading-snug tracking-tight group-hover:text-primary-navy transition-colors duration-300 relative z-10">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-[13px] text-text-slate leading-[1.72] font-sans flex-1">
+      <p className="text-[13px] text-text-slate leading-[1.72] font-sans flex-1 relative z-10">
         {text}
       </p>
     </motion.div>

@@ -120,6 +120,9 @@ export default function Header() {
           : "bg-[var(--midnight-navy-95)] border-white/10"
       }`}
     >
+      {/* Elegant thin gold bottom fading accent line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)]/80 to-transparent pointer-events-none" />
+      
       <div className={`mx-auto max-w-[1160px] px-6 transition-all duration-300 ${scrolled ? "py-2" : "py-3 lg:py-4"}`}>
         <div className="grid grid-cols-[auto_1fr] items-center gap-6 lg:gap-10">
           {/* Logo */}
@@ -252,7 +255,7 @@ export default function Header() {
 
               <Link
                 href="#contact"
-                className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
+                className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
               >
                 <CalendarDays size={13} className="transition-transform duration-300 group-hover:rotate-12" />
                 Request a Consultation
@@ -394,7 +397,7 @@ export default function Header() {
                 <Link
                   href="#contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="group mt-4 flex h-[44px] items-center justify-center gap-2 bg-[var(--brand-gold)] px-5 text-[11px] font-semibold uppercase tracking-wider text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
+                  className="group mt-4 flex h-[44px] items-center justify-center gap-2 bg-[var(--brand-gold)] px-5 text-[11px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
                 >
                   <CalendarDays size={14} className="transition-transform duration-300 group-hover:rotate-12" />
                   Request a Consultation

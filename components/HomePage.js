@@ -7,7 +7,9 @@ import WhyChoose from "./WhyChoose";
 import VendorNetwork from "./VendorNetwork";
 import TrustStrip from "./TrustStrip";
 import Testimonials from "./Testimonials";
+import ResourcesFAQ from "./ResourcesFAQ";
 import ServiceAreas from "./ServiceAreas";
+import ContactForm from "./ContactForm";
 import CtaBar from "./CtaBar";
 
 export default function HomePage() {
@@ -20,8 +22,10 @@ export default function HomePage() {
       <VendorNetwork />
       <TrustStrip />
       <Testimonials />
+      <ResourcesFAQ />
       <ServiceAreas />
       <CtaBar />
+      <ContactForm />
     </main>
   );
 }

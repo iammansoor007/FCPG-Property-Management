@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,14 +19,24 @@ function FullBleedCard({
   title, text, icon: Icon, image, badge, index, delay = 0,
   className = "", contentPadding = "p-7",
 }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative overflow-hidden rounded-2xl ${className}`}
-      style={{ boxShadow: "0 16px 48px rgba(3,27,49,0.15)" }}
+      onMouseMove={handleMouseMove}
+      className={`group relative overflow-hidden rounded-2xl shadow-[0_16px_48px_rgba(3,27,49,0.15)] hover:shadow-[0_20px_50px_rgba(201,155,49,0.22)] transition-all duration-500 ${className}`}
     >
       {/* Background image */}
       <Image
@@ -59,6 +70,14 @@ function FullBleedCard({
           </span>
         </div>
       )}
+
+      {/* Dynamic Cursor Spotlight Effect */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl z-25"
+        style={{
+          background: `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, rgba(201, 155, 49, 0.12), transparent 80%)`
+        }}
+      />
 
       {/* Content — pinned to bottom, always fully visible */}
       <div className={`absolute bottom-0 left-0 right-0 z-20 ${contentPadding} flex flex-col gap-3.5`}>
