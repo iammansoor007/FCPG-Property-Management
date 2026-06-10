@@ -40,11 +40,7 @@ const values = [
   },
 ];
 
-const stats = [
-  { value: "15+",  label: "Years in Business",  sub: "Established in 2009"       },
-  { value: "500+", label: "Properties Managed",  sub: "Across South Carolina"     },
-  { value: "98%",  label: "Client Retention",    sub: "Year over year"            },
-];
+
 
 /* Border-sharing grid cell — used by Stripe, Linear, Notion for clean feature grids */
 function FeatureCell({ icon: Icon, title, text, index, totalCols = 3, total = 6 }) {
@@ -168,73 +164,6 @@ export default function WhyChoose() {
           </motion.div>
         </div>
 
-        {/* ── Stats bar ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="grid grid-cols-1 sm:grid-cols-3 rounded-2xl overflow-hidden mb-6"
-          style={{
-            background: "linear-gradient(135deg, var(--primary-navy) 0%, var(--midnight-navy) 100%)",
-            borderTop: "2px solid rgba(201,155,49,0.35)",
-          }}
-        >
-          {stats.map(({ value, label, sub }, i) => (
-            <div
-              key={label}
-              className="relative flex flex-col items-center justify-center py-12 gap-1"
-              style={{ borderRight: i < 2 ? "1px solid rgba(255,255,255,0.07)" : "none" }}
-            >
-              {/* Ambient gold glow behind number */}
-              <div
-                className="absolute rounded-full pointer-events-none"
-                style={{
-                  width: "120px",
-                  height: "120px",
-                  background: "radial-gradient(circle, rgba(201,155,49,0.12) 0%, transparent 70%)",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -60%)",
-                }}
-              />
-
-              {/* Big number */}
-              <span
-                className="relative font-display font-black leading-none"
-                style={{
-                  fontSize: "clamp(2.8rem, 5.5vw, 3.8rem)",
-                  color: "#ffffff",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                {value}
-              </span>
-
-              {/* Gold accent bar */}
-              <span
-                className="rounded-full my-2"
-                style={{ width: "28px", height: "2px", backgroundColor: "var(--brand-gold)", opacity: 0.75 }}
-              />
-
-              {/* Label */}
-              <span
-                className="text-[11px] font-bold uppercase tracking-[0.2em]"
-                style={{ color: "rgba(255,255,255,0.9)" }}
-              >
-                {label}
-              </span>
-
-              {/* Sub-description */}
-              <span
-                className="text-[10px] font-medium mt-0.5"
-                style={{ color: "rgba(255,255,255,0.38)", letterSpacing: "0.04em" }}
-              >
-                {sub}
-              </span>
-            </div>
-          ))}
-        </motion.div>
 
         {/* ── Feature grid — border-sharing ── */}
         <div

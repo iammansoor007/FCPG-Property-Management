@@ -1,411 +1,393 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Wrench, Zap, Droplets, Paintbrush, Trees, ShieldCheck,
-  ArrowRight, Clock, CheckCircle2, Award, ShieldAlert,
-  Sparkles, ThumbsUp, Activity
+  Wrench, Trees, Paintbrush, ShieldCheck, Check,
+  ArrowRight, ShieldAlert, Sparkles, Clock, Award, Shield
 } from "lucide-react";
 
-const categories = [
+const sections = [
   {
-    id: "maintenance",
     icon: Wrench,
-    label: "General Maintenance",
-    desc: "Day-to-day repairs and facility maintenance",
-    longDesc: "From minor handyman fixes to comprehensive structural preventative maintenance, our general technicians keep properties in peak condition year-round.",
-    sla: "30 Mins (Emergency) / 4 Hrs (Routine)",
-    verification: "Fully Vetted & Background Checked",
-    projects: "4,500+ Completed",
-    activeCrews: "24 Local Crews",
-    rating: "4.9 / 5.0 Rating",
-    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=85",
+    tag: "Division 01",
+    title: "Mechanical & Infrastructure",
+    subtitle: "24/7 Emergency Dispatch",
+    desc: "Critical repairs and preventative maintenance for complex building systems. We keep mechanical lines, electrical wiring, and climate networks functioning seamlessly to prevent asset deterioration.",
+    statusLabel: "Emergency Dispatch SLA",
+    statusVal: "< 15 Min Response",
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=85",
+    badge: "Active Registry: 24 Crews",
     services: [
-      "Drywall & Carpentry Repairs",
-      "Hardware & Lock Installation",
-      "Preventative Walkthroughs",
-      "Gutter & Roof Cleans"
+      "24/7 HVAC & Climate Systems Diagnostics",
+      "Class A Master Electrical Troubleshooting",
+      "Main Line Plumbing & Emergency Leak Repair",
+      "Backflow Testing & Mechanical Audits"
     ]
   },
   {
-    id: "electrical",
-    icon: Zap,
-    label: "Electrical Systems",
-    desc: "24/7 emergency dispatch and wiring upgrades",
-    longDesc: "Professional electrical services including emergency troubleshooting, panel upgrades, lighting installations, and detailed safety code inspections.",
-    sla: "15 Mins (Emergency) / 2 Hrs (Routine)",
-    verification: "Class A Master Electricians",
-    projects: "1,800+ Completed",
-    activeCrews: "12 Certified Teams",
-    rating: "5.0 / 5.0 Rating",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=85",
-    services: [
-      "Emergency Power Restoration",
-      "LED Lighting Retrofits",
-      "Breaker & Panel Upgrades",
-      "Safety Code Audits"
-    ]
-  },
-  {
-    id: "plumbing",
-    icon: Droplets,
-    label: "Plumbing & HVAC",
-    desc: "Water systems, heating, and cooling networks",
-    longDesc: "Full-scale HVAC and plumbing experts ensuring water distribution, drainage systems, and climate control units function perfectly in all seasons.",
-    sla: "20 Mins (Emergency) / 3 Hrs (Routine)",
-    verification: "EPA Certified & Bonded",
-    projects: "3,100+ Completed",
-    activeCrews: "18 Dedicated Teams",
-    rating: "4.8 / 5.0 Rating",
-    image: "https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=800&q=85",
-    services: [
-      "AC & Furnace Diagnostics",
-      "Leak Detection & Piping",
-      "Water Heater Installation",
-      "Backflow Prevention Testing"
-    ]
-  },
-  {
-    id: "painting",
-    icon: Paintbrush,
-    label: "Painting & Finishing",
-    desc: "Interior/exterior finishes and drywall prep",
-    longDesc: "Premium finishing crews delivering sharp interior painting, weather-resistant exterior coatings, cabinet staining, and smooth drywall finishing.",
-    sla: "Next-Day Estimating / 24-Hr Start",
-    verification: "Lead-Safe Certified Firms",
-    projects: "2,400+ Completed",
-    activeCrews: "15 Finishing Teams",
-    rating: "4.9 / 5.0 Rating",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=85",
-    services: [
-      "Precision Wall & Trim Painting",
-      "Drywall Texture & Finishing",
-      "Stucco & Siding Coatings",
-      "Professional Pressure Washing"
-    ]
-  },
-  {
-    id: "landscaping",
     icon: Trees,
-    label: "Landscaping & Exterior",
-    desc: "Grounds upkeep and seasonal yard designs",
-    longDesc: "Strategic grounds keeping, plant care, irrigation design, and storm cleanup to maximize property curb appeal and outdoor safety.",
-    sla: "Weekly Schedules / 4-Hr Storm Dispatch",
-    verification: "Licensed Pesticide Applicators",
-    projects: "5,000+ Completed",
-    activeCrews: "30 Ground Crews",
-    rating: "4.7 / 5.0 Rating",
-    image: "https://images.unsplash.com/photo-1557429287-b2e26467fc2b?auto=format&fit=crop&w=800&q=85",
+    tag: "Division 02",
+    title: "Exterior Care & Landscaping",
+    subtitle: "Weekly Maintenance & Curb Appeal",
+    desc: "Precision lawn care, smart irrigation systems, and outer building envelope maintenance to secure absolute curb appeal and protect property valuation.",
+    statusLabel: "Site Audit Frequency",
+    statusVal: "Weekly Inspection Walks",
+    image: "https://images.unsplash.com/photo-1557429287-b2e26467fc2b?auto=format&fit=crop&w=900&q=85",
+    badge: "Statewide Coverage: 30 Crews",
     services: [
-      "Mowing, Edging & Pruning",
-      "Irrigation Repair & Winterization",
-      "Curb Appeal Enhancement",
-      "Emergency Tree Removal"
+      "Turf Management, Mowing & Seasonal Color",
+      "Smart Irrigation Audits & System Repairs",
+      "Roofing, Siding & Gutter Assessments",
+      "Priority Post-Storm Debris Cleanup"
     ]
   },
   {
-    id: "safety",
-    icon: ShieldCheck,
-    label: "Safety & Compliance",
-    desc: "Code inspections, fire protection, and alarms",
-    longDesc: "Specialist compliance networks executing commercial code checks, smoke/fire alarm installations, access systems, and security audits.",
-    sla: "Immediate Dispatch for Violations",
-    verification: "NFPA Certified Inspectors",
-    projects: "900+ Code Audits",
-    activeCrews: "8 Specialized Inspectors",
-    rating: "5.0 / 5.0 Rating",
-    image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=85",
+    icon: Paintbrush,
+    tag: "Division 03",
+    title: "Cosmetics & Unit Turnover",
+    subtitle: "48-Hour Vacancy Restoration",
+    desc: "Lightning-fast drywall repairs, carpentry finishing, and paint turnover services designed to minimize vacancy times and prepare properties for occupancy.",
+    statusLabel: "Average Turnover Time",
+    statusVal: "48-Hour Guarantee",
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=85",
+    badge: "Turnover Specialist Crews",
     services: [
-      "Fire System Recertifications",
-      "Smoke & Carbon Detector Checks",
-      "Access Control Maintenance",
-      "Egress Code Compliance Walks"
+      "Precision Drywall Patching & Texture Matching",
+      "High-End Interior & Exterior Painting",
+      "Trim Work, Finish Carpentry & Renovations",
+      "Master Locksmith & Rekey Security Services"
+    ]
+  },
+  {
+    icon: ShieldCheck,
+    tag: "Division 04",
+    title: "Vetting & Compliance Standards",
+    subtitle: "100% Insured & Licensed Network",
+    desc: "We enforce strict onboarding credentials to shield property owners from liability risks. Every vendor undergoes background checks and insurance audits annually.",
+    statusLabel: "Minimum Insurance Limit",
+    statusVal: "$1M General Liability",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85",
+    badge: "100% Insured Compliance",
+    services: [
+      "Strict Criminal Background Screening",
+      "Active South Carolina License Verification",
+      "Workers' Compensation Coverage Mandates",
+      "W-9 Compliance & Tax Audits"
     ]
   }
 ];
 
 export default function VendorNetwork() {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeSection, setActiveSection] = useState(0);
 
-  const activeCategory = categories[activeTab];
+  useEffect(() => {
+    const handleScroll = () => {
+      const elements = document.querySelectorAll(".vendor-scroll-item");
+      let activeIdx = 0;
+      let minDistance = Infinity;
+
+      elements.forEach((el, idx) => {
+        const rect = el.getBoundingClientRect();
+        // Measure distance from the element's center to the viewport center
+        const distance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeIdx = idx;
+        }
+      });
+
+      setActiveSection(activeIdx);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Run once on mount to determine initial active section
+    handleScroll();
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section
       id="vendor-network"
-      className="relative overflow-hidden py-20 lg:py-28"
-      style={{ background: "linear-gradient(180deg, #031b31 0%, #021222 100%)" }}
+      className="relative text-white py-24 lg:py-32 border-b border-white/[0.04]"
+      style={{ background: "radial-gradient(ellipse at 50% 0%, #052946 0%, #031b31 65%, #020c18 100%)" }}
     >
-      {/* Aesthetic grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px)",
-          backgroundSize: "24px 24px"
-        }}
-      />
+      {/* Modern High-Tech Architectural Grid Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        {/* Custom SVG Grid Lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="bg-grid-lines" width="80" height="80" patternUnits="userSpaceOnUse">
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.75" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#bg-grid-lines)" />
+        </svg>
 
-      {/* Decorative ambient color spots */}
-      <div className="absolute top-1/4 left-1/10 w-[400px] h-[400px] bg-brand-gold/[0.03] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/10 w-[500px] h-[500px] bg-[#052946]/[0.1] rounded-full blur-[150px] pointer-events-none" />
+        {/* Diagonal Light Beam Mesh */}
+        <div 
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: "repeating-linear-gradient(45deg, rgba(201,155,49,0.15) 0px, rgba(201,155,49,0.15) 2px, transparent 2px, transparent 40px)"
+          }}
+        />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1160px] px-6 lg:px-8">
+        {/* Glow Masking (fades grid toward edges for premium vignette look) */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#020c18_95%)]" />
+
+        {/* Golden glowing coordinate crosses at grid intersections */}
+        <div className="absolute top-[18%] left-[12%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 01_INFRA</div>
+        <div className="absolute top-[42%] right-[18%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 02_ESTHETICS</div>
+        <div className="absolute bottom-[35%] left-[28%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 03_RESTORATION</div>
+        <div className="absolute bottom-[12%] right-[8%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 04_COMPLIANCE</div>
+      </div>
+
+      {/* Radial soft gold and sapphire ambient glows */}
+      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-brand-gold/[0.035] rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#052946]/[0.25] rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
         
-        {/* ── Section Header ── */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex gap-4 items-start"
-          >
-            <div
-              className="flex-shrink-0 w-[3px] self-stretch rounded-full mt-1"
-              style={{ background: "linear-gradient(180deg, #c99b31 0%, rgba(201,155,49,0.3) 70%, transparent 100%)" }}
-            />
-            <div>
-              <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold mb-3">
-                Vendor Management
-              </p>
-              <h2 className="text-4xl md:text-5xl font-bold font-display text-white leading-[1.1] tracking-tight">
+        {/* Main 2-column sticky scroll layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* ── Left Column: Scrollable Content (7 Cols) ── */}
+          <div className="lg:col-span-7 flex flex-col">
+            
+            {/* Intro Header */}
+            <div className="mb-14 sm:mb-20 max-w-[580px]">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-5 h-[1.5px] bg-brand-gold" />
+                <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
+                  Contractor Network
+                </p>
+              </div>
+              <h2 className="text-[28px] xs:text-3xl sm:text-4xl md:text-5xl font-bold font-display text-white leading-[1.1] tracking-tight">
                 Vetted Contractors.{" "}
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
-                  Guaranteed Performance.
+                  Flawless Performance.
                 </span>
               </h2>
-            </div>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[14.5px] text-white/60 leading-relaxed md:max-w-[380px] font-sans"
-          >
-            We eliminate maintenance stress. Our verified network of licensed, local, and fully insured contractors delivers responsive communication and quality work.
-          </motion.p>
-        </div>
-
-        {/* ── Dashboard Layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
-          {/* Left Side: Vertical Selector Tabs (5 columns) */}
-          <div className="lg:col-span-5 flex flex-col gap-3.5">
-            <div className="mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[9px] font-black tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
-                Select Category to Inspect
-              </span>
+              <p className="text-[13px] sm:text-[14px] md:text-[14.5px] text-white/65 leading-relaxed mt-4 sm:mt-6 font-sans">
+                We eliminate maintenance friction. First Choice Property Group maintains strategic partnerships with South Carolina's premier licensed technicians to guarantee prompt response, professional communication, and quality results.
+              </p>
             </div>
 
-            <div className="flex flex-col gap-2">
-              {categories.map((cat, idx) => {
-                const Icon = cat.icon;
-                const isActive = activeTab === idx;
-
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveTab(idx)}
-                    className={`group flex items-start gap-4 p-4 rounded-xl text-left transition-all duration-300 border focus:outline-none ${
-                      isActive
-                        ? "bg-white/[0.04] border-brand-gold/45 shadow-[0_8px_32px_rgba(201,155,49,0.06)]"
-                        : "bg-white/[0.01] border-white/[0.04] hover:bg-white/[0.02] hover:border-white/[0.08]"
+            {/* Scrollable Divisions Wrapper with timeline tracker */}
+            <div className="relative pl-6 xs:pl-8 lg:pl-10">
+              
+              {/* Timeline Tracker line */}
+              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white/10">
+                <div
+                  className="w-full bg-brand-gold transition-all duration-500 ease-out shadow-[0_0_8px_var(--brand-gold)]"
+                  style={{
+                    height: `${(activeSection / (sections.length - 1)) * 100}%`,
+                  }}
+                />
+                
+                {/* Visual indicator nodes/dots */}
+                {sections.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`absolute left-1/2 -translate-x-1/2 w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full border-2 transition-all duration-500 ${
+                      activeSection >= idx
+                        ? "bg-brand-gold border-brand-gold shadow-[0_0_8px_rgba(201,155,49,0.7)] scale-110"
+                        : "bg-midnight-navy border-white/25 scale-90"
                     }`}
-                  >
-                    {/* Glowing Icon Holder */}
+                    style={{ top: `${idx * (100 / (sections.length - 1))}%` }}
+                  />
+                ))}
+              </div>
+
+              {/* Divisions List */}
+              <div className="flex flex-col gap-20 sm:gap-24 lg:gap-32 pb-12">
+                {sections.map((sec, idx) => {
+                  const Icon = sec.icon;
+                  const isActive = activeSection === idx;
+
+                  return (
                     <div
-                      className={`flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-lg border transition-all duration-300 ${
-                        isActive
-                          ? "bg-brand-gold border-brand-gold text-midnight-navy shadow-[0_0_15px_rgba(201,155,49,0.3)]"
-                          : "bg-white/[0.03] border-white/[0.08] text-white/70 group-hover:text-brand-gold group-hover:border-brand-gold/30"
+                      key={sec.title}
+                      data-index={idx}
+                      className={`vendor-scroll-item relative flex flex-col gap-4 sm:gap-5 transition-all duration-500 origin-left ${
+                        isActive ? "opacity-100 scale-100" : "opacity-25 hover:opacity-45 scale-[0.98] cursor-pointer"
                       }`}
                     >
-                      <Icon size={18} strokeWidth={2.2} />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <h3
-                        className={`text-[13.5px] font-bold transition-colors duration-200 ${
-                          isActive ? "text-brand-gold" : "text-white group-hover:text-brand-gold"
-                        }`}
-                      >
-                        {cat.label}
-                      </h3>
-                      <p className="text-[11.5px] text-white/45 mt-0.5 line-clamp-1 group-hover:text-white/60 transition-colors">
-                        {cat.desc}
-                      </p>
-                    </div>
-
-                    {/* Active State indicator bar */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className="w-1 h-6 bg-brand-gold rounded-full self-center ml-2 shadow-[0_0_8px_rgba(201,155,49,0.5)]"
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Side: Showcase Dashboard Panel (7 columns) */}
-          <div className="lg:col-span-7">
-            <div className="relative h-full rounded-2xl border border-white/[0.07] bg-white/[0.02] backdrop-blur-md overflow-hidden flex flex-col justify-between shadow-[0_24px_50px_rgba(2,18,34,0.3)]">
-              
-              {/* Header Details */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="flex flex-col h-full"
-                >
-                  {/* Visual Top Area */}
-                  <div className="relative h-[220px] w-full overflow-hidden">
-                    <Image
-                      src={activeCategory.image}
-                      alt={activeCategory.label}
-                      fill
-                      priority
-                      className="object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
-                    />
-                    {/* Shadow overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#021222] via-[#021222]/50 to-transparent" />
-                    
-                    {/* Verification pill */}
-                    <div className="absolute top-4 left-4 flex gap-2">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/90 text-white text-[9px] font-black uppercase tracking-wider shadow-md">
-                        <CheckCircle2 size={10} strokeWidth={3} />
-                        Vetted & Insured
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-4 left-6 right-6">
-                      <h4 className="text-xl md:text-2xl font-display font-bold text-white tracking-tight">
-                        {activeCategory.label}
-                      </h4>
-                      <p className="text-[12px] text-brand-gold font-medium mt-0.5">
-                        {activeCategory.verification}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-6 md:p-8 flex flex-col gap-6 flex-grow">
-                    <p className="text-[13px] text-white/70 leading-relaxed font-sans">
-                      {activeCategory.longDesc}
-                    </p>
-
-                    {/* Stats Metrics Dashboard Grid */}
-                    <div className="grid grid-cols-2 gap-3.5">
-                      <div className="p-3.5 rounded-xl border border-white/[0.04] bg-white/[0.01] flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center flex-shrink-0">
-                          <Clock size={15} />
-                        </div>
-                        <div>
-                          <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider">Response SLA</p>
-                          <p className="text-[12px] font-bold text-white mt-0.5">{activeCategory.sla}</p>
+                      {/* Tag + Icon row */}
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <span className="text-[10px] sm:text-[11px] font-bold text-brand-gold uppercase tracking-[0.2em] font-sans">
+                          {sec.tag}
+                        </span>
+                        <span className="h-[1px] w-8 sm:w-12 bg-white/10" />
+                        <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg border flex items-center justify-center transition-all duration-300 ${
+                          isActive 
+                            ? "bg-brand-gold text-midnight-navy border-brand-gold shadow-[0_0_15px_rgba(201,155,49,0.3)]" 
+                            : "bg-white/[0.03] text-white/60 border-white/10"
+                        }`}>
+                          <Icon size={12} className="sm:w-3.5 sm:h-3.5" strokeWidth={2.2} />
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded-xl border border-white/[0.04] bg-white/[0.01] flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center flex-shrink-0">
-                          <Activity size={15} />
-                        </div>
-                        <div>
-                          <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider">Completed Work</p>
-                          <p className="text-[12px] font-bold text-white mt-0.5">{activeCategory.projects}</p>
+                      {/* Title & Desc */}
+                      <div>
+                        <h3 className="text-lg xs:text-xl sm:text-[22px] md:text-[26px] font-bold text-white font-display tracking-tight transition-colors duration-300">
+                          {sec.title}
+                        </h3>
+                        <p className="text-[10px] font-black tracking-widest text-brand-gold/80 uppercase mt-0.5 font-sans">
+                          {sec.subtitle}
+                        </p>
+                        <p className="text-[12.5px] sm:text-[13.5px] text-white/70 mt-2.5 sm:mt-3.5 leading-relaxed font-sans">
+                          {sec.desc}
+                        </p>
+                      </div>
+
+                      {/* Mobile Only Image: Hidden on Desktop */}
+                      <div className="block lg:hidden relative w-full aspect-[16/10] sm:aspect-video rounded-xl overflow-hidden border border-white/10 shadow-sm my-2">
+                        <Image
+                          src={sec.image}
+                          alt={sec.title}
+                          fill
+                          sizes="100vw"
+                          className="object-cover"
+                        />
+                        <div className="absolute top-3 right-3 bg-midnight-navy/90 border border-white/10 px-2.5 py-1 rounded-full text-[9px] font-bold text-brand-gold uppercase tracking-wider">
+                          {sec.badge}
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded-xl border border-white/[0.04] bg-white/[0.01] flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center flex-shrink-0">
-                          <Award size={15} />
-                        </div>
-                        <div>
-                          <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider">Active Crews</p>
-                          <p className="text-[12px] font-bold text-white mt-0.5">{activeCategory.activeCrews}</p>
+                      {/* Checklist of Services */}
+                      <div className={`flex flex-col gap-3 p-4 xs:p-5 lg:p-6 rounded-xl border transition-all duration-500 backdrop-blur-sm ${
+                        isActive 
+                          ? "bg-white/[0.03] border-white/[0.08] shadow-[0_8px_30px_rgba(255,255,255,0.01)]" 
+                          : "bg-white/[0.01] border-white/[0.04]"
+                      }`}>
+                        <p className="text-[9px] sm:text-[10px] font-black uppercase text-white/50 tracking-widest mb-1">
+                          Scope of services includes
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                          {sec.services.map((serv, sIdx) => (
+                            <div key={sIdx} className="flex items-start gap-2.5">
+                              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-brand-gold/15 text-brand-gold mt-0.5 shrink-0">
+                                <Check size={10} strokeWidth={3.5} />
+                              </span>
+                              <span className="text-[12px] font-semibold text-white/90 leading-tight font-sans">
+                                {serv}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded-xl border border-white/[0.04] bg-white/[0.01] flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center flex-shrink-0">
-                          <ThumbsUp size={15} />
-                        </div>
-                        <div>
-                          <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider">Quality Score</p>
-                          <p className="text-[12px] font-bold text-white mt-0.5">{activeCategory.rating}</p>
-                        </div>
+                      {/* Stat / SLA indicator */}
+                      <div className="flex items-center gap-2">
+                        <Clock size={13} className="text-brand-gold" />
+                        <span className="text-[12px] font-semibold text-white/80">
+                          {sec.statusLabel}: <span className="text-brand-gold font-bold">{sec.statusVal}</span>
+                        </span>
                       </div>
                     </div>
-
-                    {/* Scope Checklist */}
-                    <div>
-                      <h5 className="text-[10.5px] font-black tracking-wider uppercase text-brand-gold mb-3">
-                        Services Performed
-                      </h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-                        {activeCategory.services.map((serv, idx) => (
-                          <div key={idx} className="flex items-center gap-2.5">
-                            <CheckCircle2 size={13} className="text-brand-gold flex-shrink-0" strokeWidth={2.5} />
-                            <span className="text-[12px] text-white/70 font-sans">{serv}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Bottom CTA Block */}
-              <div className="p-6 border-t border-white/[0.06] bg-white/[0.01] flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <ShieldAlert size={14} className="text-brand-gold flex-shrink-0" />
-                  <span className="text-[11px] font-medium text-white/50">Minimum $1M general liability required for all vendors.</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Link
-                    href="#contact"
-                    className="group inline-flex items-center gap-2 h-10 px-5 rounded-[4px] bg-brand-gold text-midnight-navy font-bold text-[10.5px] uppercase tracking-wider transition-all duration-300 hover:bg-tagline-gold active:scale-[0.97]"
-                  >
-                    Submit Service Request
-                    <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
-                </div>
+                  );
+                })}
               </div>
 
             </div>
           </div>
 
-        </div>
+          {/* ── Right Column: Sticky Visual Viewer (5 Cols) ── */}
+          <div className="lg:col-span-5 sticky top-28 hidden lg:block w-full h-[520px]">
+            <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/[0.08] shadow-[0_24px_50px_rgba(0,0,0,0.4)] bg-white/[0.02] backdrop-blur-md">
+              
+              {/* Stack of cross-fading images using AnimatePresence in parallel */}
+              <AnimatePresence>
+                {sections.map((sec, idx) => {
+                  const isActive = activeSection === idx;
+                  if (!isActive) return null;
 
-        {/* ── Partner Strip ── */}
-        <div className="mt-16 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold">
-              <Sparkles size={16} />
-            </div>
-            <div>
-              <p className="text-[12.5px] font-bold text-white">Are you a licensed contractor in South Carolina?</p>
-              <p className="text-[11px] text-white/50">Join our network and receive consistent work requests.</p>
+                  return (
+                    <motion.div
+                      key={sec.title}
+                      initial={{ opacity: 0, scale: 1.05, y: 12 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -12 }}
+                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                      className="absolute inset-0 w-full h-full"
+                    >
+                      <Image
+                        src={sec.image}
+                        alt={sec.title}
+                        fill
+                        priority={idx === 0}
+                        sizes="(min-width: 1024px) 40vw"
+                        className="object-cover"
+                      />
+                      {/* Luxury gradient vignette overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+                      
+                      {/* Floating Top Pill */}
+                      <div className="absolute top-5 left-5">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-midnight-navy/95 border border-white/[0.1] text-brand-gold text-[9px] font-black tracking-wider uppercase backdrop-blur-sm shadow-md">
+                          <ShieldCheck size={10} className="text-brand-gold" />
+                          Verified Contractor Network
+                        </span>
+                      </div>
+
+                      {/* Floating Bottom Pill */}
+                      <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4">
+                        <span className="inline-flex px-3 py-1 rounded bg-black/60 text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
+                          {sec.badge}
+                        </span>
+                        <span className="inline-flex px-3 py-1 rounded bg-brand-gold text-midnight-navy text-[10px] font-black uppercase tracking-wider shadow-md">
+                          {sec.statusVal}
+                        </span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+
+              {/* Gold decorative inset border corner frames */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-t-[2.5px] border-l-[2.5px] border-brand-gold/60 pointer-events-none rounded-tl-2xl" />
+              <div className="absolute top-0 right-0 w-8 h-8 border-t-[2.5px] border-r-[2.5px] border-brand-gold/60 pointer-events-none rounded-tr-2xl" />
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-[2.5px] border-l-[2.5px] border-brand-gold/60 pointer-events-none rounded-bl-2xl" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-[2.5px] border-r-[2.5px] border-brand-gold/60 pointer-events-none rounded-br-2xl" />
             </div>
           </div>
-          <Link
-            href="#contact"
-            className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider text-brand-gold hover:text-tagline-gold transition-colors duration-300 self-start sm:self-auto"
-          >
-            Become an Approved Vendor Partner →
-          </Link>
+
+        </div>
+
+        {/* ── Contractor Network CTA Footer ── */}
+        <div className="mt-20 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0 animate-pulse">
+              <ShieldAlert size={16} />
+            </div>
+            <div>
+              <p className="text-[13px] sm:text-[13.5px] font-bold text-white">Are you a licensed and insured South Carolina contractor?</p>
+              <p className="text-[11px] sm:text-[11.5px] text-white/55 font-sans">We are always expanding our network of qualified service professionals.</p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+            <Link
+              href="#contact"
+              className="group inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[4px] font-bold text-[11px] uppercase tracking-wider transition-all duration-300 active:scale-[0.97] w-full sm:w-auto"
+              style={{ backgroundColor: "var(--brand-gold)", color: "#ffffff" }}
+              onMouseEnter={e => e.currentTarget.style.backgroundColor = "var(--tagline-gold)"}
+              onMouseLeave={e => e.currentTarget.style.backgroundColor = "var(--brand-gold)"}
+            >
+              Submit Maintenance Request
+              <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="#contact"
+              className="inline-flex items-center justify-center gap-1 text-[11px] font-bold uppercase tracking-wider text-white/60 hover:text-brand-gold transition-colors duration-300 w-full sm:w-auto py-2 text-center"
+            >
+              Become an Approved Vendor Partner →
+            </Link>
+          </div>
         </div>
 
       </div>
