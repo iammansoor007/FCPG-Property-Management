@@ -72,7 +72,7 @@
     "cardHeading": "Begin a Partnership",
     "cardDesc": "Connect with our team to request a custom proposal or schedule an intro call.",
     "primaryCta": "Schedule a Consultation",
-    "primaryCtaHref": "#contact",
+    "primaryCtaHref": "/contact",
     "secondaryCta": "Call Direct: (864) 326-0000",
     "secondaryCtaHref": "tel:8643260000",
     "disclaimer1": "No obligation consultation",
@@ -574,7 +574,7 @@
       "emailHref": "mailto:info@firstchoicepg.com",
       "email": "info@firstchoicepg.com",
       "ctaLabel": "Submit Support Request",
-      "ctaHref": "#contact"
+      "ctaHref": "/contact"
     },
     "faqs": [
       {
