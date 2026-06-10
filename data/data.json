@@ -244,7 +244,7 @@
       { "label": "Services", "href": "/#services" },
       { "label": "Vendor Network", "href": "/#vendor-network" },
       { "label": "Resources", "href": "/#resources" },
-      { "label": "Contact Us", "href": "/#contact" }
+      { "label": "Contact Us", "href": "/contact" }
     ],
     "services": [
       { "label": "HOA Management", "href": "/#services" },
@@ -752,6 +752,36 @@
       { "value": "120+", "label": "Vetted Contractors" },
       { "value": "98.4%", "label": "Retention Rate" }
     ]
+  },
+  "contactPage": {
+    "hero": {
+      "tagline": "Start a Partnership",
+      "heading1": "Start a Conversation.",
+      "heading2": "Get in Touch.",
+      "heading3": "Request a Proposal.",
+      "description": "Ready to elevate your property standards? Connect with our certified association managers and regional office teams across South Carolina.",
+      "bgImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1800&q=85",
+      "bgImageAlt": "Modern corporate offices and meeting space",
+      "coordLat": "+ 34.8526° N",
+      "coordLng": "+ 82.3861° W"
+    },
+    "directory": {
+      "badge": "Office Presence",
+      "heading1": "Corporate HQ &",
+      "heading2": "Regional Operations",
+      "description": "Our headquarters is located in Greenville, SC, with regional portfolio managers active across every major South Carolina metro area."
+    },
+    "form": {
+      "badge": "Request Proposal",
+      "heading": "Begin a Partnership",
+      "description": "Submit your association or property details below, and our leadership team will respond with a custom proposal package.",
+      "progressLabel": "PROPOSAL FORM COMPLETION PROGRESS",
+      "successTitle": "Inquiry Received",
+      "successDesc": "Thank you for reaching out. A senior partner will review your property details and contact you within 2 hours.",
+      "submitLabel": "Submit proposal request",
+      "loadingLabel": "Sending request...",
+      "resetLabel": "Send another inquiry"
+    }
   },
   "metadata": {
     "title": "First Choice Property Group | Professional Property Management SC",

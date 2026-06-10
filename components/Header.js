@@ -46,7 +46,7 @@ export default function Header() {
   const getNavLink = (item) => {
     if (item === "Home") return "/";
     if (item === "About Us") return "/about";
-    if (item === "Contact") return "/#contact";
+    if (item === "Contact") return "/contact";
     return `/#${item.toLowerCase().replaceAll(" ", "-")}`;
   };
 
@@ -198,7 +198,7 @@ export default function Header() {
               </nav>
 
               <Link
-                href="/#contact"
+                href="/contact"
                 className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
               >
                 <CalendarDays size={13} className="transition-transform duration-300 group-hover:rotate-12" />
@@ -339,7 +339,7 @@ export default function Header() {
                   </Link>
                 </div>
                 <Link
-                  href="/#contact"
+                  href="/contact"
                   onClick={() => setMobileMenuOpen(false)}
                   className="group mt-4 flex h-[44px] items-center justify-center gap-2 bg-[var(--brand-gold)] px-5 text-[11px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
                 >
