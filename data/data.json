@@ -144,31 +144,31 @@
     "servicesDropdownItems": [
       {
         "title": "HOA Management",
-        "href": "#services",
+        "href": "/#services",
         "description": "Expert governance, compliance, and community satisfaction.",
         "icon": "UsersRound"
       },
       {
         "title": "Residential Management",
-        "href": "#services",
+        "href": "/#services",
         "description": "Tenant placement, maintenance, and financial oversight.",
         "icon": "Home"
       },
       {
         "title": "Commercial Management",
-        "href": "#services",
+        "href": "/#services",
         "description": "Solutions for office, retail, and mixed-use spaces.",
         "icon": "Building2"
       },
       {
         "title": "Developer Services",
-        "href": "#services",
+        "href": "/#services",
         "description": "Interim management from development to governance.",
         "icon": "HardHat"
       },
       {
         "title": "Financial Management",
-        "href": "#services",
+        "href": "/#services",
         "description": "Budgeting, reporting, and reserve fund oversight.",
         "icon": "BadgeDollarSign"
       }
@@ -176,31 +176,31 @@
     "resourcesDropdownItems": [
       {
         "title": "Blog & Insights",
-        "href": "#resources",
+        "href": "/#resources",
         "description": "Latest news, tips, and articles for property owners.",
         "icon": "ClipboardCheck"
       },
       {
         "title": "FAQs",
-        "href": "#resources",
+        "href": "/#resources",
         "description": "Answers to common association & management questions.",
         "icon": "MessageCircle"
       },
       {
         "title": "Owner Resources",
-        "href": "#resources",
+        "href": "/#resources",
         "description": "Onboarding documents, landlord tips, and local guidelines.",
         "icon": "Handshake"
       },
       {
         "title": "HOA Board Center",
-        "href": "#resources",
+        "href": "/#resources",
         "description": "Board member training materials and compliance templates.",
         "icon": "Award"
       },
       {
         "title": "Resident Guides",
-        "href": "#resources",
+        "href": "/#resources",
         "description": "Move-in checklists, utility setup forms, and handbooks.",
         "icon": "Clock3"
       }
@@ -239,26 +239,26 @@
       "mapsHref": "https://maps.google.com/?q=1230+Woodruff+Road+Suite+101+Greenville+SC+29607"
     },
     "quickLinks": [
-      { "label": "Home", "href": "#" },
-      { "label": "About Us", "href": "#about-us" },
-      { "label": "Services", "href": "#services" },
-      { "label": "Vendor Network", "href": "#vendor-network" },
-      { "label": "Resources", "href": "#resources" },
-      { "label": "Contact Us", "href": "#contact" }
+      { "label": "Home", "href": "/" },
+      { "label": "About Us", "href": "/about" },
+      { "label": "Services", "href": "/#services" },
+      { "label": "Vendor Network", "href": "/#vendor-network" },
+      { "label": "Resources", "href": "/#resources" },
+      { "label": "Contact Us", "href": "/#contact" }
     ],
     "services": [
-      { "label": "HOA Management", "href": "#services" },
-      { "label": "Residential Management", "href": "#services" },
-      { "label": "Commercial Management", "href": "#services" },
-      { "label": "Developer & Builder Services", "href": "#services" },
-      { "label": "Financial Management", "href": "#services" }
+      { "label": "HOA Management", "href": "/#services" },
+      { "label": "Residential Management", "href": "/#services" },
+      { "label": "Commercial Management", "href": "/#services" },
+      { "label": "Developer & Builder Services", "href": "/#services" },
+      { "label": "Financial Management", "href": "/#services" }
     ],
     "resources": [
-      { "label": "Blog", "href": "#resources" },
-      { "label": "FAQs", "href": "#resources" },
-      { "label": "Owner Resources", "href": "#resources" },
-      { "label": "HOA Resources", "href": "#resources" },
-      { "label": "Tenant Resources", "href": "#resources" }
+      { "label": "Blog", "href": "/#resources" },
+      { "label": "FAQs", "href": "/#resources" },
+      { "label": "Owner Resources", "href": "/#resources" },
+      { "label": "HOA Resources", "href": "/#resources" },
+      { "label": "Tenant Resources", "href": "/#resources" }
     ]
   },
   "proofBar": {
@@ -627,6 +627,130 @@
       { "id": "Myrtle Beach", "name": "Myrtle Beach", "x": 790, "y": 366, "count": "11", "type": "Coastal Communities" },
       { "id": "Charleston", "name": "Charleston", "x": 772, "y": 390, "count": "22", "type": "Managed Associations" },
       { "id": "Beaufort", "name": "Beaufort", "x": 760, "y": 398, "count": "7", "type": "Historic Properties" }
+    ]
+  },
+  "aboutPage": {
+    "hero": {
+      "tagline": "About First Choice",
+      "heading1": "Pioneering Standards.",
+      "heading2": "Cultivating Trust.",
+      "heading3": "Managing Assets.",
+      "description": "First Choice Property Group is a premier full-service property management company built on absolute transparency, certified leadership, and a relationship-driven partnership standard.",
+      "bgImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1800&q=85",
+      "bgImageAlt": "Modern corporate boardroom and glass offices",
+      "coordLat": "+ 34.8526° N",
+      "coordLng": "+ 82.3861° W"
+    },
+    "philosophy": {
+      "badge": "Our Philosophy",
+      "heading": "Excellence in Every Asset.",
+      "description": "We don't believe in passive oversight. We actively safeguard your investments through a rigorous, proactive framework centered on compliance, transparency, and personal accountability."
+    },
+    "pillars": [
+      {
+        "icon": "Award",
+        "title": "Decades of Experience",
+        "text": "Over 15 years navigating complex South Carolina property regulations, coastal windstorm compliance, and developer-to-board transitions."
+      },
+      {
+        "icon": "UsersRound",
+        "title": "Certified Leadership",
+        "text": "Every regional portfolio is directed by certified association managers (CMCA, AMS) actively guiding boards and resolving operational challenges."
+      },
+      {
+        "icon": "MessageCircle",
+        "title": "Proactive Communication",
+        "text": "We guarantee a 24-hour response SLA on all inquiries, supported by real-time resident text alerts and automated board updates."
+      },
+      {
+        "icon": "ClipboardCheck",
+        "title": "Disciplined Operations",
+        "text": "Structured onsite inspections, automated maintenance dispatching, and a fully vetted, licensed, and insured vendor network."
+      },
+      {
+        "icon": "BadgeDollarSign",
+        "title": "Financial Accountability",
+        "text": "Complete monthly financial packages, secure lockbox collections, tax support, and rigorous reserve fund optimization."
+      },
+      {
+        "icon": "Handshake",
+        "title": "Relationship-Driven Care",
+        "text": "We operate with a partnership first model. Trust is earned through open communication, mutual respect, and face-to-face board collaboration."
+      }
+    ],
+    "story": {
+      "badge": "Our History",
+      "heading1": "A Legacy of Elevating",
+      "heading2": "Community Standards.",
+      "description": "Founded in 2009 in Greenville, SC, First Choice Property Group was established to address a critical gap in the market: the need for professional, transparent, and responsive property management. What started as a local residential portfolio has grown into a statewide operation, managing premier HOAs, commercial spaces, and mixed-use developments. Despite our scale, our core mission remains unchanged: delivering peace of mind through disciplined management.",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+      "imageAlt": "Corporate office building glass facade",
+      "milestones": [
+        {
+          "year": "2009",
+          "title": "Foundation in Greenville",
+          "desc": "Established FCPG with a single portfolio manager and a mission to introduce transparent financial reporting to HOA boards.",
+          "highlight": "Greenville Office Opened"
+        },
+        {
+          "year": "2014",
+          "title": "Certified Portfolio Growth",
+          "desc": "Achieved AMS and CMCA credentials company-wide and expanded operations to Spartanburg and Anderson regions.",
+          "highlight": "50+ Active Communities"
+        },
+        {
+          "year": "2019",
+          "title": "Statewide Expansion",
+          "desc": "Opened our Columbia and Charleston offices, introducing developer consulting and coastal windstorm compliance programs.",
+          "highlight": "Columbia & Charleston HQs"
+        },
+        {
+          "year": "2024",
+          "title": "Technology Integration",
+          "desc": "Launched automated tenant screening workflows, online board portals, and a vetted vendor registry with strict SLA monitoring.",
+          "highlight": "100% Digital Audits"
+        },
+        {
+          "year": "2026",
+          "title": "FCPG Active System V2",
+          "desc": "Unveiled our relationship-first standard, managing over 8,500 units with a vetted contractor network and 24-hour SLA.",
+          "highlight": "98.4% Retention Rate"
+        }
+      ]
+    },
+    "leadership": {
+      "badge": "Executive Steering",
+      "heading": "Our Leadership Team",
+      "description": "Meet the certified professionals directing our regional operations, financial compliance, and client partnerships.",
+      "members": [
+        {
+          "name": "Robert Vance, CMCA",
+          "role": "Managing Partner & Founder",
+          "bio": "Robert has over 18 years of real estate asset management experience and directs FCPG's strategic growth and developer consulting services.",
+          "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Robert Vance portrait"
+        },
+        {
+          "name": "Sarah Jenkins, AMS",
+          "role": "Director of HOA Operations",
+          "bio": "Sarah manages our portfolio managers and enforces community standards, bringing certified expertise in covenant enforcement.",
+          "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Sarah Jenkins portrait"
+        },
+        {
+          "name": "Marcus Thorne, CPA",
+          "role": "Chief Financial Officer",
+          "bio": "Marcus oversees all accounting, reporting, and reserve fund auditing, ensuring flawless financial compliance for all clients.",
+          "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Marcus Thorne portrait"
+        }
+      ]
+    },
+    "stats": [
+      { "value": "15+", "label": "Years in Service" },
+      { "value": "8,500+", "label": "Units Managed" },
+      { "value": "120+", "label": "Vetted Contractors" },
+      { "value": "98.4%", "label": "Retention Rate" }
     ]
   },
   "metadata": {

@@ -43,6 +43,13 @@ export default function Header() {
   const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const getNavLink = (item) => {
+    if (item === "Home") return "/";
+    if (item === "About Us") return "/about";
+    if (item === "Contact") return "/#contact";
+    return `/#${item.toLowerCase().replaceAll(" ", "-")}`;
+  };
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -118,7 +125,7 @@ export default function Header() {
                       onMouseLeave={() => setHoveredNav(null)}
                     >
                       <Link
-                        href={item === "Contact" ? "#contact" : `#${item.toLowerCase().replaceAll(" ", "-")}`}
+                        href={getNavLink(item)}
                         className={`relative flex items-center gap-1 px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-wider transition-colors duration-300 hover:text-[var(--brand-gold)] ${
                           hoveredNav === item ? "text-[var(--brand-gold)]" : index === 0 ? "text-[var(--brand-gold)]" : "text-white/90"
                         }`}
@@ -191,7 +198,7 @@ export default function Header() {
               </nav>
 
               <Link
-                href="#contact"
+                href="/#contact"
                 className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
               >
                 <CalendarDays size={13} className="transition-transform duration-300 group-hover:rotate-12" />
@@ -275,7 +282,7 @@ export default function Header() {
                           </button>
                         ) : (
                           <Link
-                            href={item === "Contact" ? "#contact" : `#${item.toLowerCase().replaceAll(" ", "-")}`}
+                            href={getNavLink(item)}
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-center justify-between py-3.5 text-[12.5px] font-semibold uppercase tracking-wider text-white/90 hover:text-[var(--brand-gold)] transition duration-200"
                           >
@@ -332,7 +339,7 @@ export default function Header() {
                   </Link>
                 </div>
                 <Link
-                  href="#contact"
+                  href="/#contact"
                   onClick={() => setMobileMenuOpen(false)}
                   className="group mt-4 flex h-[44px] items-center justify-center gap-2 bg-[var(--brand-gold)] px-5 text-[11px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
                 >
