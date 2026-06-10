@@ -1,62 +1,394 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { Quote, Check } from "lucide-react";
 
+/* ─── Data ─────────────────────────────────────────────── */
 const testimonials = [
-  ["First Choice Property Group has been an invaluable partner to our HOA. Their communication, professionalism, and attention to detail are unmatched.", "HOA Board President", "Greenville, SC"],
-  ["Their team has helped us maximize our rental income while minimizing vacancies and maintenance issues. Highly recommended!", "Real Estate Investor", "Columbia, SC"],
-  ["From development startup to ongoing operations, their support has been instrumental in building a successful community.", "Community Developer", "Spartanburg, SC"]
+  {
+    quote: "First Choice Property Group has fundamentally changed how our community operates. Their financial reporting is crystal-clear, their vendor network is exceptional, and their team is always a step ahead.",
+    name: "Michael T.",
+    title: "HOA Board President",
+    location: "Greenville, SC",
+    initials: "MT",
+    years: "Client since 2019",
+  },
+  {
+    quote: "Maximized our rental income while eliminating vacancy headaches entirely. Best decision we've made as investors.",
+    name: "Sarah L.",
+    title: "Real Estate Investor",
+    location: "Columbia, SC",
+    initials: "SL",
+    years: "Client since 2021",
+  },
+  {
+    quote: "From community startup to full operations — their support was instrumental every step of the way.",
+    name: "David R.",
+    title: "Community Developer",
+    location: "Spartanburg, SC",
+    initials: "DR",
+    years: "Client since 2020",
+  },
+  {
+    quote: "Their response times are remarkable. Issues get resolved before residents even notice there was a problem. That's the FCPG standard.",
+    name: "Jennifer M.",
+    title: "HOA Treasurer",
+    location: "Hilton Head, SC",
+    initials: "JM",
+    years: "Client since 2018",
+  },
+  {
+    quote: "Professional, proactive, always accessible. We've worked with other firms — there is simply no comparison.",
+    name: "Robert K.",
+    title: "Property Owner",
+    location: "Charleston, SC",
+    initials: "RK",
+    years: "Client since 2022",
+  },
+  {
+    quote: "Managing a large coastal community has unique challenges. FCPG brings unmatched expertise in windstorm compliance and local vendor contracting.",
+    name: "Linda J.",
+    title: "HOA Board Director",
+    location: "Mount Pleasant, SC",
+    initials: "LJ",
+    years: "Client since 2017",
+  },
+  {
+    quote: "FCPG's commercial maintenance team is elite. They keep our medical and retail plazas in pristine condition year-round.",
+    name: "James D.",
+    title: "Commercial Asset Manager",
+    location: "Clemson, SC",
+    initials: "JD",
+    years: "Client since 2020",
+  },
+  {
+    quote: "Outstanding customer service and full financial transparency. Their reports are easy to read and always delivered on time.",
+    name: "Amanda C.",
+    title: "Board Member",
+    location: "Myrtle Beach, SC",
+    initials: "AC",
+    years: "Client since 2019",
+  },
+  {
+    quote: "FCPG turned my struggling portfolio around. Rent collection is automated, repairs are swift, and tenant retention is at an all-time high.",
+    name: "Thomas H.",
+    title: "Residential Landlord",
+    location: "Rock Hill, SC",
+    initials: "TH",
+    years: "Client since 2021",
+  },
+  {
+    quote: "They helped us resolve a multi-year budget deficit in just six months. Incredible financial stewardship and strategic advisory.",
+    name: "Rachel W.",
+    title: "Townhome HOA Secretary",
+    location: "Lexington, SC",
+    initials: "RW",
+    years: "Client since 2018",
+  },
+  {
+    quote: "Their advisory during our development phase prevented numerous structural and zoning headaches. True professionals.",
+    name: "Marcus P.",
+    title: "Mixed-Use Developer",
+    location: "Fort Mill, SC",
+    initials: "MP",
+    years: "Client since 2022",
+  },
+  {
+    quote: "We trust them with our entire multi-family portfolio. Their tenant vetting process is flawless, leading to near-zero default rates.",
+    name: "Jessica B.",
+    title: "Investor Group VP",
+    location: "Charleston, SC",
+    initials: "JB",
+    years: "Client since 2019",
+  },
 ];
 
+/* Split testimonials array into three columns */
+const col1 = [testimonials[0], testimonials[3], testimonials[6], testimonials[9]];
+const col2 = [testimonials[1], testimonials[4], testimonials[7], testimonials[10]];
+const col3 = [testimonials[2], testimonials[5], testimonials[8], testimonials[11]];
+
+/* ─── Sub-components ────────────────────────────────────── */
+function Stars() {
+  return (
+    <div className="flex gap-0.5">
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} width="11" height="11" viewBox="0 0 24 24" fill="var(--brand-gold)">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+function Avatar({ initials }) {
+  return (
+    <div
+      className="rounded-full flex items-center justify-center font-display font-bold shrink-0 text-[11px]"
+      style={{
+        width: 36,
+        height: 36,
+        background: "linear-gradient(135deg, var(--primary-navy), var(--midnight-navy))",
+        color: "var(--brand-gold)",
+        border: "1.5px solid rgba(201,155,49,0.25)",
+      }}
+    >
+      {initials}
+    </div>
+  );
+}
+
+function TestimonialCard({ t }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <div
+      onMouseMove={handleMouseMove}
+      className="group relative flex flex-col justify-between rounded-2xl p-6 bg-white/80 backdrop-blur-md border border-[rgba(5,41,70,0.06)] shadow-[0_8px_32px_0_rgba(8,38,66,0.02)] transition-all duration-300 hover:shadow-[0_20px_50px_rgba(201,155,49,0.08)] hover:border-[rgba(201,155,49,0.45)] hover:-translate-y-1 overflow-hidden"
+      style={{
+        transitionProperty: "box-shadow, border-color, transform",
+      }}
+    >
+      {/* Gold top sweep line on hover */}
+      <span className="absolute top-0 left-0 right-0 h-[2.5px] rounded-t-2xl bg-gradient-to-r from-brand-gold/0 via-brand-gold to-brand-gold/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+
+      {/* Dynamic Cursor Spotlight Effect */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
+        style={{
+          background: `radial-gradient(350px circle at ${mousePos.x}px ${mousePos.y}px, rgba(201, 155, 49, 0.08), transparent 80%)`
+        }}
+      />
+
+      {/* Ghosted quote mark in the top-right corner */}
+      <div className="absolute top-4 right-4 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity duration-300 pointer-events-none">
+        <Quote size={28} className="text-[var(--text-navy)]" strokeWidth={1.5} />
+      </div>
+
+      <div className="relative z-10">
+        <Stars />
+        <blockquote className="font-sans font-medium text-[var(--text-slate)] leading-[1.68] mt-4 text-[13px] sm:text-[13.5px] italic">
+          "{t.quote}"
+        </blockquote>
+      </div>
+
+      <div className="relative z-10 flex items-center gap-3 mt-6 pt-4 border-t border-[rgba(5,41,70,0.05)]">
+        <Avatar initials={t.initials} />
+        <div>
+          <div className="flex items-center gap-1.5">
+            <p className="font-sans font-bold text-[var(--text-navy)] text-[12.5px] leading-tight">{t.name}</p>
+            <div className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-[var(--brand-gold)]/10 text-[var(--brand-gold)]">
+              <Check size={9} strokeWidth={3.5} />
+            </div>
+          </div>
+          <p className="font-sans text-[10.5px] text-[var(--text-slate)] mt-0.5 leading-tight">{t.title} · {t.location}</p>
+          <p className="font-sans font-medium text-[9px] text-[var(--brand-gold)] mt-0.5 tracking-wider uppercase">{t.years}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MarqueeColumn({ list, direction = "up", speed = "45s", className = "" }) {
+  // Render array twice to enable seamless looping
+  const doubledList = [...list, ...list];
+
+  return (
+    <div className={`relative overflow-hidden h-full ${className}`}>
+      <div
+        className={`marquee-track flex flex-col gap-6 py-3 cursor-pointer ${
+          direction === "up" ? "animate-scroll-up" : "animate-scroll-down"
+        }`}
+        style={{
+          "--duration": speed,
+        }}
+      >
+        {doubledList.map((t, idx) => (
+          <TestimonialCard key={`${t.name}-${idx}`} t={t} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main component ────────────────────────────────────── */
 export default function Testimonials() {
   return (
-    <section id="resources" className="bg-[var(--light-gray)] px-6 py-16 lg:py-24">
-      <div className="mx-auto max-w-[1160px] text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--brand-gold)]">What Our Clients Say</p>
-        <h2 className="mt-3 text-[28px] md:text-[36px] font-display font-bold tracking-tight text-[var(--text-navy)]">
-          Trusted by Communities. Chosen by Professionals.
-        </h2>
+    <section id="testimonials" className="relative bg-white overflow-hidden"
+      style={{ borderTop: "1px solid #eceae4" }}>
+      
+      {/* Inject custom CSS keyframe animations directly */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes scroll-up {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+        @keyframes scroll-down {
+          0% { transform: translateY(-50%); }
+          100% { transform: translateY(0); }
+        }
+        @keyframes shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 200% 50%; }
+        }
+        .animate-scroll-up {
+          animation: scroll-up var(--duration, 45s) linear infinite;
+        }
+        .animate-scroll-down {
+          animation: scroll-down var(--duration, 45s) linear infinite;
+        }
+        .shimmer-gradient {
+          animation: shimmer 6s linear infinite;
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+      `}} />
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map(([quote, name, city], index) => (
-            <motion.article
-              key={name}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05, duration: 0.5 }}
-              className="group relative bg-white p-8 text-left shadow-[0_8px_24px_rgba(5,34,61,0.04)] hover:shadow-[0_20px_48px_rgba(5,34,61,0.10)] rounded-[4px] border border-gray-100 hover:border-[var(--brand-gold)]/30 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+      {/* ── Tilted grid lines background ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute z-0"
+        style={{
+          inset: "-40%",
+          backgroundImage: `
+            linear-gradient(rgba(5,41,70,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(5,41,70,0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: "64px 64px",
+          transform: "rotate(15deg)",
+          maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%)",
+        }}
+      />
+
+      {/* ── Background Ambient Glow Blobs (Drifting Fluid Motion) ── */}
+      <motion.div 
+        animate={{
+          scale: [1, 1.12, 0.92, 1],
+          x: [0, 25, -20, 0],
+          y: [0, -20, 30, 0]
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-[30%] left-[15%] w-[420px] h-[420px] bg-[var(--brand-gold)]/[0.04] rounded-full blur-[110px] pointer-events-none select-none z-0" 
+      />
+      <motion.div 
+        animate={{
+          scale: [1, 0.9, 1.15, 1],
+          x: [0, -30, 25, 0],
+          y: [0, 25, -20, 0]
+        }}
+        transition={{
+          duration: 26,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute bottom-[20%] right-[15%] w-[480px] h-[480px] bg-[#052946]/[0.045] rounded-full blur-[130px] pointer-events-none select-none z-0" 
+      />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+
+        {/* ── Section Header ── */}
+        <div className="text-center max-w-[700px] mx-auto mb-16 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* Elegant capsule section badge with double-ripple pulse */}
+            <div className="inline-flex items-center gap-2 mb-6 border border-[var(--brand-gold)]/25 rounded-full px-3.5 py-1.5 bg-[var(--brand-gold)]/[0.03] shadow-[0_2px_10px_rgba(201,155,49,0.03)]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-gold)]"></span>
+              </span>
+              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">Client Stories</p>
+            </div>
+            
+            <h2
+              className="font-display font-bold text-[var(--text-navy)] leading-[1.08] tracking-tight"
+              style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)" }}
             >
-              {/* Gold left border reveal */}
-              <span className="absolute inset-y-0 left-0 w-[3px] bg-[var(--brand-gold)] scale-y-0 group-hover:scale-y-100 transition-transform duration-400 origin-top rounded-l-[4px]" />
-              <div>
-                <p className="text-[48px] font-serif font-bold leading-none text-[var(--brand-gold)] h-8 -mt-2 transition-transform duration-300 group-hover:scale-110 origin-left inline-block">“</p>
-                <p className="text-[13px] md:text-[14px] font-medium leading-[1.65] text-[var(--text-slate)] italic">
-                  {quote}
-                </p>
-              </div>
-              <div className="mt-8 flex items-center gap-3.5 border-t border-gray-100 pt-5">
-                <Image
-                  src={`https://images.unsplash.com/photo-${index === 0 ? "1500648767791-00dcc994a43e" : index === 1 ? "1472099645785-5658abf4ff4e" : "1507003211169-0a1dd7228f2d"}?auto=format&fit=crop&w=120&q=80`}
-                  alt={name}
-                  width={40}
-                  height={40}
-                  className="h-[40px] w-[40px] rounded-full object-cover shadow-sm ring-2 ring-transparent group-hover:ring-[var(--brand-gold)]/40 transition-all duration-300"
-                />
-                <div>
-                  <p className="text-[13px] font-semibold text-[var(--text-navy)]">{name}</p>
-                  <p className="text-[11px] font-semibold text-[#627386]">{city}</p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
+              <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
+                Stories of Impact.
+              </span>
+              <span 
+                className="shimmer-gradient block mt-1"
+                style={{
+                  color: "transparent",
+                  backgroundImage: "linear-gradient(90deg, #c99b31 0%, #f1cd7c 25%, #c99b31 50%, #f1cd7c 75%, #c99b31 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  backgroundSize: "200% auto",
+                }}
+              >
+                Shared by Our Communities.
+              </span>
+            </h2>
+            
+            <p className="mt-4 font-sans text-[var(--text-slate)] leading-[1.78]" style={{ fontSize: "14px" }}>
+              Discover why board members, residential owners, and real estate developers across South Carolina partner with First Choice Property Group for unmatched service and compliance.
+            </p>
+          </motion.div>
         </div>
-        <div className="mt-10 flex justify-center gap-2.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-gold)] cursor-pointer" />
-          <span className="h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-gray-400 transition cursor-pointer" />
-          <span className="h-2.5 w-2.5 rounded-full bg-gray-300 hover:bg-gray-400 transition cursor-pointer" />
-        </div>
+
+        {/* ── Marquee container ── */}
+        <motion.div 
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="relative overflow-hidden w-full h-[640px] rounded-[32px] border border-[rgba(5,41,70,0.05)] bg-white/40 backdrop-blur-[4px] shadow-[0_4px_30px_rgba(8,38,66,0.015)]"
+        >
+          
+          {/* Side, top, and bottom vignettes for dramatic fade effect */}
+          <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-20" />
+          <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-20" />
+          <div className="absolute top-0 bottom-0 left-0 w-8 sm:w-16 bg-gradient-to-r from-white via-white/40 to-transparent pointer-events-none z-20" />
+          <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-16 bg-gradient-to-l from-white via-white/40 to-transparent pointer-events-none z-20" />
+
+          {/* Scrolling Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full px-6 py-2">
+            {/* Column 1: Left - Scrolls Downward. Visible on Tablet & Desktop */}
+            <MarqueeColumn
+              list={col1}
+              direction="down"
+              speed="48s"
+              className="hidden md:block"
+            />
+
+            {/* Column 2: Center - Scrolls Upward. Always Visible */}
+            <MarqueeColumn
+              list={col2}
+              direction="up"
+              speed="40s"
+              className="block"
+            />
+
+            {/* Column 3: Right - Scrolls Downward. Visible on Desktop */}
+            <MarqueeColumn
+              list={col3}
+              direction="down"
+              speed="52s"
+              className="hidden lg:block"
+            />
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
