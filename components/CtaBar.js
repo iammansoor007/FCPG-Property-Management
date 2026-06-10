@@ -198,8 +198,8 @@ export default function CtaBar() {
                   <Layers size={16} className="transition-transform duration-300 group-hover/item:-translate-y-0.5" />
                 </div>
                 <div>
-                  <h4 className="text-[12px] font-bold text-white tracking-wide uppercase transition-colors duration-300 group-hover/item:text-[var(--brand-gold)]">Owner Portal</h4>
-                  <p className="text-[11px] text-white/50 font-medium mt-0.5 leading-normal transition-colors duration-300 group-hover/item:text-white/60">Real-time reports & data.</p>
+                  <h4 className="text-[12px] font-bold text-white tracking-wide uppercase transition-colors duration-300 group-hover/item:text-[var(--brand-gold)]">Resource Hub</h4>
+                  <p className="text-[11px] text-white/50 font-medium mt-0.5 leading-normal transition-colors duration-300 group-hover/item:text-white/60">Owner checklists & templates.</p>
                 </div>
               </div>
             </motion.div>

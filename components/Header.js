@@ -53,21 +53,21 @@ const resourcesDropdownItems = [
     icon: null
   },
   {
-    title: "Owner Portal",
-    href: "#contact",
-    description: "Access statements, reporting, and request assistance.",
+    title: "Owner Resources",
+    href: "#resources",
+    description: "Onboarding documents, landlord tips, and local guidelines.",
     icon: null
   },
   {
-    title: "HOA Portal",
-    href: "#contact",
-    description: "Board member tools, financials, and meeting minutes.",
+    title: "HOA Board Center",
+    href: "#resources",
+    description: "Board member training materials and compliance templates.",
     icon: null
   },
   {
-    title: "Tenant Portal",
-    href: "#contact",
-    description: "Submit maintenance requests and make online payments.",
+    title: "Resident Guides",
+    href: "#resources",
+    description: "Move-in checklists, utility setup forms, and handbooks.",
     icon: null
   }
 ];
