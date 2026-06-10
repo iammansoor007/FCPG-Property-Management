@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Mail, Phone, Clock, Send, CheckCircle2 } from "lucide-react";
+import data from "../data/data.json";
+
+const { contactForm: cf } = data;
+
+const CardIconMap = { address: MapPin, phone: Phone, email: Mail, hours: Clock };
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -11,7 +16,7 @@ export default function ContactForm() {
     email: "",
     phone: "",
     propertyName: "",
-    serviceType: "HOA Property Management",
+    serviceType: cf.serviceOptions[0],
     message: ""
   });
   const [status, setStatus] = useState("idle"); // idle | loading | success
@@ -33,7 +38,7 @@ export default function ContactForm() {
         email: "",
         phone: "",
         propertyName: "",
-        serviceType: "HOA Property Management",
+        serviceType: cf.serviceOptions[0],
         message: ""
       });
     }, 1200);
@@ -55,31 +60,8 @@ export default function ContactForm() {
     <section id="contact" className="relative bg-white overflow-hidden py-20 lg:py-28"
       style={{ borderTop: "1px solid #eceae4" }}>
       
-      {/* Inject custom CSS keyframe animations for network lines */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .premium-shimmer {
-          position: relative;
-          overflow: hidden;
-        }
-        .premium-shimmer::after {
-          content: '';
-          position: absolute;
-          top: -50%; left: -60%; width: 220%; height: 220%;
-          background: linear-gradient(
-            45deg,
-            transparent 45%,
-            rgba(201, 155, 49, 0.06) 50%,
-            transparent 55%
-          );
-          transform: rotate(45deg);
-          transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-          pointer-events: none;
-        }
-        .premium-shimmer:hover::after {
-          left: 120%;
-          top: 120%;
-        }
-      `}} />
+      {/* Contact card shimmer class (premium-shimmer) is defined in app/globals.css */}
+
 
       {/* ── Background Grid ── */}
       <div
@@ -111,7 +93,7 @@ export default function ContactForm() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-gold)]"></span>
               </span>
-              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">Partner With Us</p>
+              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{cf.badge}</p>
             </div>
 
             {/* Title */}
@@ -120,7 +102,7 @@ export default function ContactForm() {
               style={{ fontSize: "clamp(2rem, 4.5vw, 2.8rem)" }}
             >
               <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
-                Start a Conversation.
+                {cf.heading1}
               </span>
               <span 
                 className="shimmer-gradient block mt-1"
@@ -132,72 +114,45 @@ export default function ContactForm() {
                   backgroundSize: "200% auto",
                 }}
               >
-                Request a Proposal.
+                {cf.heading2}
               </span>
             </h2>
 
             <p className="text-[14px] font-sans leading-[1.7] text-[var(--text-slate)] mb-6 max-w-[480px]">
-              Ready to elevate your property standards? Submit your association or property details below, and our leadership team will respond with a tailored proposal package.
+              {cf.description}
             </p>
 
             {/* Premium Gold Accent Line Divider */}
             <div className="h-[1.5px] w-20 bg-gradient-to-r from-[var(--brand-gold)] to-transparent mb-8" />
 
-            {/* 2x2 Grid of Location & Contact Cards */}
+            {/* 2x2 Grid of Contact Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-              
-              {/* Card 1: HQ */}
-              <div className="premium-shimmer p-4 rounded-2xl border border-[rgba(5,41,70,0.05)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm hover:border-[rgba(201,155,49,0.25)] hover:shadow-md transition-all duration-300">
-                <div className="flex items-center gap-2 mb-2 text-[var(--brand-gold)]">
-                  <MapPin size={13} />
-                  <span className="text-[9.5px] font-black uppercase tracking-wider text-[var(--text-navy)]/40 font-sans">Corporate HQ</span>
-                </div>
-                <p className="text-[13.5px] font-bold text-[var(--text-navy)]">Greenville, SC</p>
-                <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight">124 Verdae Blvd, 29607</p>
-              </div>
-
-              {/* Card 2: Phone */}
-              <a 
-                href="tel:8643260000" 
-                className="premium-shimmer group p-4 rounded-2xl border border-[rgba(5,41,70,0.05)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm hover:border-[rgba(201,155,49,0.3)] hover:shadow-md hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer"
-              >
-                <div className="flex items-center gap-2 mb-2 text-[var(--brand-gold)]">
-                  <Phone size={13} />
-                  <span className="text-[9.5px] font-black uppercase tracking-wider text-[var(--text-navy)]/40 font-sans">Direct Line</span>
-                </div>
-                <p className="text-[13.5px] font-bold text-[var(--text-navy)] group-hover:text-[var(--brand-gold)] transition-colors duration-200">(864) 326-0000</p>
-                <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight flex items-center gap-1.5 font-medium">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#10b981] animate-pulse shrink-0" />
-                  SLA: &lt; 1m Wait Time
-                </p>
-              </a>
-
-              {/* Card 3: Email */}
-              <a 
-                href="mailto:info@firstchoicepg.com" 
-                className="premium-shimmer group p-4 rounded-2xl border border-[rgba(5,41,70,0.05)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm hover:border-[rgba(201,155,49,0.3)] hover:shadow-md hover:bg-white transition-all duration-300 flex flex-col justify-start cursor-pointer"
-              >
-                <div className="flex items-center gap-2 mb-2 text-[var(--brand-gold)]">
-                  <Mail size={13} />
-                  <span className="text-[9.5px] font-black uppercase tracking-wider text-[var(--text-navy)]/40 font-sans">Corporate Inbox</span>
-                </div>
-                <p className="text-[13px] font-bold text-[var(--text-navy)] group-hover:text-[var(--brand-gold)] transition-colors duration-200 truncate">info@firstchoicepg.com</p>
-                <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight flex items-center gap-1.5 font-medium">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#10b981] animate-pulse shrink-0" />
-                  SLA: &lt; 2h Response
-                </p>
-              </a>
-
-              {/* Card 4: Hours */}
-              <div className="premium-shimmer p-4 rounded-2xl border border-[rgba(5,41,70,0.05)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm hover:border-[rgba(201,155,49,0.25)] hover:shadow-md transition-all duration-300">
-                <div className="flex items-center gap-2 mb-2 text-[var(--brand-gold)]">
-                  <Clock size={13} />
-                  <span className="text-[9.5px] font-black uppercase tracking-wider text-[var(--text-navy)]/40 font-sans">Business Hours</span>
-                </div>
-                <p className="text-[13.5px] font-bold text-[var(--text-navy)]">8:00 AM - 5:00 PM</p>
-                <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight">Monday through Friday</p>
-              </div>
-
+              {cf.cards.map((card) => {
+                const Icon = CardIconMap[card.type];
+                const isClickable = card.href;
+                const Tag = isClickable ? "a" : "div";
+                return (
+                  <Tag
+                    key={card.label}
+                    {...(isClickable ? { href: card.href } : {})}
+                    className={`premium-shimmer p-4 rounded-2xl border border-[rgba(5,41,70,0.05)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm hover:border-[rgba(201,155,49,0.3)] hover:shadow-md transition-all duration-300${isClickable ? " group cursor-pointer hover:bg-white flex flex-col justify-start" : ""}`}
+                  >
+                    <div className="flex items-center gap-2 mb-2 text-[var(--brand-gold)]">
+                      <Icon size={13} />
+                      <span className="text-[9.5px] font-black uppercase tracking-wider text-[var(--text-navy)]/40 font-sans">{card.label}</span>
+                    </div>
+                    <p className={`text-[13.5px] font-bold text-[var(--text-navy)]${isClickable ? " group-hover:text-[var(--brand-gold)] transition-colors duration-200" : ""}`}>{card.line1}</p>
+                    <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight">
+                      {card.type === "phone" || card.type === "email" ? (
+                        <span className="flex items-center gap-1.5 font-medium">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#10b981] animate-pulse shrink-0" />
+                          {card.line2}
+                        </span>
+                      ) : card.line2}
+                    </p>
+                  </Tag>
+                );
+              })}
             </div>
 
           </div>
@@ -221,16 +176,16 @@ export default function ContactForm() {
                       <CheckCircle2 size={32} />
                     </span>
                     <h3 className="font-display font-bold text-[22px] text-[var(--text-navy)] leading-tight">
-                      Proposal Request Received
+                      {cf.successTitle}
                     </h3>
                     <p className="text-[14px] text-[var(--text-slate)] leading-relaxed mt-3 max-w-[360px]">
-                      Thank you for contacting us. A senior partner will review your inquiry and follow up within 2 hours.
+                      {cf.successDesc}
                     </p>
                     <button
                       onClick={() => setStatus("idle")}
                       className="mt-8 px-6 py-2.5 bg-[var(--primary-navy)] text-white hover:bg-[var(--primary-navy)]/90 font-bold text-[11px] uppercase tracking-wider rounded-[4px] transition-all duration-200 active:scale-[0.97]"
                     >
-                      Send Another Inquiry
+                      {cf.resetLabel}
                     </button>
                   </motion.div>
                 ) : (
@@ -245,7 +200,7 @@ export default function ContactForm() {
                     {/* Dynamic Proposal Progress Tracker */}
                     <div className="relative w-full mb-2 border-b border-black/5 pb-4">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[var(--text-navy)]/40">PROPOSAL FORM COMPLETION</span>
+                        <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[var(--text-navy)]/40">{cf.progressLabel}</span>
                         <span className="text-[10px] font-mono font-bold text-[var(--brand-gold)]">{progressPercent}%</span>
                       </div>
                       <div className="w-full h-1 bg-black/5 rounded-full overflow-hidden">
@@ -260,26 +215,26 @@ export default function ContactForm() {
                     {/* Name grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">First Name</label>
+                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.firstName}</label>
                         <input
                           required
                           type="text"
                           name="firstName"
                           value={form.firstName}
                           onChange={handleChange}
-                          placeholder="John"
+                          placeholder={cf.placeholders.firstName}
                           className="h-11 px-4 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13.5px] font-medium outline-none rounded-[6px] focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                         />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">Last Name</label>
+                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.lastName}</label>
                         <input
                           required
                           type="text"
                           name="lastName"
                           value={form.lastName}
                           onChange={handleChange}
-                          placeholder="Doe"
+                          placeholder={cf.placeholders.lastName}
                           className="h-11 px-4 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13.5px] font-medium outline-none rounded-[6px] focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                         />
                       </div>
@@ -288,26 +243,26 @@ export default function ContactForm() {
                     {/* Email/Phone grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">Email Address</label>
+                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.email}</label>
                         <input
                           required
                           type="email"
                           name="email"
                           value={form.email}
                           onChange={handleChange}
-                          placeholder="john@example.com"
+                          placeholder={cf.placeholders.email}
                           className="h-11 px-4 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13.5px] font-medium outline-none rounded-[6px] focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                         />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">Phone Number</label>
+                        <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.phone}</label>
                         <input
                           required
                           type="tel"
                           name="phone"
                           value={form.phone}
                           onChange={handleChange}
-                          placeholder="(864) 555-0199"
+                          placeholder={cf.placeholders.phone}
                           className="h-11 px-4 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13.5px] font-medium outline-none rounded-[6px] focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                         />
                       </div>
@@ -315,44 +270,42 @@ export default function ContactForm() {
 
                     {/* Property / Association Name */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">Property / Association Name</label>
+                      <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.propertyName}</label>
                       <input
                         required
                         type="text"
                         name="propertyName"
                         value={form.propertyName}
                         onChange={handleChange}
-                        placeholder="e.g. Verdae Park HOA"
+                        placeholder={cf.placeholders.propertyName}
                         className="h-11 px-4 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13.5px] font-medium outline-none rounded-[6px] focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                       />
                     </div>
 
                     {/* Dropdown service needed */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">Service Needed</label>
+                      <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.serviceNeeded}</label>
                       <select
                         name="serviceType"
                         value={form.serviceType}
                         onChange={handleChange}
                         className="h-11 px-3 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13px] font-semibold text-[var(--text-navy)] outline-none rounded-[6px] focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                       >
-                        <option value="HOA Property Management">HOA Property Management</option>
-                        <option value="Residential Rentals">Residential Rentals</option>
-                        <option value="Commercial Management">Commercial Management</option>
-                        <option value="Financial Services Only">Financial Services Only</option>
-                        <option value="General Consultation">General Consultation</option>
+                        {cf.serviceOptions.map((opt) => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
                       </select>
                     </div>
 
                     {/* Message Area */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">Message / Details</label>
+                      <label className="text-[9.5px] font-black uppercase tracking-[0.12em] text-[var(--text-navy)]/60 font-sans">{cf.labels.message}</label>
                       <textarea
                         name="message"
                         value={form.message}
                         onChange={handleChange}
                         rows={4}
-                        placeholder="Tell us about your property management needs..."
+                        placeholder={cf.placeholders.message}
                         className="p-4 border border-black/10 focus:border-[var(--brand-gold)]/60 bg-[#f8f9fb] focus:bg-white transition duration-200 text-[13.5px] font-medium outline-none rounded-[6px] resize-none focus:ring-2 focus:ring-[var(--brand-gold)]/30 focus:shadow-[0_4px_12px_rgba(201,155,49,0.08)]"
                       />
                     </div>
@@ -366,11 +319,11 @@ export default function ContactForm() {
                       {status === "loading" ? (
                         <>
                           <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Processing Proposal Request...
+                          {cf.loadingLabel}
                         </>
                       ) : (
                         <>
-                          Submit Proposal Request
+                          {cf.submitLabel}
                           <Send size={12} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </>
                       )}

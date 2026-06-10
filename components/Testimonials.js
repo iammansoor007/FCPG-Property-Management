@@ -4,107 +4,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Quote, Check } from "lucide-react";
 
-/* ─── Data ─────────────────────────────────────────────── */
-const testimonials = [
-  {
-    quote: "First Choice Property Group has fundamentally changed how our community operates. Their financial reporting is crystal-clear, their vendor network is exceptional, and their team is always a step ahead.",
-    name: "Michael T.",
-    title: "HOA Board President",
-    location: "Greenville, SC",
-    initials: "MT",
-    years: "Client since 2019",
-  },
-  {
-    quote: "Maximized our rental income while eliminating vacancy headaches entirely. Best decision we've made as investors.",
-    name: "Sarah L.",
-    title: "Real Estate Investor",
-    location: "Columbia, SC",
-    initials: "SL",
-    years: "Client since 2021",
-  },
-  {
-    quote: "From community startup to full operations — their support was instrumental every step of the way.",
-    name: "David R.",
-    title: "Community Developer",
-    location: "Spartanburg, SC",
-    initials: "DR",
-    years: "Client since 2020",
-  },
-  {
-    quote: "Their response times are remarkable. Issues get resolved before residents even notice there was a problem. That's the FCPG standard.",
-    name: "Jennifer M.",
-    title: "HOA Treasurer",
-    location: "Hilton Head, SC",
-    initials: "JM",
-    years: "Client since 2018",
-  },
-  {
-    quote: "Professional, proactive, always accessible. We've worked with other firms — there is simply no comparison.",
-    name: "Robert K.",
-    title: "Property Owner",
-    location: "Charleston, SC",
-    initials: "RK",
-    years: "Client since 2022",
-  },
-  {
-    quote: "Managing a large coastal community has unique challenges. FCPG brings unmatched expertise in windstorm compliance and local vendor contracting.",
-    name: "Linda J.",
-    title: "HOA Board Director",
-    location: "Mount Pleasant, SC",
-    initials: "LJ",
-    years: "Client since 2017",
-  },
-  {
-    quote: "FCPG's commercial maintenance team is elite. They keep our medical and retail plazas in pristine condition year-round.",
-    name: "James D.",
-    title: "Commercial Asset Manager",
-    location: "Clemson, SC",
-    initials: "JD",
-    years: "Client since 2020",
-  },
-  {
-    quote: "Outstanding customer service and full financial transparency. Their reports are easy to read and always delivered on time.",
-    name: "Amanda C.",
-    title: "Board Member",
-    location: "Myrtle Beach, SC",
-    initials: "AC",
-    years: "Client since 2019",
-  },
-  {
-    quote: "FCPG turned my struggling portfolio around. Rent collection is automated, repairs are swift, and tenant retention is at an all-time high.",
-    name: "Thomas H.",
-    title: "Residential Landlord",
-    location: "Rock Hill, SC",
-    initials: "TH",
-    years: "Client since 2021",
-  },
-  {
-    quote: "They helped us resolve a multi-year budget deficit in just six months. Incredible financial stewardship and strategic advisory.",
-    name: "Rachel W.",
-    title: "Townhome HOA Secretary",
-    location: "Lexington, SC",
-    initials: "RW",
-    years: "Client since 2018",
-  },
-  {
-    quote: "Their advisory during our development phase prevented numerous structural and zoning headaches. True professionals.",
-    name: "Marcus P.",
-    title: "Mixed-Use Developer",
-    location: "Fort Mill, SC",
-    initials: "MP",
-    years: "Client since 2022",
-  },
-  {
-    quote: "We trust them with our entire multi-family portfolio. Their tenant vetting process is flawless, leading to near-zero default rates.",
-    name: "Jessica B.",
-    title: "Investor Group VP",
-    location: "Charleston, SC",
-    initials: "JB",
-    years: "Client since 2019",
-  },
-];
+import data from "../data/data.json";
 
-/* Split testimonials array into three columns */
+const sh = data.sectionHeaders.testimonials;
+const testimonials = data.testimonials.testimonials;
 const col1 = [testimonials[0], testimonials[3], testimonials[6], testimonials[9]];
 const col2 = [testimonials[1], testimonials[4], testimonials[7], testimonials[10]];
 const col3 = [testimonials[2], testimonials[5], testimonials[8], testimonials[11]];
@@ -226,34 +129,7 @@ export default function Testimonials() {
     <section id="testimonials" className="relative bg-white overflow-hidden"
       style={{ borderTop: "1px solid #eceae4" }}>
       
-      {/* Inject custom CSS keyframe animations directly */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes scroll-up {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
-        }
-        @keyframes scroll-down {
-          0% { transform: translateY(-50%); }
-          100% { transform: translateY(0); }
-        }
-        @keyframes shimmer {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 200% 50%; }
-        }
-        .animate-scroll-up {
-          animation: scroll-up var(--duration, 45s) linear infinite;
-        }
-        .animate-scroll-down {
-          animation: scroll-down var(--duration, 45s) linear infinite;
-        }
-        .shimmer-gradient {
-          animation: shimmer 6s linear infinite;
-        }
-        .marquee-track:hover {
-          animation-play-state: paused;
-        }
-      `}} />
+      {/* Animation keyframes are defined globally in app/globals.css for performance */}
 
       {/* ── Tilted grid lines background ── */}
       <div
@@ -316,7 +192,7 @@ export default function Testimonials() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-gold)]"></span>
               </span>
-              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">Client Stories</p>
+              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{sh.badge}</p>
             </div>
             
             <h2
@@ -324,7 +200,7 @@ export default function Testimonials() {
               style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)" }}
             >
               <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
-                Stories of Impact.
+                {sh.heading1}
               </span>
               <span 
                 className="shimmer-gradient block mt-1"
@@ -336,12 +212,12 @@ export default function Testimonials() {
                   backgroundSize: "200% auto",
                 }}
               >
-                Shared by Our Communities.
+                {sh.heading2}
               </span>
             </h2>
             
             <p className="mt-4 font-sans text-[var(--text-slate)] leading-[1.78]" style={{ fontSize: "14px" }}>
-              Discover why board members, residential owners, and real estate developers across South Carolina partner with First Choice Property Group for unmatched service and compliance.
+              {sh.description}
             </p>
           </motion.div>
         </div>

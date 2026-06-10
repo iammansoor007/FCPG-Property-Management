@@ -9,78 +9,24 @@ import {
   ArrowRight, ShieldAlert, Sparkles, Clock, Award, Shield
 } from "lucide-react";
 
-const sections = [
-  {
-    icon: Wrench,
-    tag: "Division 01",
-    title: "Mechanical & Infrastructure",
-    subtitle: "24/7 Emergency Dispatch",
-    desc: "Critical repairs and preventative maintenance for complex building systems. We keep mechanical lines, electrical wiring, and climate networks functioning seamlessly to prevent asset deterioration.",
-    statusLabel: "Emergency Dispatch SLA",
-    statusVal: "< 15 Min Response",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=85",
-    badge: "Active Registry: 24 Crews",
-    services: [
-      "24/7 HVAC & Climate Systems Diagnostics",
-      "Class A Master Electrical Troubleshooting",
-      "Main Line Plumbing & Emergency Leak Repair",
-      "Backflow Testing & Mechanical Audits"
-    ]
-  },
-  {
-    icon: Trees,
-    tag: "Division 02",
-    title: "Exterior Care & Landscaping",
-    subtitle: "Weekly Maintenance & Curb Appeal",
-    desc: "Precision lawn care, smart irrigation systems, and outer building envelope maintenance to secure absolute curb appeal and protect property valuation.",
-    statusLabel: "Site Audit Frequency",
-    statusVal: "Weekly Inspection Walks",
-    image: "https://images.unsplash.com/photo-1557429287-b2e26467fc2b?auto=format&fit=crop&w=900&q=85",
-    badge: "Statewide Coverage: 30 Crews",
-    services: [
-      "Turf Management, Mowing & Seasonal Color",
-      "Smart Irrigation Audits & System Repairs",
-      "Roofing, Siding & Gutter Assessments",
-      "Priority Post-Storm Debris Cleanup"
-    ]
-  },
-  {
-    icon: Paintbrush,
-    tag: "Division 03",
-    title: "Cosmetics & Unit Turnover",
-    subtitle: "48-Hour Vacancy Restoration",
-    desc: "Lightning-fast drywall repairs, carpentry finishing, and paint turnover services designed to minimize vacancy times and prepare properties for occupancy.",
-    statusLabel: "Average Turnover Time",
-    statusVal: "48-Hour Guarantee",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=85",
-    badge: "Turnover Specialist Crews",
-    services: [
-      "Precision Drywall Patching & Texture Matching",
-      "High-End Interior & Exterior Painting",
-      "Trim Work, Finish Carpentry & Renovations",
-      "Master Locksmith & Rekey Security Services"
-    ]
-  },
-  {
-    icon: ShieldCheck,
-    tag: "Division 04",
-    title: "Vetting & Compliance Standards",
-    subtitle: "100% Insured & Licensed Network",
-    desc: "We enforce strict onboarding credentials to shield property owners from liability risks. Every vendor undergoes background checks and insurance audits annually.",
-    statusLabel: "Minimum Insurance Limit",
-    statusVal: "$1M General Liability",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85",
-    badge: "100% Insured Compliance",
-    services: [
-      "Strict Criminal Background Screening",
-      "Active South Carolina License Verification",
-      "Workers' Compensation Coverage Mandates",
-      "W-9 Compliance & Tax Audits"
-    ]
-  }
-];
+import data from "../data/data.json";
+
+const sh = data.sectionHeaders.vendorNetwork;
+
+const IconMap = {
+  Wrench,
+  Trees,
+  Paintbrush,
+  ShieldCheck
+};
+
+const sections = data.vendorNetwork.sections.map(section => ({
+  ...section,
+  icon: IconMap[section.icon]
+}));
 
 export default function VendorNetwork() {
+  const { coordinateLabels, scopeTitle, verifiedBadge, footerQ, footerSub, footerPrimaryCta, footerSecondaryCta } = data.vendorNetwork;
   const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
@@ -139,10 +85,10 @@ export default function VendorNetwork() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#020c18_95%)]" />
 
         {/* Golden glowing coordinate crosses at grid intersections */}
-        <div className="absolute top-[18%] left-[12%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 01_INFRA</div>
-        <div className="absolute top-[42%] right-[18%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 02_ESTHETICS</div>
-        <div className="absolute bottom-[35%] left-[28%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 03_RESTORATION</div>
-        <div className="absolute bottom-[12%] right-[8%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">+ 04_COMPLIANCE</div>
+        <div className="absolute top-[18%] left-[12%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[0]}</div>
+        <div className="absolute top-[42%] right-[18%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[1]}</div>
+        <div className="absolute bottom-[35%] left-[28%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[2]}</div>
+        <div className="absolute bottom-[12%] right-[8%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[3]}</div>
       </div>
 
       {/* Radial soft gold and sapphire ambient glows */}
@@ -162,18 +108,18 @@ export default function VendorNetwork() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-5 h-[1.5px] bg-brand-gold" />
                 <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
-                  Contractor Network
+                  {sh.badge}
                 </p>
               </div>
               <h2 className="text-[28px] xs:text-3xl sm:text-4xl md:text-5xl font-bold font-display text-white leading-[1.1] tracking-tight">
-                Vetted Contractors.{" "}
+                {sh.heading1}{" "}
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
-                  Flawless Performance.
+                  {sh.heading2}
                 </span>
               </h2>
               <p className="text-[13px] sm:text-[14px] md:text-[14.5px] text-white/65 leading-relaxed mt-4 sm:mt-6 font-sans">
-                We eliminate maintenance friction. First Choice Property Group maintains strategic partnerships with South Carolina's premier licensed technicians to guarantee prompt response, professional communication, and quality results.
+                {sh.description}
               </p>
             </div>
 
@@ -266,7 +212,7 @@ export default function VendorNetwork() {
                           : "bg-white/[0.01] border-white/[0.04]"
                       }`}>
                         <p className="text-[9px] sm:text-[10px] font-black uppercase text-white/50 tracking-widest mb-1">
-                          Scope of services includes
+                          {scopeTitle}
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                           {sec.services.map((serv, sIdx) => (
@@ -331,7 +277,7 @@ export default function VendorNetwork() {
                       <div className="absolute top-5 left-5">
                         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-midnight-navy/95 border border-white/[0.1] text-brand-gold text-[9px] font-black tracking-wider uppercase backdrop-blur-sm shadow-md">
                           <ShieldCheck size={10} className="text-brand-gold" />
-                          Verified Contractor Network
+                          {verifiedBadge}
                         </span>
                       </div>
 
@@ -366,8 +312,8 @@ export default function VendorNetwork() {
               <ShieldAlert size={16} />
             </div>
             <div>
-              <p className="text-[13px] sm:text-[13.5px] font-bold text-white">Are you a licensed and insured South Carolina contractor?</p>
-              <p className="text-[11px] sm:text-[11.5px] text-white/55 font-sans">We are always expanding our network of qualified service professionals.</p>
+              <p className="text-[13px] sm:text-[13.5px] font-bold text-white">{footerQ}</p>
+              <p className="text-[11px] sm:text-[11.5px] text-white/55 font-sans">{footerSub}</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
@@ -378,14 +324,14 @@ export default function VendorNetwork() {
               onMouseEnter={e => e.currentTarget.style.backgroundColor = "var(--tagline-gold)"}
               onMouseLeave={e => e.currentTarget.style.backgroundColor = "var(--brand-gold)"}
             >
-              Submit Maintenance Request
+              {footerPrimaryCta}
               <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <Link
               href="#contact"
               className="inline-flex items-center justify-center gap-1 text-[11px] font-bold uppercase tracking-wider text-white/60 hover:text-brand-gold transition-colors duration-300 w-full sm:w-auto py-2 text-center"
             >
-              Become an Approved Vendor Partner →
+              {footerSecondaryCta}
             </Link>
           </div>
         </div>

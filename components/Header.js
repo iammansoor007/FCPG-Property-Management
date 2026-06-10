@@ -2,78 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, CalendarDays, Menu, Phone, MapPin, Mail, X } from "lucide-react";
+import {
+  ChevronDown, CalendarDays, Menu, Phone, MapPin, Mail, X,
+  UsersRound, Home, Building2, HardHat, BadgeDollarSign,
+  ClipboardCheck, MessageCircle, Handshake, Award, Clock3
+} from "lucide-react";
 import Link from "next/link";
 import { LogoMark, FacebookIcon } from "./Icons";
 
-const servicesDropdownItems = [
-  {
-    title: "HOA Management",
-    href: "#services",
-    description: "Expert governance, compliance, and community satisfaction.",
-    icon: null // we will set icon dynamically or use custom rendering
-  },
-  {
-    title: "Residential Management",
-    href: "#services",
-    description: "Tenant placement, maintenance, and financial oversight.",
-    icon: null
-  },
-  {
-    title: "Commercial Management",
-    href: "#services",
-    description: "Solutions for office, retail, and mixed-use spaces.",
-    icon: null
-  },
-  {
-    title: "Developer Services",
-    href: "#services",
-    description: "Interim management from development to governance.",
-    icon: null
-  },
-  {
-    title: "Financial Management",
-    href: "#services",
-    description: "Budgeting, reporting, and reserve fund oversight.",
-    icon: null
-  }
-];
+import data from "../data/data.json";
 
-const resourcesDropdownItems = [
-  {
-    title: "Blog & Insights",
-    href: "#resources",
-    description: "Latest news, tips, and articles for property owners.",
-    icon: null
-  },
-  {
-    title: "FAQs",
-    href: "#resources",
-    description: "Answers to common association & management questions.",
-    icon: null
-  },
-  {
-    title: "Owner Resources",
-    href: "#resources",
-    description: "Onboarding documents, landlord tips, and local guidelines.",
-    icon: null
-  },
-  {
-    title: "HOA Board Center",
-    href: "#resources",
-    description: "Board member training materials and compliance templates.",
-    icon: null
-  },
-  {
-    title: "Resident Guides",
-    href: "#resources",
-    description: "Move-in checklists, utility setup forms, and handbooks.",
-    icon: null
-  }
-];
-
-// Add icons to dropdown items using lucide-react dynamically
-import {
+const IconMap = {
   UsersRound,
   Home,
   Building2,
@@ -84,22 +23,20 @@ import {
   Handshake,
   Award,
   Clock3
-} from "lucide-react";
+};
 
-servicesDropdownItems[0].icon = UsersRound;
-servicesDropdownItems[1].icon = Home;
-servicesDropdownItems[2].icon = Building2;
-servicesDropdownItems[3].icon = HardHat;
-servicesDropdownItems[4].icon = BadgeDollarSign;
+const servicesDropdownItems = data.header.servicesDropdownItems.map(item => ({
+  ...item,
+  icon: IconMap[item.icon]
+}));
 
-resourcesDropdownItems[0].icon = ClipboardCheck;
-resourcesDropdownItems[1].icon = MessageCircle;
-resourcesDropdownItems[2].icon = Handshake;
-resourcesDropdownItems[3].icon = Award;
-resourcesDropdownItems[4].icon = Clock3;
+const resourcesDropdownItems = data.header.resourcesDropdownItems.map(item => ({
+  ...item,
+  icon: IconMap[item.icon]
+}));
 
 export default function Header() {
-  const nav = ["Home", "About Us", "Services", "Vendor Network", "Resources", "Contact"];
+  const { nav, brand, contact, drawerTitle, ctaLabel } = data.header;
   const [hoveredNav, setHoveredNav] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -126,12 +63,12 @@ export default function Header() {
       <div className={`mx-auto max-w-[1160px] px-6 transition-all duration-300 ${scrolled ? "py-2" : "py-3 lg:py-4"}`}>
         <div className="grid grid-cols-[auto_1fr] items-center gap-6 lg:gap-10">
           {/* Logo */}
-          <Link href="#" className="flex items-center gap-3 shrink-0" aria-label="First Choice Property Group">
+          <Link href="#" className="flex items-center gap-3 shrink-0" aria-label={`${brand.first} ${brand.last}`}>
             <LogoMark />
             <div className="leading-tight">
-              <p className="text-[17px] sm:text-[21px] font-display font-bold uppercase tracking-[0.04em] text-white">First Choice</p>
-              <p className="text-[10px] sm:text-[13px] font-bold uppercase tracking-[0.17em] text-white/80 -mt-0.5">Property Group</p>
-              <p className="text-[7px] sm:text-[8px] font-medium uppercase tracking-[0.2em] text-[var(--tagline-gold)] mt-1">Your property. Our priority.</p>
+              <p className="text-[17px] sm:text-[21px] font-display font-bold uppercase tracking-[0.04em] text-white">{brand.first}</p>
+              <p className="text-[10px] sm:text-[13px] font-bold uppercase tracking-[0.17em] text-white/80 -mt-0.5">{brand.last}</p>
+              <p className="text-[7px] sm:text-[8px] font-medium uppercase tracking-[0.2em] text-[var(--tagline-gold)] mt-1">{brand.tagline}</p>
             </div>
           </Link>
 
@@ -140,21 +77,21 @@ export default function Header() {
             {/* Top Row: Contact info — hidden when scrolled to compact the nav */}
             <div className={`lg:flex items-center justify-end gap-1 text-[10px] font-semibold uppercase tracking-wider text-white/70 pb-2 border-b border-white/10 transition-all duration-300 ${scrolled ? "hidden" : "hidden lg:flex"}`}>
               <Link
-                href="tel:8643260000"
+                href={contact.phoneHref}
                 className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
               >
                 <Phone size={12} className="text-[var(--brand-gold)] group-hover:scale-110 transition-transform duration-200" strokeWidth={2.5} />
-                (864) 326-0000
+                {contact.phone}
               </Link>
               <span className="text-white/20 select-none">·</span>
               <Link
-                href="https://maps.google.com/?q=Greenville,SC"
+                href={contact.locationHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
               >
                 <MapPin size={12} className="text-[var(--brand-gold)] group-hover:scale-110 transition-transform duration-200" strokeWidth={2.5} />
-                Greenville, SC
+                {contact.location}
               </Link>
               <span className="text-white/20 select-none ml-1">·</span>
               <Link
@@ -258,7 +195,7 @@ export default function Header() {
                 className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
               >
                 <CalendarDays size={13} className="transition-transform duration-300 group-hover:rotate-12" />
-                Request a Consultation
+                {ctaLabel}
               </Link>
 
               {/* Mobile Hamburger Menu button */}
@@ -300,8 +237,8 @@ export default function Header() {
                   <div className="flex items-center gap-2">
                     <LogoMark />
                     <div className="leading-tight">
-                      <p className="text-[15px] font-display font-bold uppercase tracking-[0.04em] text-white">First Choice</p>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-white/80 -mt-0.5">Property Group</p>
+                      <p className="text-[15px] font-display font-bold uppercase tracking-[0.04em] text-white">{brand.first}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-white/80 -mt-0.5">{brand.last}</p>
                     </div>
                   </div>
                   <button
@@ -383,15 +320,15 @@ export default function Header() {
 
               {/* Contact Info at Bottom of Drawer */}
               <div className="p-4 rounded-lg bg-white/5 border border-white/5 mt-auto">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--brand-gold)]">Need Assistance?</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--brand-gold)]">{drawerTitle}</p>
                 <div className="mt-3 flex flex-col gap-2.5 text-[12px] font-medium text-white/80">
-                  <Link href="tel:8643260000" className="flex items-center gap-2.5 hover:text-[var(--brand-gold)] transition">
+                  <Link href={contact.phoneHref} className="flex items-center gap-2.5 hover:text-[var(--brand-gold)] transition">
                     <Phone size={13} className="text-[var(--brand-gold)]" />
-                    (864) 326-0000
+                    {contact.phone}
                   </Link>
-                  <Link href="mailto:info@firstchoicepg.com" className="flex items-center gap-2.5 hover:text-[var(--brand-gold)] transition">
+                  <Link href={contact.emailHref} className="flex items-center gap-2.5 hover:text-[var(--brand-gold)] transition">
                     <Mail size={13} className="text-[var(--brand-gold)]" />
-                    info@firstchoicepg.com
+                    {contact.email}
                   </Link>
                 </div>
                 <Link
@@ -400,7 +337,7 @@ export default function Header() {
                   className="group mt-4 flex h-[44px] items-center justify-center gap-2 bg-[var(--brand-gold)] px-5 text-[11px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
                 >
                   <CalendarDays size={14} className="transition-transform duration-300 group-hover:rotate-12" />
-                  Request a Consultation
+                  {ctaLabel}
                 </Link>
               </div>
             </motion.div>

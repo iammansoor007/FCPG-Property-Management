@@ -3,12 +3,14 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ScrollProgress from "../components/ScrollProgress";
+import data from "../data/data.json";
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   display: "swap",
   variable: "--font-inter",
+  preload: true,
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -16,37 +18,27 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   variable: "--font-space-grotesk",
+  preload: true,
 });
 
-export const metadata = {
-  title: "First Choice Property Group | Professional Property Management SC",
-  description:
-    "First Choice Property Group delivers expert HOA, residential, commercial, and financial property management services across South Carolina — Greenville, Columbia, Charleston & beyond.",
-  keywords: [
-    "property management South Carolina",
-    "HOA management Greenville SC",
-    "residential property management",
-    "commercial property management",
-    "First Choice Property Group",
-  ],
-  openGraph: {
-    title: "First Choice Property Group",
-    description:
-      "Full-service property management for communities, investors, and developers across South Carolina.",
-    type: "website",
-    locale: "en_US",
-    siteName: "First Choice Property Group",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "First Choice Property Group",
-    description: "Professional property management across South Carolina.",
-  },
-};
+export const metadata = data.metadata;
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <head>
+        {/* DNS prefetch for external image CDN */}
+        <link rel="dns-prefetch" href="//images.unsplash.com" />
+        {/* Preconnect to Google Fonts origin */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect to Unsplash for hero image */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        {/* Theme color for browser chrome */}
+        <meta name="theme-color" content="#031b31" />
+        {/* Mobile viewport optimization */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
       <body className="font-sans antialiased">
         <ScrollProgress />
         <Header />
@@ -56,6 +48,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
 
 
 

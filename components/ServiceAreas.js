@@ -5,17 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, MapPin, Building2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-/* ─── Cities Data with Positions & Stats ────────────────── */
-const citiesData = [
-  { id: "Greenville", name: "Greenville", x: 727, y: 348, count: "14", type: "Managed Communities" },
-  { id: "Spartanburg", name: "Spartanburg", x: 738, y: 346, count: "9", type: "Managed Properties" },
-  { id: "Anderson", name: "Anderson", x: 720, y: 354, count: "6", type: "Active Associations" },
-  { id: "Columbia", name: "Columbia", x: 754, y: 370, count: "18", type: "HOA Portfolios" },
-  { id: "Florence", name: "Florence", x: 776, y: 360, count: "5", type: "Client Associations" },
-  { id: "Myrtle Beach", name: "Myrtle Beach", x: 790, y: 366, count: "11", type: "Coastal Communities" },
-  { id: "Charleston", name: "Charleston", x: 772, y: 390, count: "22", type: "Managed Associations" },
-  { id: "Beaufort", name: "Beaufort", x: 760, y: 398, count: "7", type: "Historic Properties" },
-];
+import data from "../data/data.json";
+
+const sh = data.sectionHeaders.serviceAreas;
+const citiesData = data.serviceAreas.citiesData;
+const { coordinateLabels, mapVersionLabel, tooltipLabels, ctaLabel } = data.serviceAreas;
 
 export default function ServiceAreas() {
   const [activeCity, setActiveCity] = useState(null);
@@ -25,26 +19,8 @@ export default function ServiceAreas() {
     <section id="service-areas" className="relative bg-white overflow-hidden py-20 lg:py-28"
       style={{ borderTop: "1px solid #eceae4" }}>
 
-      {/* Inject custom CSS keyframe animations for network lines */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        @keyframes network-dash {
-          to {
-            stroke-dashoffset: -20;
-          }
-        }
-        @keyframes pulse-travel {
-          to {
-            stroke-dashoffset: -12;
-          }
-        }
-        .active-network-line {
-          animation: network-dash 0.8s linear infinite;
-        }
-        .travel-pulse-line {
-          animation: pulse-travel 0.4s linear infinite;
-        }
-      `}} />
+      {/* Network animation classes (active-network-line, travel-pulse-line) are defined in app/globals.css */}
+
 
       {/* ── Background Grid ── */}
       <div
@@ -90,7 +66,7 @@ export default function ServiceAreas() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-gold)]"></span>
               </span>
-              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">Proudly Serving</p>
+              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{sh.badge}</p>
             </div>
 
             {/* Editorial Title */}
@@ -99,7 +75,7 @@ export default function ServiceAreas() {
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)" }}
             >
               <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
-                Statewide Coverage.
+                {sh.heading1}
               </span>
               <span
                 className="shimmer-gradient block mt-1"
@@ -111,12 +87,12 @@ export default function ServiceAreas() {
                   backgroundSize: "200% auto",
                 }}
               >
-                Local Management Expertise.
+                {sh.heading2}
               </span>
             </h2>
 
             <p className="text-[13.5px] font-sans leading-[1.7] text-[var(--text-slate)] mb-6 max-w-[480px]">
-              First Choice Property Group delivers master-class property management across South Carolina. Explore our active regions on the map to see how we elevate community standards.
+              {sh.description}
             </p>
 
             {/* City Chips Grid */}
@@ -172,7 +148,7 @@ export default function ServiceAreas() {
               href="#contact"
               className="group inline-flex h-[44px] items-center justify-center gap-2.5 bg-[var(--brand-gold)] border border-[var(--brand-gold)] px-6 text-[11px] font-bold uppercase !text-white hover:!text-white tracking-wider transition-all duration-200 hover:bg-[var(--primary-navy)] hover:border-[var(--primary-navy)] active:scale-[0.97] rounded-[4px] shadow-lg shadow-black/5"
             >
-              Request Statewide Proposal
+              {ctaLabel}
               <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
 
@@ -216,13 +192,13 @@ export default function ServiceAreas() {
                       <>
                         <div className="flex items-center gap-2 mb-1 text-[var(--brand-gold)]/60">
                           <Building2 size={13} className="shrink-0" />
-                          <p className="font-display font-bold text-[11px] uppercase tracking-wider">SC Statewide Presence</p>
+                          <p className="font-display font-bold text-[11px] uppercase tracking-wider">{tooltipLabels.statewideTitle}</p>
                         </div>
                         <p className="font-sans font-black text-white text-[24px] leading-none tracking-tight">
-                          8 <span className="text-[12px] text-white/50 font-normal">Regions</span>
+                          8 <span className="text-[12px] text-white/50 font-normal">{tooltipLabels.statewideUnit}</span>
                         </p>
                         <p className="font-sans font-semibold text-white/50 text-[9.5px] uppercase tracking-widest mt-1">
-                          Licensed Property Management
+                          {tooltipLabels.statewideDesc}
                         </p>
                       </>
                     )}
@@ -231,9 +207,9 @@ export default function ServiceAreas() {
               </div>
 
               {/* Dynamic Technical Blueprints (Crosshairs) */}
-              <div className="absolute top-4 left-4 text-[10px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none">+ 81.1637° W</div>
-              <div className="absolute top-4 right-4 text-[10px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none">+ 33.8361° N</div>
-              <div className="absolute bottom-4 right-4 text-[9px] font-mono text-black/20 pointer-events-none select-none">FCPG_CORP_MAP v2.3</div>
+              <div className="absolute top-4 left-4 text-[10px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none">{coordinateLabels[0]}</div>
+              <div className="absolute top-4 right-4 text-[10px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none">{coordinateLabels[1]}</div>
+              <div className="absolute bottom-4 right-4 text-[9px] font-mono text-black/20 pointer-events-none select-none">{mapVersionLabel}</div>
 
               {/* South Carolina Interactive Map */}
               <svg viewBox="0 0 520 390" role="img" aria-label="South Carolina service area map" className="h-auto w-full drop-shadow-md relative z-10 select-none">

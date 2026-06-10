@@ -5,38 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HelpCircle, Phone, Mail } from "lucide-react";
 import Link from "next/link";
 
-const faqs = [
-  {
-    category: "Property Maintenance",
-    q: "How do I submit a maintenance request?",
-    a: "All non-emergency maintenance requests should be submitted through our main office via phone, email, or our digital request form. For after-hours structural, electrical, or mechanical emergencies, please contact our 24/7 urgent dispatch line directly at (864) 326-0000."
-  },
-  {
-    category: "Tenant Screening",
-    q: "What is your tenant screening process?",
-    a: "We perform a comprehensive multi-point screening on all prospective tenants. This includes credit score evaluation, nationwide eviction checks, criminal background checks, employment and income verification (requiring 3x monthly rent), and direct rental history references."
-  },
-  {
-    category: "Finance & Reporting",
-    q: "How do HOA board members access financial reports?",
-    a: "Board members receive secure, automated monthly financial report distributions. We prepare and distribute balance sheets, general ledgers, budget comparisons, and delinquency reports so your board is always fully informed."
-  },
-  {
-    category: "Dues & Payments",
-    q: "How are HOA dues collected and processed?",
-    a: "Homeowners can pay dues electronically via automated bank transfers (ACH), online invoice options, or by mailing checks to our secure banking lockbox processing center."
-  },
-  {
-    category: "Governance",
-    q: "What steps do you take to enforce HOA covenants?",
-    a: "We conduct scheduled, objective community inspections to document covenants compliance. Our automated system generates notification letters with photo evidence, tracks grace periods, and handles fine assessments in strict accordance with your community's bylaws."
-  },
-  {
-    category: "Corporate Overview",
-    q: "What types of properties does First Choice manage?",
-    a: "First Choice Property Group provides comprehensive property management services across South Carolina, specializing in Homeowners Associations (HOAs), residential rental properties, and commercial asset management."
-  }
-];
+import data from "../data/data.json";
+const { badge, heading1, heading2, description, supportCard, faqs } = data.resourcesFAQ;
 
 export default function ResourcesFAQ() {
   const [openIdx, setOpenIdx] = useState(null);
@@ -83,7 +53,7 @@ export default function ResourcesFAQ() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-gold)]"></span>
               </span>
-              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">Information Hub</p>
+              <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{badge}</p>
             </div>
             
             {/* Title */}
@@ -92,7 +62,7 @@ export default function ResourcesFAQ() {
               style={{ fontSize: "clamp(2rem, 4.5vw, 2.8rem)" }}
             >
               <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
-                Got Questions?
+                {heading1}
               </span>
               <span 
                 className="shimmer-gradient block mt-1"
@@ -104,12 +74,12 @@ export default function ResourcesFAQ() {
                   backgroundSize: "200% auto",
                 }}
               >
-                We Have Answers.
+                {heading2}
               </span>
             </h2>
             
             <p className="text-[13.5px] font-sans leading-[1.7] text-[var(--text-slate)] mb-6 max-w-[480px]">
-              Explore answers to common questions about association governance, tenant screening, property inspections, and billing operations.
+              {description}
             </p>
 
             {/* Premium Gold Accent Line Divider */}
@@ -142,49 +112,43 @@ export default function ResourcesFAQ() {
                   <HelpCircle size={20} className="text-[var(--brand-gold)]" />
                 </span>
                 <div>
-                  <h4 className="font-display font-bold text-[16px] text-[var(--brand-gold)] leading-tight">Need Direct Assistance?</h4>
-                  <p className="text-[12px] text-white/70 mt-1">Our South Carolina support team is standing by.</p>
+                  <h4 className="font-display font-bold text-[16px] text-[var(--brand-gold)] leading-tight">{supportCard.title}</h4>
+                  <p className="text-[12px] text-white/70 mt-1">{supportCard.subtitle}</p>
                 </div>
               </div>
 
               {/* Minimalist 3-Column Stats Row */}
               <div className="grid grid-cols-3 gap-1 relative z-10 py-4 border-t border-b border-white/10">
-                <div className="flex flex-col">
-                  <span className="text-[20px] sm:text-[22px] font-black font-sans text-white leading-none">24/7</span>
-                  <span className="text-[8.5px] text-white/50 font-bold uppercase tracking-wider mt-1.5 leading-tight">Emergency Support</span>
-                </div>
-                <div className="flex flex-col border-l border-white/10 pl-3">
-                  <span className="text-[20px] sm:text-[22px] font-black font-sans text-[var(--brand-gold)] leading-none">&lt; 15m</span>
-                  <span className="text-[8.5px] text-white/50 font-bold uppercase tracking-wider mt-1.5 leading-tight">Response Time</span>
-                </div>
-                <div className="flex flex-col border-l border-white/10 pl-3">
-                  <span className="text-[20px] sm:text-[22px] font-black font-sans text-white leading-none">100%</span>
-                  <span className="text-[8.5px] text-white/50 font-bold uppercase tracking-wider mt-1.5 leading-tight">Local Board Support</span>
-                </div>
+                {supportCard.stats.map((stat, i) => (
+                  <div key={stat.label} className={`flex flex-col${i > 0 ? " border-l border-white/10 pl-3" : ""}`}>
+                    <span className={`text-[20px] sm:text-[22px] font-black font-sans leading-none${i === 1 ? " text-[var(--brand-gold)]" : " text-white"}`}>{stat.value}</span>
+                    <span className="text-[8.5px] text-white/50 font-bold uppercase tracking-wider mt-1.5 leading-tight">{stat.label}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Direct Contact Links */}
               <div className="relative z-10 flex flex-col gap-3.5 text-[13px] font-semibold text-white/90">
-                <a href="tel:8643260000" className="group/link flex items-center gap-3 hover:text-[var(--brand-gold)] transition-colors duration-200">
+                <a href={supportCard.phoneHref} className="group/link flex items-center gap-3 hover:text-[var(--brand-gold)] transition-colors duration-200">
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 group-hover/link:border-[var(--brand-gold)]/40 group-hover/link:bg-[var(--brand-gold)]/[0.03] transition-all duration-200">
                     <Phone size={13} className="text-[var(--brand-gold)]" />
                   </span>
-                  (864) 326-0000
+                  {supportCard.phone}
                 </a>
-                <a href="mailto:info@firstchoicepg.com" className="group/link flex items-center gap-3 hover:text-[var(--brand-gold)] transition-colors duration-200">
+                <a href={supportCard.emailHref} className="group/link flex items-center gap-3 hover:text-[var(--brand-gold)] transition-colors duration-200">
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10 group-hover/link:border-[var(--brand-gold)]/40 group-hover/link:bg-[var(--brand-gold)]/[0.03] transition-all duration-200">
                     <Mail size={13} className="text-[var(--brand-gold)]" />
                   </span>
-                  info@firstchoicepg.com
+                  {supportCard.email}
                 </a>
               </div>
 
               {/* Direct Action Link */}
               <Link
-                href="#contact"
+                href={supportCard.ctaHref}
                 className="group relative z-10 w-full h-[46px] rounded-[4px] bg-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/90 text-white font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.97] shadow-lg shadow-black/10 border border-[var(--brand-gold)]"
               >
-                Submit Support Request
+                {supportCard.ctaLabel}
                 <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
               </Link>
             </motion.div>

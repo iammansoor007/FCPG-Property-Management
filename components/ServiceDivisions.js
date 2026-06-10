@@ -8,6 +8,20 @@ import {
   UsersRound, Home, Building2, HardHat, BadgeDollarSign,
   ArrowUpRight, ShieldCheck, MapPin, TrendingUp,
 } from "lucide-react";
+import data from "../data/data.json";
+
+const sh = data.sectionHeaders.serviceDivisions;
+
+const IconMap = {
+  UsersRound,
+  Home,
+  Building2,
+  HardHat,
+  BadgeDollarSign,
+  ShieldCheck,
+  MapPin,
+  TrendingUp
+};
 
 /* ─────────────────────────────────────────────────────────────
    FULL-BLEED CARD
@@ -102,7 +116,7 @@ function FullBleedCard({
           className="inline-flex items-center gap-2 self-start mt-0.5 group/cta"
         >
           <span className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-gold/90 group-hover/cta:text-brand-gold transition-colors duration-300">
-            Explore Service
+            {data.serviceDivisions.ctaLabel}
           </span>
           <span className="flex items-center justify-center w-6 h-6 rounded-full border border-brand-gold/30 text-brand-gold/70 transition-all duration-300 group-hover/cta:bg-brand-gold group-hover/cta:text-midnight-navy group-hover/cta:border-brand-gold group-hover/cta:shadow-[0_0_10px_rgba(201,155,49,0.4)]">
             <ArrowUpRight size={11} strokeWidth={2.5} />
@@ -158,13 +172,13 @@ export default function ServiceDivisions() {
             />
             <div>
               <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold mb-3">
-                Our Services
+                {sh.badge}
               </p>
               <h2 className="text-4xl md:text-[2.7rem] lg:text-5xl font-bold font-display text-text-navy leading-[1.1] tracking-tight">
-                Property Management<br />
-                Solutions That{" "}
+                {sh.heading1}<br />
+                {sh.heading2}{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
-                  Perform
+                  {sh.heading3}
                 </span>
               </h2>
             </div>
@@ -179,95 +193,38 @@ export default function ServiceDivisions() {
             className="md:max-w-[360px] flex flex-col gap-5"
           >
             <p className="text-[14px] text-text-slate leading-relaxed font-sans">
-              From residential communities to commercial assets, we deliver expertise, transparency, and peace of mind at every step.
+              {sh.description}
             </p>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              {[
-                { icon: ShieldCheck, label: "Trusted Communities" },
-                { icon: MapPin,      label: "Carolina Local"      },
-                { icon: TrendingUp,  label: "Proven ROI"          },
-              ].map(({ icon: I, label }) => (
-                <div key={label} className="flex items-center gap-1.5">
-                  <I size={14} className="text-brand-gold flex-shrink-0" strokeWidth={2.2} />
-                  <span className="text-[10.5px] font-semibold text-text-slate">{label}</span>
-                </div>
-              ))}
+              {data.serviceDivisions.trustPills.map(({ icon, label }) => {
+                const I = IconMap[icon];
+                return (
+                  <div key={label} className="flex items-center gap-1.5">
+                    <I size={14} className="text-brand-gold flex-shrink-0" strokeWidth={2.2} />
+                    <span className="text-[10.5px] font-semibold text-text-slate">{label}</span>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
 
-        {/* ── Bento Grid ──────────────────────────────────────── */}
-        {/*
-          Desktop (3 cols):
-            ┌──────────────┬────────────┬──────────────┐
-            │  Residential │ Commercial │     HOA      │
-            │  (row-span-2)├────────────┼──────────────┤
-            │              │ Developer  │  Financial   │
-            └──────────────┴────────────┴──────────────┘
-
-          The left card spans both rows.
-          Right 4 cards each occupy 1 cell in a 2×2 arrangement.
-          Heights are driven by padding + min-h (not fixed px rows).
-        */}
+        {/* ── Bento Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-
-          {/* ── Featured: Residential ── */}
-          {/* On mobile: min-h-[340px]. On desktop: row-span-2 so it fills both grid rows naturally. */}
-          <FullBleedCard
-            title="Residential Management"
-            text="Comprehensive management that protects your investment and ensures tenant satisfaction at every level."
-            icon={Home}
-            image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85"
-            badge="Featured"
-            index={1}
-            delay={0.05}
-            contentPadding="p-8"
-            className="min-h-[340px] md:min-h-[440px] lg:row-span-2"
-          />
-
-          {/* ── Commercial ── */}
-          <FullBleedCard
-            title="Commercial Management"
-            text="Strategic management for office, retail, and mixed-use properties focused on performance and long-term value."
-            icon={Building2}
-            image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=85"
-            index={2}
-            delay={0.12}
-            className="min-h-[260px]"
-          />
-
-          {/* ── HOA ── */}
-          <FullBleedCard
-            title="HOA Management"
-            text="Expert governance, compliance, and community support for well-managed associations."
-            icon={UsersRound}
-            image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=85"
-            index={3}
-            delay={0.18}
-            className="min-h-[260px]"
-          />
-
-          {/* ── Developer ── */}
-          <FullBleedCard
-            title="Developer & Builder Services"
-            text="Partnering with developers and builders to transition projects seamlessly into long-term operations."
-            icon={HardHat}
-            image="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=700&q=85"
-            index={4}
-            delay={0.24}
-            className="min-h-[260px]"
-          />
-
-          {/* ── Financial ── */}
-          <FullBleedCard
-            title="Financial Management"
-            text="Transparent reporting, budgeting, and financial oversight you can always count on."
-            icon={BadgeDollarSign}
-            image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=700&q=85"
-            index={5}
-            delay={0.3}
-            className="min-h-[260px]"
-          />
+          {data.serviceDivisions.services.map((service) => (
+            <FullBleedCard
+              key={service.title}
+              title={service.title}
+              text={service.text}
+              icon={IconMap[service.icon]}
+              image={service.image}
+              badge={service.badge}
+              index={service.index}
+              delay={service.delay}
+              contentPadding={service.contentPadding || "p-7"}
+              className={service.className}
+            />
+          ))}
         </div>
 
         {/* ── Footer strip ── */}
@@ -280,7 +237,7 @@ export default function ServiceDivisions() {
         >
           <ShieldCheck size={15} className="text-brand-gold" strokeWidth={2} />
           <p className="text-[11px] text-text-slate font-medium tracking-wide">
-            Serving homeowners, investors &amp; developers across South Carolina
+            {sh.footerStrip}
           </p>
         </motion.div>
 

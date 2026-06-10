@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
+import data from "../data/data.json";
+
+const { hero } = data;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -20,8 +23,8 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full"
       >
         <Image
-          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=85"
-          alt="Townhome community street"
+          src={hero.bgImage}
+          alt={hero.bgImageAlt}
           fill
           priority
           sizes="100vw"
@@ -44,8 +47,8 @@ export default function Hero() {
           <rect width="100%" height="100%" fill="url(#hero-grid-dots)" />
         </svg>
         {/* Coordinate blueprint crosshairs */}
-        <div className="absolute top-6 right-8 text-[9px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none tracking-widest">+ 82.3861° W</div>
-        <div className="absolute bottom-6 right-8 text-[9px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none tracking-widest">+ 34.8526° N</div>
+        <div className="absolute top-6 right-8 text-[9px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none tracking-widest">{hero.coordLng}</div>
+        <div className="absolute bottom-6 right-8 text-[9px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none tracking-widest">{hero.coordLat}</div>
       </div>
 
       {/* Radial soft gold and sapphire ambient glows */}
@@ -66,7 +69,7 @@ export default function Hero() {
           <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-3">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand-gold)] animate-pulse" />
             <span className="text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--tagline-gold)]">
-              Professional Property Management
+              {hero.tagline}
             </span>
           </motion.div>
 
@@ -74,9 +77,9 @@ export default function Hero() {
             variants={fadeUp}
             className="text-[32px] sm:text-[45px] lg:text-[54px] font-display font-bold leading-[1.08] tracking-tight text-white"
           >
-            Managing Communities.
+            {hero.heading1}
             <br />
-            Protecting Investments.
+            {hero.heading2}
             <br />
             <span
               className="text-transparent bg-clip-text"
@@ -87,14 +90,14 @@ export default function Hero() {
                 backgroundClip: "text",
               }}
             >
-              Maximizing Value.
+              {hero.heading3}
             </span>
           </motion.h1>
           <motion.p
             variants={fadeUp}
             className="mt-3 max-w-[520px] text-[13.5px] md:text-[15px] font-normal leading-[1.65] text-white/80"
           >
-            First Choice Property Group is a full-service property management company proudly serving communities, property owners, investors, and developers throughout South Carolina.
+            {hero.description}
           </motion.p>
           <motion.div
             variants={fadeUp}
@@ -106,14 +109,14 @@ export default function Hero() {
               className="group inline-flex h-[48px] items-center justify-center gap-2.5 bg-[var(--brand-gold)] border border-[var(--brand-gold)] px-6 text-[12px] font-bold uppercase text-white tracking-wider transition-all duration-200 hover:bg-white hover:!text-[#031b31] hover:border-white active:scale-[0.97] rounded-[4px] shadow-lg shadow-black/10 hover:shadow-[0_8px_25px_rgba(201,155,49,0.35)]"
             >
               <CalendarDays size={14} className="transition-transform duration-300 group-hover:rotate-12" />
-              Schedule a Consultation
+              {hero.primaryCta}
             </Link>
             {/* Secondary CTA */}
             <Link
               href="#contact"
               className="inline-flex h-[48px] items-center justify-center border border-white/30 bg-transparent px-6 text-[12px] font-bold uppercase text-white/90 tracking-wider transition-all duration-200 hover:bg-white/10 hover:border-white active:scale-[0.97] rounded-[4px]"
             >
-              Request a Proposal
+              {hero.secondaryCta}
             </Link>
           </motion.div>
         </motion.div>

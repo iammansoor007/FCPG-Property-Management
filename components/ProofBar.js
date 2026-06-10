@@ -14,12 +14,9 @@ function Counter({ to, suffix = "", duration = 1.5 }) {
   return <motion.span ref={ref}>{display}</motion.span>;
 }
 
-const stats = [
-  { to: 20,  suffix: "+", label: "Years of Experience",   sub: "Serving SC since founding"     },
-  { to: 500, suffix: "+", label: "Properties Managed",    sub: "Residential, commercial & HOA" },
-  { to: 98,  suffix: "%", label: "Client Retention Rate", sub: "Built on trust & results"      },
-  { text: "5★",           label: "Service Standard",      sub: "Across every division"         },
-];
+import data from "../data/data.json";
+const stats = data.proofBar.stats;
+const sh = data.sectionHeaders.proofBar;
 
 export default function ProofBar() {
   return (
@@ -30,7 +27,7 @@ export default function ProofBar() {
         <div className="flex items-center gap-3 mb-8">
           <span style={{ display: "block", height: "2px", width: "24px", background: "#c99b31", borderRadius: "9999px" }} />
           <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#052946" }}>
-            By the Numbers
+            {sh.badge}
           </p>
           <span style={{ display: "block", height: "1px", flex: 1, background: "linear-gradient(90deg, #c99b31, transparent)", opacity: 0.3 }} />
         </div>

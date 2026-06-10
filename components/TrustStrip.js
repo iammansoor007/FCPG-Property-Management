@@ -2,21 +2,10 @@
 
 import { motion } from "framer-motion";
 
-const pillars = [
-  { stat: "100%", label: "Licensed & Insured",    body: "Every manager and vendor meets SC's strictest requirements. Zero compromise on protection." },
-  { stat: "24h",  label: "Response Guarantee",    body: "Guaranteed first-response on every ticket and owner inquiry. Always on, always accountable." },
-  { stat: "30+",  label: "Active Communities",    body: "From coastal Hilton Head to Upstate Greenville — serving communities statewide." },
-  { stat: "#1",   label: "Ranked in SC",          body: "Top-ranked HOA & property management firm in South Carolina — three years running." },
-];
+import data from "../data/data.json";
 
-const credentials = [
-  "SC Real Estate Commission",
-  "CAI Member Association",
-  "NARPM Certified Professionals",
-  "BBB Accredited Business",
-  "Equal Housing Opportunity",
-  "SCAR Affiliate Member",
-];
+const sh = data.sectionHeaders.trustStrip;
+const { pillars, credentials, bgText } = data.trustStrip;
 const marqueeItems = [...credentials, ...credentials];
 
 export default function TrustStrip() {
@@ -53,7 +42,7 @@ export default function TrustStrip() {
           zIndex: 0,
         }}
       >
-        FC
+        {bgText}
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 pt-20 lg:pt-28 pb-0">
@@ -69,24 +58,16 @@ export default function TrustStrip() {
             <div className="flex items-center gap-3 mb-5">
               <span className="h-px w-7 bg-brand-gold" />
               <p className="text-[10px] font-black tracking-[0.3em] uppercase text-brand-gold">
-                Our Commitments
+                {sh.badge}
               </p>
             </div>
             <h2
               className="font-display font-bold text-text-navy leading-[1.06] tracking-tight"
               style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)" }}
             >
-              Standards That{" "}
+              {sh.heading1}{" "}
               <br className="hidden sm:block" />
-              Don't{" "}
-              <span style={{
-                color: "transparent",
-                backgroundImage: "linear-gradient(90deg,#c99b31,#e8b84b)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-              }}>
-                Bend.
-              </span>
+              {sh.heading2}
             </h2>
           </motion.div>
 
@@ -98,7 +79,7 @@ export default function TrustStrip() {
             className="font-sans leading-[1.82] text-text-slate md:max-w-[320px] md:pb-1"
             style={{ fontSize: "13.5px" }}
           >
-            Every promise is backed by a credential, a process, or a measurable SLA — accountability is not optional.
+            {sh.description}
           </motion.p>
         </div>
 
@@ -195,7 +176,7 @@ export default function TrustStrip() {
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32"
           style={{ background: "linear-gradient(270deg,#07375e,transparent)" }} />
 
-        <div style={{ display: "flex", width: "max-content", animation: "trust-marquee 36s linear infinite" }}>
+        <div className="animate-trust-marquee" style={{ display: "flex", width: "max-content" }}>
           {marqueeItems.map((c, i) => (
             <div key={i} className="inline-flex items-center gap-4 px-8 shrink-0">
               <span style={{
@@ -212,12 +193,7 @@ export default function TrustStrip() {
           ))}
         </div>
 
-        <style>{`
-          @keyframes trust-marquee {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-          }
-        `}</style>
+        {/* Animation keyframes are defined globally in app/globals.css for performance */}
       </div>
     </section>
   );

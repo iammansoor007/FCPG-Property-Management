@@ -7,39 +7,23 @@ import {
   BadgeDollarSign, Handshake, MessageCircle,
   UsersRound, ClipboardCheck, Cpu, ArrowRight,
 } from "lucide-react";
+import data from "../data/data.json";
 
-const values = [
-  {
-    icon: BadgeDollarSign,
-    title: "Financial Accountability",
-    text: "Transparent reporting, accurate reconciliation, and responsible stewardship of every dollar.",
-  },
-  {
-    icon: Handshake,
-    title: "Vendor Coordination",
-    text: "A vetted vendor network delivering quality service, competitive pricing, and minimal disruption.",
-  },
-  {
-    icon: MessageCircle,
-    title: "Proactive Communication",
-    text: "Clear, consistent updates for all stakeholders — no surprises, only confidence.",
-  },
-  {
-    icon: UsersRound,
-    title: "Community Focused",
-    text: "Enhancing community value through meaningful engagement and operational excellence.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Compliance & Governance",
-    text: "Full adherence to covenants, local regulations, and evolving industry best practices.",
-  },
-  {
-    icon: Cpu,
-    title: "Technology Forward",
-    text: "Modern platforms deliver real-time insights, streamlined workflows, and faster responses.",
-  },
-];
+const sh = data.sectionHeaders.whyChoose;
+
+const IconMap = {
+  BadgeDollarSign,
+  Handshake,
+  MessageCircle,
+  UsersRound,
+  ClipboardCheck,
+  Cpu
+};
+
+const values = data.whyChoose.values.map(val => ({
+  ...val,
+  icon: IconMap[val.icon]
+}));
 
 
 
@@ -126,13 +110,13 @@ export default function WhyChoose() {
             <div className="flex items-center gap-2 mb-4">
               <span className="w-5 h-[1.5px] bg-brand-gold" />
               <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
-                Why First Choice
+                {sh.badge}
               </p>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold font-display text-text-navy leading-[1.1] tracking-tight">
-              A Partner You Can{" "}
+              {sh.heading1}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
-                Rely On
+                {sh.heading2}
               </span>
             </h2>
           </motion.div>
@@ -145,7 +129,7 @@ export default function WhyChoose() {
             className="flex flex-col gap-6 md:max-w-[380px]"
           >
             <p className="text-[15px] text-text-slate leading-[1.75] font-sans">
-              We go beyond day-to-day management — we are strategic partners focused on protecting assets, enhancing communities, and delivering exceptional results at every level.
+              {sh.description}
             </p>
 
             {/* Dual CTA row */}
@@ -158,7 +142,7 @@ export default function WhyChoose() {
                 onMouseEnter={e => e.currentTarget.style.backgroundColor = "var(--tagline-gold)"}
                 onMouseLeave={e => e.currentTarget.style.backgroundColor = "var(--brand-gold)"}
               >
-                Get Started
+                {sh.primaryCta}
                 <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
 
@@ -170,7 +154,7 @@ export default function WhyChoose() {
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = "var(--primary-navy)"; e.currentTarget.style.color = "#fff"; }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = "var(--primary-navy)"; }}
               >
-                About Our Company
+                {sh.secondaryCta}
               </Link>
             </div>
 
@@ -178,7 +162,7 @@ export default function WhyChoose() {
             <div className="flex items-center gap-2 pt-1">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
               <p className="text-[11px] text-text-slate font-medium">
-                Trusted by communities across South Carolina since 2009
+                {sh.trustLine}
               </p>
             </div>
           </motion.div>
