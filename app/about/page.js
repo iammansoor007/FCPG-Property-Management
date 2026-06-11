@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,7 +13,15 @@ import {
   Handshake,
   ArrowRight,
   Mail,
-  ArrowDown
+  ArrowDown,
+  Building2,
+  TrendingUp,
+  Cpu,
+  Check,
+  Play,
+  Pause,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 import { LinkedinIcon } from "@/components/Icons";
@@ -29,7 +37,11 @@ const IconMap = {
   MessageCircle,
   ClipboardCheck,
   BadgeDollarSign,
-  Handshake
+  Handshake,
+  Building2,
+  TrendingUp,
+  Cpu,
+  Check
 };
 
 const fadeUp = {
@@ -63,7 +75,7 @@ function PillarCard({ icon: IconName, title, text, index }) {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.06, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={handleMouseMove}
-      className={`group relative flex flex-col gap-5 p-8 cursor-default overflow-hidden bg-white transition-all duration-300 hover:bg-[rgba(201,155,49,0.02)]
+      className={`group relative flex flex-col gap-4 sm:gap-5 p-5 sm:p-8 cursor-default overflow-hidden bg-white transition-all duration-300 hover:bg-[rgba(201,155,49,0.02)]
         ${!isLastCol ? "md:border-r border-[rgba(201,155,49,0.18)]" : ""}
         ${!isLastRow ? "md:border-b border-[rgba(201,155,49,0.18)]" : ""}
         border-b md:border-b-0 border-[rgba(201,155,49,0.12)] last:border-b-0
@@ -101,9 +113,48 @@ function PillarCard({ icon: IconName, title, text, index }) {
   );
 }
 
+// Parallax 3D tilt component for interactive hover depth
+function ParallaxTilt({ children, className }) {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+    setCoords({ x, y });
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setCoords({ x: 0, y: 0 });
+      }}
+      style={{
+        perspective: 1200,
+        transformStyle: "preserve-3d"
+      }}
+      animate={{
+        rotateX: isHovered ? -coords.y * 10 : 0,
+        rotateY: isHovered ? coords.x * 10 : 0,
+      }}
+      transition={{ type: "spring", stiffness: 150, damping: 18 }}
+      className={className}
+    >
+      {typeof children === "function" ? children(isHovered, coords) : children}
+    </motion.div>
+  );
+}
+
 export default function AboutPage() {
   const { hero, philosophy, pillars, story, leadership, stats } = aboutPage;
-  const [activeMilestone, setActiveMilestone] = useState(0);
+
+  const historySectionRef = useRef(null);
+  const timelineRef = useRef(null);
 
   // Helper to scroll smoothly to the philosophy section
   const handleScrollDown = () => {
@@ -112,6 +163,20 @@ export default function AboutPage() {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const { scrollYProgress } = useScroll({
+    target: historySectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const { scrollYProgress: timelineScroll } = useScroll({
+    target: timelineRef,
+    offset: ["start center", "end center"]
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  const watermarkY = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const lineScaleY = useTransform(timelineScroll, [0, 1], [0, 1]);
 
   return (
     <main className="min-h-screen bg-white text-[#072642]">
@@ -159,7 +224,7 @@ export default function AboutPage() {
         {/* Bottom accent gold line */}
         <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)] to-transparent z-20 opacity-70" />
 
-        <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-20 z-20">
+        <div className="relative mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 z-20">
           <motion.div
             initial="hidden"
             animate="show"
@@ -177,7 +242,7 @@ export default function AboutPage() {
             {/* Heading */}
             <motion.h1
               variants={fadeUp}
-              className="text-[36px] sm:text-[48px] lg:text-[58px] font-display font-bold leading-[1.06] tracking-tight text-white"
+              className="text-[28px] sm:text-[48px] lg:text-[58px] font-display font-bold leading-[1.06] tracking-tight text-white"
             >
               {hero.heading1}
               <br />
@@ -199,7 +264,7 @@ export default function AboutPage() {
             {/* Description */}
             <motion.p
               variants={fadeUp}
-              className="mt-5 max-w-[540px] text-[14px] md:text-[15.5px] font-normal leading-[1.65] text-white/80"
+              className="mt-4 sm:mt-5 max-w-[540px] text-[13px] sm:text-[14px] md:text-[15.5px] font-normal leading-[1.65] text-white/80"
             >
               {hero.description}
             </motion.p>
@@ -221,7 +286,7 @@ export default function AboutPage() {
 
       {/* ── CORE PHILOSOPHY & PILLARS ── */}
       <section id="about-philosophy" className="bg-white scroll-mt-24">
-        <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
           {/* Header */}
           <div className="max-w-[650px] mb-14">
             <motion.div
@@ -241,7 +306,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.06 }}
-              className="text-3xl md:text-4.5xl font-bold font-display text-text-navy leading-tight tracking-tight"
+              className="text-2xl sm:text-3xl md:text-4.5xl font-bold font-display text-text-navy leading-tight tracking-tight"
             >
               {philosophy.heading}
             </motion.h2>
@@ -250,7 +315,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.12 }}
-              className="mt-4 text-[14px] text-text-slate leading-[1.72]"
+              className="mt-4 text-[13px] sm:text-[14px] text-text-slate leading-[1.72]"
             >
               {philosophy.description}
             </motion.p>
@@ -271,121 +336,230 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── INTERACTIVE TIMELINE / HISTORY ── */}
-      <section className="bg-light-gray relative overflow-hidden border-y border-[rgba(201,155,49,0.12)]">
-        {/* Soft blueprints background pattern */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.02] mix-blend-overlay">
+      {/* ── INTERACTIVE SCROLLING TIMELINE / HISTORY ── */}
+      <section ref={historySectionRef} className="bg-light-gray relative overflow-hidden border-y border-[rgba(201,155,49,0.12)] py-16 lg:py-24">
+        {/* Scrolling watermark background text for parallax depth */}
+        <motion.div 
+          style={{ y: watermarkY }}
+          className="absolute right-[-8%] top-[12%] text-[15vw] font-display font-black text-brand-gold/[0.015] pointer-events-none select-none tracking-tighter"
+        >
+          ESTABLISHED 2009
+        </motion.div>
+
+        <motion.div 
+          style={{ y: useTransform(scrollYProgress, [0, 1], [60, -60]) }}
+          className="absolute left-[-5%] bottom-[10%] text-[12vw] font-display font-black text-brand-gold/[0.015] pointer-events-none select-none tracking-tighter"
+        >
+          FIRST CHOICE
+        </motion.div>
+
+        {/* Soft blueprints background pattern - scroll parallax */}
+        <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="story-dots" width="30" height="30" patternUnits="userSpaceOnUse">
-                <circle cx="1.5" cy="1.5" r="0.75" fill="#031b31" />
+              <pattern id="story-dots" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1.2" fill="#031b31" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#story-dots)" />
           </svg>
-        </div>
+        </motion.div>
 
-        <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left side: Timeline Content & Interactive Navigation */}
-            <div className="lg:col-span-7 flex flex-col gap-8">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="w-5 h-[1.5px] bg-brand-gold" />
-                  <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
-                    {story.badge}
-                  </p>
-                </div>
-
-                <h2 className="text-3xl md:text-4.5xl font-bold font-display text-text-navy leading-[1.12] tracking-tight">
-                  {story.heading1}{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
-                    {story.heading2}
-                  </span>
-                </h2>
-
-                <p className="text-[13.5px] text-text-slate leading-[1.75] font-sans">
-                  {story.description}
-                </p>
-              </div>
-
-              {/* Elegant Milestone selector bar */}
-              <div className="relative flex flex-col gap-4 mt-2">
-                <div className="relative flex items-center justify-between w-full border-b border-gray-200 pb-2">
-                  {/* Connector line behind circles */}
-                  <div className="absolute bottom-2 left-0 right-0 h-[2px] bg-gray-200" />
-                  <motion.div
-                    className="absolute bottom-2 h-[2px] bg-[var(--brand-gold)] transition-all duration-300"
-                    style={{
-                      left: `${(activeMilestone / (story.milestones.length - 1)) * 90}%`,
-                      width: `${100 / story.milestones.length}%`
-                    }}
-                  />
-
-                  {story.milestones.map((milestone, idx) => (
-                    <button
-                      key={milestone.year}
-                      onClick={() => setActiveMilestone(idx)}
-                      className={`relative z-10 flex flex-col items-center gap-2 pb-1 focus:outline-none cursor-pointer group`}
-                    >
-                      <span className={`text-[12px] font-display font-black tracking-wider transition-colors duration-300 ${activeMilestone === idx ? "text-[var(--brand-gold)] font-bold scale-110" : "text-text-slate group-hover:text-primary-navy"}`}>
-                        {milestone.year}
-                      </span>
-                      <div className={`w-3.5 h-3.5 rounded-full border-2 transition-all duration-300 flex items-center justify-center
-                        ${activeMilestone === idx ? "border-[var(--brand-gold)] bg-white scale-110" : "border-gray-300 bg-gray-100 group-hover:border-gray-400"}
-                      `}>
-                        {activeMilestone === idx && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-[var(--brand-gold)] animate-pulse" />
-                        )}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Animated active milestone content display */}
-                <div className="min-h-[160px] p-6 rounded-xl border border-[rgba(201,155,49,0.18)] bg-white shadow-sm relative overflow-hidden flex flex-col justify-between">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeMilestone}
-                      initial={{ opacity: 0, x: 12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -12 }}
-                      transition={{ duration: 0.35 }}
-                      className="flex flex-col gap-3"
-                    >
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                        <h4 className="text-[15px] font-bold text-text-navy tracking-tight uppercase">
-                          {story.milestones[activeMilestone].title}
-                        </h4>
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[rgba(201,155,49,0.1)] border border-[rgba(201,155,49,0.18)] text-[9px] font-bold text-[var(--brand-gold)] uppercase tracking-wider">
-                          {story.milestones[activeMilestone].highlight}
-                        </span>
-                      </div>
-                      <p className="text-[13px] text-text-slate leading-[1.7] font-sans">
-                        {story.milestones[activeMilestone].desc}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
-                  {/* Decorative badge */}
-                  <div className="absolute -bottom-6 -right-6 text-[64px] font-display font-black text-brand-gold/[0.04] pointer-events-none select-none tracking-tighter">
-                    {story.milestones[activeMilestone].year}
-                  </div>
-                </div>
-              </div>
+        <div className="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Header */}
+          <div className="flex flex-col gap-4 mb-16 max-w-[620px]">
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-[1.5px] bg-brand-gold" />
+              <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
+                {story.badge}
+              </p>
             </div>
 
-            {/* Right side: Story Image Container */}
-            <div className="lg:col-span-5 relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-[rgba(201,155,49,0.2)] shadow-xl group">
-              {/* Inner gold frame */}
-              <div className="absolute inset-2 border border-brand-gold/10 group-hover:border-brand-gold/30 transition-colors duration-500 z-10 pointer-events-none" />
-              <Image
-                src={story.image}
-                alt={story.imageAlt}
-                fill
-                loading="lazy"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover transition-transform duration-[1200ms] group-hover:scale-105"
-              />
+            <h2 className="text-3xl md:text-4.5xl font-bold font-display text-text-navy leading-[1.12] tracking-tight">
+              {story.heading1}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
+                {story.heading2}
+              </span>
+            </h2>
+
+            <p className="text-[14px] text-text-slate leading-[1.7] font-sans">
+              {story.description}
+            </p>
+          </div>
+
+          {/* Timeline Container */}
+          <div ref={timelineRef} className="relative">
+            {/* The vertical timeline track line (centered on desktop, left-aligned on mobile) */}
+            {/* Background track line */}
+            <div className="absolute left-[12px] sm:left-[15px] lg:left-1/2 lg:-translate-x-1/2 top-4 bottom-4 w-[2px] bg-gray-200 pointer-events-none" />
+
+            {/* Active Drawing Progress Line */}
+            <motion.div 
+              className="absolute left-[12px] sm:left-[15px] lg:left-1/2 lg:-translate-x-1/2 top-4 bottom-4 w-[2px] bg-brand-gold origin-top pointer-events-none"
+              style={{ scaleY: lineScaleY }}
+            />
+
+            <div className="flex flex-col">
+              {story.milestones.map((milestone, index) => {
+                const Icon = IconMap[milestone.icon] || Award;
+                const isEven = index % 2 === 1;
+
+                return (
+                  <div key={milestone.year} className="relative pb-16 lg:pb-24 last:pb-0 group overflow-hidden">
+                    {/* Centered Timeline Node (Desktop only - scales, rotates, and lights up into view) */}
+                    <motion.div
+                      initial={{ scale: 0, rotate: -30, backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#9ca3af" }}
+                      whileInView={{ scale: 1, rotate: 0, backgroundColor: "#ffffff", borderColor: "#c99b31", color: "#c99b31" }}
+                      viewport={{ once: false, margin: "-180px 0px -180px 0px" }}
+                      transition={{ type: "spring", stiffness: 140, damping: 15 }}
+                      className="absolute left-1/2 -translate-x-1/2 top-4 w-9 h-9 rounded-full border-2 z-10 hidden lg:flex items-center justify-center shadow-[0_0_12px_rgba(8,38,66,0.05)] hover:bg-brand-gold hover:text-white hover:border-brand-gold transition-all duration-300"
+                    >
+                      <Icon size={14} strokeWidth={2.2} />
+                    </motion.div>
+
+                    {/* Mobile Left Timeline Node (Scales on scroll) */}
+                    <motion.div
+                      initial={{ scale: 0, backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#9ca3af" }}
+                      whileInView={{ scale: 1, backgroundColor: "#ffffff", borderColor: "#c99b31", color: "#c99b31" }}
+                      viewport={{ once: false, margin: "-120px 0px -120px 0px" }}
+                      transition={{ type: "spring", stiffness: 180, damping: 12 }}
+                      className="absolute left-[-4px] sm:left-[-1px] top-1.5 w-8 h-8 rounded-full border-2 z-10 flex lg:hidden items-center justify-center shadow-sm hover:bg-brand-gold hover:text-white hover:border-brand-gold transition-all duration-300"
+                    >
+                      <Icon size={13} strokeWidth={2.2} />
+                    </motion.div>
+
+                    <div className="pl-8 sm:pl-12 lg:pl-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+                      {/* Text details card (slides in from left or right) */}
+                      <motion.div
+                        initial={{ opacity: 0, x: isEven ? 45 : -45 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-120px" }}
+                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                        className={`lg:col-span-6 ${isEven ? "lg:order-2" : "lg:order-1"}`}
+                      >
+                        <ParallaxTilt className="flex flex-col gap-4 p-4 sm:p-8 rounded-2xl border border-gray-100 bg-white shadow-[0_4px_20px_rgba(8,38,66,0.04)] relative overflow-hidden transition-colors duration-500 hover:border-brand-gold/25 group">
+                          {(isHovered, coords) => (
+                            <>
+                              {/* Huge watermark year inside the card, floating in 3D */}
+                              <motion.div 
+                                animate={{
+                                  x: isHovered ? coords.x * -20 : 0,
+                                  y: isHovered ? coords.y * -20 : 0,
+                                  scale: isHovered ? 1.05 : 1
+                                }}
+                                transition={{ type: "spring", stiffness: 150, damping: 18 }}
+                                className="absolute -bottom-6 -right-6 text-[90px] font-display font-black text-brand-gold/[0.04] pointer-events-none select-none tracking-tighter group-hover:text-brand-gold/[0.07] transition-colors duration-300"
+                              >
+                                {milestone.year}
+                              </motion.div>
+
+                              <div className="flex items-center justify-between flex-wrap gap-2 relative z-10">
+                                <span className="text-[26px] font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
+                                  {milestone.year}
+                                </span>
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[rgba(201,155,49,0.08)] border border-[rgba(201,155,49,0.18)] text-[9px] font-black text-[var(--brand-gold)] uppercase tracking-widest">
+                                  {milestone.highlight}
+                                </span>
+                              </div>
+
+                              <h3 className="text-[16px] font-bold text-text-navy tracking-tight relative z-10 uppercase">
+                                {milestone.title}
+                              </h3>
+
+                              <p className="text-[13px] text-text-slate leading-[1.7] font-sans relative z-10">
+                                {milestone.desc}
+                              </p>
+
+                              {/* Achievements Bullets with staggered delays */}
+                              {milestone.achievements && (
+                                <ul className="mt-2 space-y-2.5 text-[12.5px] text-text-slate relative z-10 border-t border-gray-100 pt-4">
+                                  {milestone.achievements.map((ach, bulletIdx) => (
+                                    <motion.li
+                                      key={ach}
+                                      initial={{ opacity: 0, x: -8 }}
+                                      whileInView={{ opacity: 1, x: 0 }}
+                                      viewport={{ once: true }}
+                                      transition={{ duration: 0.4, delay: 0.15 + bulletIdx * 0.08 }}
+                                      className="flex items-start gap-2.5"
+                                    >
+                                      <span className="flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full bg-[rgba(201,155,49,0.08)] text-[var(--brand-gold)] mt-0.5 shadow-sm">
+                                        <Check size={9} strokeWidth={3} />
+                                      </span>
+                                      <span>{ach}</span>
+                                    </motion.li>
+                                  ))}
+                                </ul>
+                              )}
+                            </>
+                          )}
+                        </ParallaxTilt>
+                      </motion.div>
+
+                      {/* Photo card (slides in from opposite side) */}
+                      <motion.div
+                        initial={{ opacity: 0, x: isEven ? -45 : 45 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-120px" }}
+                        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                        className={`lg:col-span-6 ${isEven ? "lg:order-1" : "lg:order-2"}`}
+                      >
+                        <ParallaxTilt className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-gray-100 shadow-[0_6px_25px_rgba(8,38,66,0.05)] bg-white group">
+                          {(isHovered, coords) => (
+                            <>
+                              {/* Inner gold frame shifting in 3D */}
+                              <motion.div 
+                                style={{ transformStyle: "preserve-3d", zIndex: 20 }}
+                                animate={{
+                                  x: isHovered ? coords.x * 12 : 0,
+                                  y: isHovered ? coords.y * 12 : 0,
+                                }}
+                                transition={{ type: "spring", stiffness: 180, damping: 20 }}
+                                className="absolute inset-2.5 border border-brand-gold/15 group-hover:border-brand-gold/25 transition-colors duration-500 z-20 pointer-events-none rounded-xl" 
+                              />
+                              
+                              {/* Blueprint grid dots overlay */}
+                              <motion.div 
+                                style={{ transformStyle: "preserve-3d", zIndex: 10 }}
+                                animate={{
+                                  x: isHovered ? -coords.x * 5 : 0,
+                                  y: isHovered ? -coords.y * 5 : 0,
+                                  opacity: isHovered ? 0.05 : 0.01
+                                }}
+                                className="absolute inset-0 bg-white pointer-events-none z-10"
+                                style={{
+                                  backgroundImage: `radial-gradient(circle, #c99b31 1px, transparent 1px)`,
+                                  backgroundSize: "20px 20px"
+                                }}
+                              />
+
+                              {/* Active Image shifting in opposite direction */}
+                              <motion.div
+                                className="absolute inset-0 w-full h-full"
+                                style={{ transformStyle: "preserve-3d" }}
+                                animate={{
+                                  scale: isHovered ? 1.04 : 1,
+                                  x: isHovered ? coords.x * -6 : 0,
+                                  y: isHovered ? coords.y * -6 : 0,
+                                }}
+                                transition={{ type: "spring", stiffness: 200, damping: 22 }}
+                              >
+                                <Image
+                                  src={milestone.image}
+                                  alt={milestone.imageAlt}
+                                  fill
+                                  loading="lazy"
+                                  sizes="(max-width: 1024px) 100vw, 40vw"
+                                  className="object-cover"
+                                />
+                              </motion.div>
+                            </>
+                          )}
+                        </ParallaxTilt>
+                      </motion.div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -393,7 +567,7 @@ export default function AboutPage() {
 
       {/* ── EXECUTIVE LEADERSHIP ── */}
       <section className="bg-white">
-        <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-24">
+        <div className="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           {/* Header */}
           <div className="text-center max-w-[620px] mx-auto mb-16">
             <div className="inline-flex items-center gap-2 mb-4 justify-center">
@@ -473,7 +647,7 @@ export default function AboutPage() {
                   </div>
 
                   {/* Profile Details */}
-                  <div className="p-6 flex flex-col gap-3 flex-grow border-t-2 border-transparent group-hover:border-brand-gold transition-colors duration-500">
+                  <div className="p-5 sm:p-6 flex flex-col gap-3 flex-grow border-t-2 border-transparent group-hover:border-brand-gold transition-colors duration-500">
                     <div>
                       <h3 className="text-[15.5px] font-bold text-text-navy tracking-tight group-hover:text-brand-gold transition-colors duration-200">
                         {member.name}
@@ -508,11 +682,11 @@ export default function AboutPage() {
           </svg>
         </div>
 
-        <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 relative z-10">
+        <div className="mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center">
             {stats.map((stat, idx) => (
               <div key={stat.label} className={`flex flex-col gap-1.5 ${idx >= 2 ? "pt-6 md:pt-0" : idx === 1 ? "pt-0" : ""}`}>
-                <span className="text-3.5xl md:text-4.5xl font-display font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-[var(--tagline-gold)] to-brand-gold">
+                <span className="text-[26px] sm:text-[32px] md:text-4.5xl font-display font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-[var(--tagline-gold)] to-brand-gold">
                   {stat.value}
                 </span>
                 <span className="text-[10.5px] uppercase font-bold tracking-[0.15em] text-white/60">

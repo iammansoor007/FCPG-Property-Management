@@ -47,6 +47,7 @@ export default function Header() {
     if (item === "Home") return "/";
     if (item === "About Us") return "/about";
     if (item === "Contact") return "/contact";
+    if (item === "FAQ") return "/#resources";
     return `/#${item.toLowerCase().replaceAll(" ", "-")}`;
   };
 
@@ -67,22 +68,17 @@ export default function Header() {
       {/* Elegant thin gold bottom fading accent line */}
       <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)]/80 to-transparent pointer-events-none" />
       
-      <div className={`mx-auto max-w-[1160px] px-6 transition-all duration-300 ${scrolled ? "py-2" : "py-3 lg:py-4"}`}>
-        <div className="grid grid-cols-[auto_1fr] items-center gap-6 lg:gap-10">
-          {/* Logo */}
-          <Link href="#" className="flex items-center gap-3 shrink-0" aria-label={`${brand.first} ${brand.last}`}>
-            <LogoMark />
-            <div className="leading-tight">
-              <p className="text-[17px] sm:text-[21px] font-display font-bold uppercase tracking-[0.04em] text-white">{brand.first}</p>
-              <p className="text-[10px] sm:text-[13px] font-bold uppercase tracking-[0.17em] text-white/80 -mt-0.5">{brand.last}</p>
-              <p className="text-[7px] sm:text-[8px] font-medium uppercase tracking-[0.2em] text-[var(--tagline-gold)] mt-1">{brand.tagline}</p>
-            </div>
-          </Link>
-
-          {/* Right Side Info & Nav */}
-          <div className="flex flex-col">
-            {/* Top Row: Contact info — hidden when scrolled to compact the nav */}
-            <div className={`lg:flex items-center justify-end gap-1 text-[10px] font-semibold uppercase tracking-wider text-white/70 pb-2 border-b border-white/10 transition-all duration-300 ${scrolled ? "hidden" : "hidden lg:flex"}`}>
+      {/* Top Bar: Contact info — hidden when scrolled */}
+      <AnimatePresence initial={false}>
+        {!scrolled && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="border-b border-white/10 hidden lg:block overflow-hidden"
+          >
+            <div className="mx-auto max-w-[1160px] px-6 py-2 flex items-center justify-end gap-1 text-[10px] font-semibold uppercase tracking-wider text-white/70">
               <Link
                 href={contact.phoneHref}
                 className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
@@ -109,112 +105,126 @@ export default function Header() {
                 <FacebookIcon className="h-3.5 w-3.5" />
               </Link>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            {/* Bottom Row: Nav links & Button */}
-            <div className="flex items-center justify-end gap-6 pt-2">
-              <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-                {nav.map((item, index) => {
-                  const hasDropdown = item === "Services" || item === "Resources";
-                  const dropdownItems = item === "Services" ? servicesDropdownItems : resourcesDropdownItems;
+      {/* Main Header Row */}
+      <div className={`mx-auto max-w-[1160px] px-6 transition-all duration-300 relative flex items-center justify-between ${scrolled ? "py-1.5 lg:py-2" : "py-2.5 lg:py-3"}`}>
+        {/* Logo */}
+        <Link href="#" className="flex items-center gap-3 shrink-0" aria-label={`${brand.first} ${brand.last}`}>
+          <LogoMark />
+          <div className="leading-tight">
+            <p className="text-[17px] sm:text-[21px] font-display font-bold uppercase tracking-[0.04em] text-white">{brand.first}</p>
+            <p className="text-[10px] sm:text-[13px] font-bold uppercase tracking-[0.17em] text-white/80 -mt-0.5">{brand.last}</p>
+            <p className="text-[7px] sm:text-[8px] font-medium uppercase tracking-[0.2em] text-[var(--tagline-gold)] mt-1">{brand.tagline}</p>
+          </div>
+        </Link>
 
-                  return (
-                    <div
-                      key={item}
-                      className="relative py-3"
-                      onMouseEnter={() => setHoveredNav(item)}
-                      onMouseLeave={() => setHoveredNav(null)}
+        {/* Centered Navigation Links */}
+        <nav className="hidden md:flex items-center gap-3 lg:gap-6 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30">
+          {nav.map((item, index) => {
+            const hasDropdown = item === "Services" || item === "Resources";
+            const dropdownItems = item === "Services" ? servicesDropdownItems : resourcesDropdownItems;
+
+            return (
+              <div
+                key={item}
+                className="relative py-3"
+                onMouseEnter={() => setHoveredNav(item)}
+                onMouseLeave={() => setHoveredNav(null)}
+              >
+                <Link
+                  href={getNavLink(item)}
+                  className={`relative flex items-center gap-1 px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-wider transition-colors duration-300 hover:text-[var(--brand-gold)] ${
+                    hoveredNav === item ? "text-[var(--brand-gold)]" : index === 0 ? "text-[var(--brand-gold)]" : "text-white/90"
+                  }`}
+                >
+                  {item}
+                  {hasDropdown && (
+                    <motion.span
+                      animate={{ rotate: hoveredNav === item ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="inline-block"
                     >
-                      <Link
-                        href={getNavLink(item)}
-                        className={`relative flex items-center gap-1 px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-wider transition-colors duration-300 hover:text-[var(--brand-gold)] ${
-                          hoveredNav === item ? "text-[var(--brand-gold)]" : index === 0 ? "text-[var(--brand-gold)]" : "text-white/90"
-                        }`}
-                      >
-                        {item}
-                        {hasDropdown && (
-                          <motion.span
-                            animate={{ rotate: hoveredNav === item ? 180 : 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="inline-block"
-                          >
-                            <ChevronDown size={11} className="opacity-70" />
-                          </motion.span>
-                        )}
-                        {hoveredNav === item && (
-                          <motion.span
-                            layoutId="nav-underline"
-                            className="absolute bottom-0 left-3 right-3 h-[2px] bg-[var(--brand-gold)]"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                      </Link>
+                      <ChevronDown size={11} className="opacity-70" />
+                    </motion.span>
+                  )}
+                  {hoveredNav === item && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute bottom-0 left-3 right-3 h-[2px] bg-[var(--brand-gold)]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
 
-                      {/* Dropdown Menu Container */}
-                      <AnimatePresence>
-                        {hasDropdown && hoveredNav === item && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 15, scale: 0.98 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 15, scale: 0.98 }}
-                            transition={{ duration: 0.2 }}
-                            className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 rounded-lg border border-white/10 bg-[var(--midnight-navy-95)] backdrop-blur-md p-5 shadow-2xl z-50 text-left ${
-                              item === "Services" ? "w-[480px] grid grid-cols-2 gap-4" : "w-[300px] flex flex-col gap-3.5"
+                {/* Dropdown Menu Container */}
+                <AnimatePresence>
+                  {hasDropdown && hoveredNav === item && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 15, scale: 0.98 }}
+                      transition={{ duration: 0.2 }}
+                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 rounded-lg border border-white/10 bg-[var(--midnight-navy-95)] backdrop-blur-md p-5 shadow-2xl z-50 text-left ${
+                        item === "Services" ? "w-[480px] grid grid-cols-2 gap-4" : "w-[300px] flex flex-col gap-3.5"
+                      }`}
+                    >
+                      {dropdownItems.map((subItem, subIdx) => {
+                        const SubIcon = subItem.icon;
+                        const isLastOdd = item === "Services" && subIdx === 4;
+                        return (
+                          <Link
+                            key={subItem.title}
+                            href={subItem.href}
+                            className={`group flex items-start gap-3 p-2.5 rounded-[4px] hover:bg-white/5 transition duration-200 ${
+                              isLastOdd ? "col-span-2" : ""
                             }`}
                           >
-                            {dropdownItems.map((subItem, subIdx) => {
-                              const SubIcon = subItem.icon;
-                              const isLastOdd = item === "Services" && subIdx === 4;
-                              return (
-                                <Link
-                                  key={subItem.title}
-                                  href={subItem.href}
-                                  className={`group flex items-start gap-3 p-2.5 rounded-[4px] hover:bg-white/5 transition duration-200 ${
-                                    isLastOdd ? "col-span-2" : ""
-                                  }`}
-                                >
-                                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--primary-navy)] text-[var(--brand-gold)] group-hover:bg-[var(--brand-gold)] group-hover:text-white transition-all duration-300">
-                                    {SubIcon && <SubIcon size={14} />}
-                                  </span>
-                                  <div>
-                                    <p className="text-[11.5px] font-bold uppercase tracking-wider text-white group-hover:text-[var(--brand-gold)] transition duration-200">
-                                      {subItem.title}
-                                    </p>
-                                    <p className="mt-0.5 text-[10px] leading-normal text-white/60 font-medium">
-                                      {subItem.description}
-                                    </p>
-                                  </div>
-                                </Link>
-                              );
-                            })}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </nav>
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--primary-navy)] text-[var(--brand-gold)] group-hover:bg-[var(--brand-gold)] group-hover:text-white transition-all duration-300">
+                              {SubIcon && <SubIcon size={14} />}
+                            </span>
+                            <div>
+                              <p className="text-[11.5px] font-bold uppercase tracking-wider text-white group-hover:text-[var(--brand-gold)] transition duration-200">
+                                {subItem.title}
+                              </p>
+                              <p className="mt-0.5 text-[10px] leading-normal text-white/60 font-medium">
+                                {subItem.description}
+                              </p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </nav>
 
-              <Link
-                href="/contact"
-                className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
-              >
-                <CalendarDays size={13} className="transition-transform duration-300 group-hover:rotate-12" />
-                {ctaLabel}
-              </Link>
+        {/* Right Side Actions */}
+        <div className="flex items-center gap-4 shrink-0">
+          <Link
+            href="/contact"
+            className="group hidden sm:flex h-[38px] items-center gap-2 bg-[var(--brand-gold)] px-5 text-[10.5px] font-semibold uppercase tracking-wider !text-white hover:!text-white transition-all duration-200 hover:bg-[var(--primary-navy)] active:scale-[0.97] rounded-[4px]"
+          >
+            <CalendarDays size={13} className="transition-transform duration-300 group-hover:rotate-12" />
+            {ctaLabel}
+          </Link>
 
-              {/* Mobile Hamburger Menu button */}
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className="flex md:hidden h-10 w-10 items-center justify-center border border-white/20 hover:bg-white/5 transition cursor-pointer"
-                aria-label="Open menu"
-              >
-                <Menu size={20} />
-              </button>
-            </div>
-          </div>
+          {/* Mobile Hamburger Menu button */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex md:hidden h-10 w-10 items-center justify-center border border-white/20 hover:bg-white/5 transition cursor-pointer"
+            aria-label="Open menu"
+          >
+            <Menu size={20} />
+          </button>
         </div>
       </div>
 

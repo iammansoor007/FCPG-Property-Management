@@ -64,9 +64,21 @@
     "heading2": "Protect Your Asset.",
     "description": "First Choice Property Group brings certified operational excellence, responsive management, and state-of-the-art technology to property owners and homeowner associations across South Carolina.",
     "trustItems": [
-      { "icon": "Clock", "title": "24-Hr SLA", "desc": "Guaranteed response times." },
-      { "icon": "ShieldCheck", "title": "Licensed SC", "desc": "Fully certified managers." },
-      { "icon": "Layers", "title": "Resource Hub", "desc": "Owner checklists & templates." }
+      {
+        "icon": "Clock",
+        "title": "24-Hr SLA",
+        "desc": "Guaranteed response times."
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": "Licensed SC",
+        "desc": "Fully certified managers."
+      },
+      {
+        "icon": "Layers",
+        "title": "Resource Hub",
+        "desc": "Owner checklists & templates."
+      }
     ],
     "cardTag": "executive desk active",
     "cardHeading": "Begin a Partnership",
@@ -88,10 +100,32 @@
     "heading2": "Request a Proposal.",
     "description": "Ready to elevate your property standards? Submit your association or property details below, and our leadership team will respond with a tailored proposal package.",
     "cards": [
-      { "type": "address", "label": "Corporate HQ", "line1": "Greenville, SC", "line2": "124 Verdae Blvd, 29607" },
-      { "type": "phone", "label": "Direct Line", "href": "tel:8643260000", "line1": "(864) 326-0000", "line2": "SLA: < 1m Wait Time" },
-      { "type": "email", "label": "Corporate Inbox", "href": "mailto:info@firstchoicepg.com", "line1": "info@firstchoicepg.com", "line2": "SLA: < 2h Response" },
-      { "type": "hours", "label": "Business Hours", "line1": "8:00 AM - 5:00 PM", "line2": "Monday through Friday" }
+      {
+        "type": "address",
+        "label": "Corporate HQ",
+        "line1": "Greenville, SC",
+        "line2": "124 Verdae Blvd, 29607"
+      },
+      {
+        "type": "phone",
+        "label": "Direct Line",
+        "href": "tel:8643260000",
+        "line1": "(864) 326-0000",
+        "line2": "SLA: < 1m Wait Time"
+      },
+      {
+        "type": "email",
+        "label": "Corporate Inbox",
+        "href": "mailto:info@firstchoicepg.com",
+        "line1": "info@firstchoicepg.com",
+        "line2": "SLA: < 2h Response"
+      },
+      {
+        "type": "hours",
+        "label": "Business Hours",
+        "line1": "8:00 AM - 5:00 PM",
+        "line2": "Monday through Friday"
+      }
     ],
     "serviceOptions": [
       "HOA Property Management",
@@ -140,7 +174,12 @@
     },
     "drawerTitle": "Need Assistance?",
     "ctaLabel": "Request a Consultation",
-    "nav": ["Home", "About Us", "Services", "Vendor Network", "Resources", "Contact"],
+    "nav": [
+      "Home",
+      "About Us",
+      "Services",
+      "FAQ"
+    ],
     "servicesDropdownItems": [
       {
         "title": "HOA Management",
@@ -225,8 +264,14 @@
       "address": "Greenville HQ"
     },
     "bottomLinks": [
-      { "label": "Privacy Policy", "href": "#" },
-      { "label": "Terms of Service", "href": "#" }
+      {
+        "label": "Privacy Policy",
+        "href": "#"
+      },
+      {
+        "label": "Terms of Service",
+        "href": "#"
+      }
     ],
     "contact": {
       "phone": "(864) 326-0000",
@@ -239,42 +284,118 @@
       "mapsHref": "https://maps.google.com/?q=1230+Woodruff+Road+Suite+101+Greenville+SC+29607"
     },
     "quickLinks": [
-      { "label": "Home", "href": "/" },
-      { "label": "About Us", "href": "/about" },
-      { "label": "Services", "href": "/#services" },
-      { "label": "Vendor Network", "href": "/#vendor-network" },
-      { "label": "Resources", "href": "/#resources" },
-      { "label": "Contact Us", "href": "/contact" }
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "About Us",
+        "href": "/about"
+      },
+      {
+        "label": "Services",
+        "href": "/#services"
+      },
+      {
+        "label": "Vendor Network",
+        "href": "/#vendor-network"
+      },
+      {
+        "label": "Resources",
+        "href": "/#resources"
+      },
+      {
+        "label": "Contact Us",
+        "href": "/contact"
+      }
     ],
     "services": [
-      { "label": "HOA Management", "href": "/#services" },
-      { "label": "Residential Management", "href": "/#services" },
-      { "label": "Commercial Management", "href": "/#services" },
-      { "label": "Developer & Builder Services", "href": "/#services" },
-      { "label": "Financial Management", "href": "/#services" }
+      {
+        "label": "HOA Management",
+        "href": "/#services"
+      },
+      {
+        "label": "Residential Management",
+        "href": "/#services"
+      },
+      {
+        "label": "Commercial Management",
+        "href": "/#services"
+      },
+      {
+        "label": "Developer & Builder Services",
+        "href": "/#services"
+      },
+      {
+        "label": "Financial Management",
+        "href": "/#services"
+      }
     ],
     "resources": [
-      { "label": "Blog", "href": "/#resources" },
-      { "label": "FAQs", "href": "/#resources" },
-      { "label": "Owner Resources", "href": "/#resources" },
-      { "label": "HOA Resources", "href": "/#resources" },
-      { "label": "Tenant Resources", "href": "/#resources" }
+      {
+        "label": "Blog",
+        "href": "/#resources"
+      },
+      {
+        "label": "FAQs",
+        "href": "/#resources"
+      },
+      {
+        "label": "Owner Resources",
+        "href": "/#resources"
+      },
+      {
+        "label": "HOA Resources",
+        "href": "/#resources"
+      },
+      {
+        "label": "Tenant Resources",
+        "href": "/#resources"
+      }
     ]
   },
   "proofBar": {
     "stats": [
-      { "to": 20, "suffix": "+", "label": "Years of Experience", "sub": "Serving SC since founding" },
-      { "to": 500, "suffix": "+", "label": "Properties Managed", "sub": "Residential, commercial & HOA" },
-      { "to": 98, "suffix": "%", "label": "Client Retention Rate", "sub": "Built on trust & results" },
-      { "text": "5★", "label": "Service Standard", "sub": "Across every division" }
+      {
+        "to": 20,
+        "suffix": "+",
+        "label": "Years of Experience",
+        "sub": "Serving SC since founding"
+      },
+      {
+        "to": 500,
+        "suffix": "+",
+        "label": "Properties Managed",
+        "sub": "Residential, commercial & HOA"
+      },
+      {
+        "to": 98,
+        "suffix": "%",
+        "label": "Client Retention Rate",
+        "sub": "Built on trust & results"
+      },
+      {
+        "text": "5★",
+        "label": "Service Standard",
+        "sub": "Across every division"
+      }
     ]
   },
   "serviceDivisions": {
     "ctaLabel": "Explore Service",
     "trustPills": [
-      { "icon": "ShieldCheck", "label": "Trusted Communities" },
-      { "icon": "MapPin", "label": "Carolina Local" },
-      { "icon": "TrendingUp", "label": "Proven ROI" }
+      {
+        "icon": "ShieldCheck",
+        "label": "Trusted Communities"
+      },
+      {
+        "icon": "MapPin",
+        "label": "Carolina Local"
+      },
+      {
+        "icon": "TrendingUp",
+        "label": "Proven ROI"
+      }
     ],
     "services": [
       {
@@ -361,7 +482,12 @@
     ]
   },
   "vendorNetwork": {
-    "coordinateLabels": ["+ 01_INFRA", "+ 02_ESTHETICS", "+ 03_RESTORATION", "+ 04_COMPLIANCE"],
+    "coordinateLabels": [
+      "+ 01_INFRA",
+      "+ 02_ESTHETICS",
+      "+ 03_RESTORATION",
+      "+ 04_COMPLIANCE"
+    ],
     "scopeTitle": "Scope of services includes",
     "verifiedBadge": "Verified Contractor Network",
     "footerQ": "Are you a licensed and insured South Carolina contractor?",
@@ -442,10 +568,26 @@
   "trustStrip": {
     "bgText": "FC",
     "pillars": [
-      { "stat": "100%", "label": "Licensed & Insured", "body": "Every manager and vendor meets SC's strictest requirements. Zero compromise on protection." },
-      { "stat": "24h", "label": "Response Guarantee", "body": "Guaranteed first-response on every ticket and owner inquiry. Always on, always accountable." },
-      { "stat": "30+", "label": "Active Communities", "body": "From coastal Hilton Head to Upstate Greenville — serving communities statewide." },
-      { "stat": "#1", "label": "Ranked in SC", "body": "Top-ranked HOA & property management firm in South Carolina — three years running." }
+      {
+        "stat": "100%",
+        "label": "Licensed & Insured",
+        "body": "Every manager and vendor meets SC's strictest requirements. Zero compromise on protection."
+      },
+      {
+        "stat": "24h",
+        "label": "Response Guarantee",
+        "body": "Guaranteed first-response on every ticket and owner inquiry. Always on, always accountable."
+      },
+      {
+        "stat": "30+",
+        "label": "Active Communities",
+        "body": "From coastal Hilton Head to Upstate Greenville — serving communities statewide."
+      },
+      {
+        "stat": "#1",
+        "label": "Ranked in SC",
+        "body": "Top-ranked HOA & property management firm in South Carolina — three years running."
+      }
     ],
     "credentials": [
       "SC Real Estate Commission",
@@ -565,9 +707,18 @@
       "title": "Need Direct Assistance?",
       "subtitle": "Our South Carolina support team is standing by.",
       "stats": [
-        { "value": "24/7", "label": "Emergency Support" },
-        { "value": "< 15m", "label": "Response Time" },
-        { "value": "100%", "label": "Local Board Support" }
+        {
+          "value": "24/7",
+          "label": "Emergency Support"
+        },
+        {
+          "value": "< 15m",
+          "label": "Response Time"
+        },
+        {
+          "value": "100%",
+          "label": "Local Board Support"
+        }
       ],
       "phoneHref": "tel:8643260000",
       "phone": "(864) 326-0000",
@@ -610,7 +761,10 @@
     ]
   },
   "serviceAreas": {
-    "coordinateLabels": ["+ 81.1637° W", "+ 33.8361° N"],
+    "coordinateLabels": [
+      "+ 81.1637° W",
+      "+ 33.8361° N"
+    ],
     "mapVersionLabel": "FCPG_CORP_MAP v2.3",
     "tooltipLabels": {
       "statewideTitle": "SC Statewide Presence",
@@ -619,14 +773,70 @@
     },
     "ctaLabel": "Request Statewide Proposal",
     "citiesData": [
-      { "id": "Greenville", "name": "Greenville", "x": 727, "y": 348, "count": "14", "type": "Managed Communities" },
-      { "id": "Spartanburg", "name": "Spartanburg", "x": 738, "y": 346, "count": "9", "type": "Managed Properties" },
-      { "id": "Anderson", "name": "Anderson", "x": 720, "y": 354, "count": "6", "type": "Active Associations" },
-      { "id": "Columbia", "name": "Columbia", "x": 754, "y": 370, "count": "18", "type": "HOA Portfolios" },
-      { "id": "Florence", "name": "Florence", "x": 776, "y": 360, "count": "5", "type": "Client Associations" },
-      { "id": "Myrtle Beach", "name": "Myrtle Beach", "x": 790, "y": 366, "count": "11", "type": "Coastal Communities" },
-      { "id": "Charleston", "name": "Charleston", "x": 772, "y": 390, "count": "22", "type": "Managed Associations" },
-      { "id": "Beaufort", "name": "Beaufort", "x": 760, "y": 398, "count": "7", "type": "Historic Properties" }
+      {
+        "id": "Greenville",
+        "name": "Greenville",
+        "x": 727,
+        "y": 348,
+        "count": "14",
+        "type": "Managed Communities"
+      },
+      {
+        "id": "Spartanburg",
+        "name": "Spartanburg",
+        "x": 738,
+        "y": 346,
+        "count": "9",
+        "type": "Managed Properties"
+      },
+      {
+        "id": "Anderson",
+        "name": "Anderson",
+        "x": 720,
+        "y": 354,
+        "count": "6",
+        "type": "Active Associations"
+      },
+      {
+        "id": "Columbia",
+        "name": "Columbia",
+        "x": 754,
+        "y": 370,
+        "count": "18",
+        "type": "HOA Portfolios"
+      },
+      {
+        "id": "Florence",
+        "name": "Florence",
+        "x": 776,
+        "y": 360,
+        "count": "5",
+        "type": "Client Associations"
+      },
+      {
+        "id": "Myrtle Beach",
+        "name": "Myrtle Beach",
+        "x": 790,
+        "y": 366,
+        "count": "11",
+        "type": "Coastal Communities"
+      },
+      {
+        "id": "Charleston",
+        "name": "Charleston",
+        "x": 772,
+        "y": 390,
+        "count": "22",
+        "type": "Managed Associations"
+      },
+      {
+        "id": "Beaufort",
+        "name": "Beaufort",
+        "x": 760,
+        "y": 398,
+        "count": "7",
+        "type": "Historic Properties"
+      }
     ]
   },
   "aboutPage": {
@@ -690,31 +900,71 @@
           "year": "2009",
           "title": "Foundation in Greenville",
           "desc": "Established FCPG with a single portfolio manager and a mission to introduce transparent financial reporting to HOA boards.",
-          "highlight": "Greenville Office Opened"
+          "highlight": "Greenville Office Opened",
+          "icon": "Building2",
+          "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Greenville SC historical brick architecture",
+          "achievements": [
+            "First Choice Property Group founded in Greenville, SC",
+            "Established transparent, double-entry financial reporting standard",
+            "Onboarded first 5 residential community associations"
+          ]
         },
         {
           "year": "2014",
           "title": "Certified Portfolio Growth",
           "desc": "Achieved AMS and CMCA credentials company-wide and expanded operations to Spartanburg and Anderson regions.",
-          "highlight": "50+ Active Communities"
+          "highlight": "50+ Active Communities",
+          "icon": "Award",
+          "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "SC suburban community neighborhood",
+          "achievements": [
+            "Company-wide certification (CMCA and AMS credentials)",
+            "Expanded regional managers to Spartanburg and Anderson counties",
+            "Surpassed 50 active client communities under management"
+          ]
         },
         {
           "year": "2019",
           "title": "Statewide Expansion",
           "desc": "Opened our Columbia and Charleston offices, introducing developer consulting and coastal windstorm compliance programs.",
-          "highlight": "Columbia & Charleston HQs"
+          "highlight": "Columbia & Charleston HQs",
+          "icon": "TrendingUp",
+          "image": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Columbia SC office building facade",
+          "achievements": [
+            "Opened branch offices in Columbia and Charleston, SC",
+            "Launched dedicated developer consultation division",
+            "Introduced specialized hurricane and coastal windstorm compliance programs"
+          ]
         },
         {
           "year": "2024",
           "title": "Technology Integration",
           "desc": "Launched automated tenant screening workflows, online board portals, and a vetted vendor registry with strict SLA monitoring.",
-          "highlight": "100% Digital Audits"
+          "highlight": "100% Digital Audits",
+          "icon": "Cpu",
+          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Tablet showing property management portal",
+          "achievements": [
+            "Launched secure, real-time board member and owner portals",
+            "Automated tenant screening workflows with 3x income verification",
+            "Integrated digital vendor registry with real-time SLA tracking"
+          ]
         },
         {
           "year": "2026",
           "title": "FCPG Active System V2",
           "desc": "Unveiled our relationship-first standard, managing over 8,500 units with a vetted contractor network and 24-hour SLA.",
-          "highlight": "98.4% Retention Rate"
+          "highlight": "98.4% Retention Rate",
+          "icon": "Handshake",
+          "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
+          "imageAlt": "Board meeting and collaboration",
+          "achievements": [
+            "Unveiled our relationship-driven management partnership standard",
+            "Portfolio expanded to manage over 8,500 units statewide",
+            "Maintained a 98.4% annual client retention rate"
+          ]
         }
       ]
     },
@@ -747,10 +997,22 @@
       ]
     },
     "stats": [
-      { "value": "15+", "label": "Years in Service" },
-      { "value": "8,500+", "label": "Units Managed" },
-      { "value": "120+", "label": "Vetted Contractors" },
-      { "value": "98.4%", "label": "Retention Rate" }
+      {
+        "value": "15+",
+        "label": "Years in Service"
+      },
+      {
+        "value": "8,500+",
+        "label": "Units Managed"
+      },
+      {
+        "value": "120+",
+        "label": "Vetted Contractors"
+      },
+      {
+        "value": "98.4%",
+        "label": "Retention Rate"
+      }
     ]
   },
   "contactPage": {

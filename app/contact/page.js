@@ -132,7 +132,7 @@ export default function ContactPage() {
         {/* Bottom accent gold line */}
         <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)] to-transparent z-20 opacity-70" />
 
-        <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-20 z-20">
+        <div className="relative mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-16 lg:py-20 z-20">
           <motion.div
             initial="hidden"
             animate="show"
@@ -150,7 +150,7 @@ export default function ContactPage() {
             {/* Heading */}
             <motion.h1
               variants={fadeUp}
-              className="text-[36px] sm:text-[48px] lg:text-[58px] font-display font-bold leading-[1.06] tracking-tight text-white"
+              className="text-[28px] sm:text-[48px] lg:text-[58px] font-display font-bold leading-[1.06] tracking-tight text-white"
             >
               {hero.heading1}
               <br />
@@ -172,7 +172,7 @@ export default function ContactPage() {
             {/* Description */}
             <motion.p
               variants={fadeUp}
-              className="mt-5 max-w-[540px] text-[14px] md:text-[15.5px] font-normal leading-[1.65] text-white/80"
+              className="mt-5 max-w-[540px] text-[13px] sm:text-[14px] md:text-[15.5px] font-normal leading-[1.65] text-white/80"
             >
               {hero.description}
             </motion.p>
@@ -206,7 +206,7 @@ export default function ContactPage() {
           }}
         />
 
-        <div className="relative z-10 mx-auto w-full max-w-[1160px] px-6 lg:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
             {/* Left Column: Office Directory & Map */}
@@ -239,7 +239,7 @@ export default function ContactPage() {
                     <Tag
                       key={card.label}
                       {...(isClickable ? { href: card.href } : {})}
-                      className={`p-4 rounded-xl border border-[rgba(5,41,70,0.06)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm transition-all duration-300
+                      className={`p-3.5 sm:p-4 rounded-xl border border-[rgba(5,41,70,0.06)] bg-[#f7f8fa]/80 backdrop-blur-sm shadow-sm transition-all duration-300
                         ${isClickable ? "group cursor-pointer hover:bg-white hover:border-[rgba(201,155,49,0.3)] hover:shadow-md flex flex-col justify-start" : "flex flex-col justify-start"}
                       `}
                     >
@@ -266,7 +266,7 @@ export default function ContactPage() {
               </div>
 
               {/* Interactive SC Presence Map */}
-              <div className="flex flex-col gap-4 p-6 rounded-2xl border border-[rgba(201,155,49,0.18)] bg-white shadow-sm overflow-hidden items-center group relative">
+              <div className="flex flex-col gap-4 p-3 sm:p-6 rounded-2xl border border-[rgba(201,155,49,0.18)] bg-white shadow-sm overflow-hidden items-center group relative">
                 {/* Gold grid overlay decoration */}
                 <div className="absolute inset-0 pointer-events-none opacity-[0.02] mix-blend-overlay">
                   <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -287,7 +287,7 @@ export default function ContactPage() {
 
             {/* Right Column: Detailed Proposal Request Form */}
             <div className="lg:col-span-6 w-full">
-              <div className="p-6 sm:p-10 rounded-2xl border border-[rgba(201,155,49,0.18)] bg-white shadow-xl relative overflow-hidden">
+              <div className="p-4 sm:p-10 rounded-2xl border border-[rgba(201,155,49,0.18)] bg-white shadow-xl relative overflow-hidden">
                 {/* Thin gold top accent border */}
                 <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-brand-gold to-tagline-gold" />
 
