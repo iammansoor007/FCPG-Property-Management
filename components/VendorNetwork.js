@@ -25,7 +25,7 @@ const sections = data.vendorNetwork.sections.map(section => ({
   icon: IconMap[section.icon]
 }));
 
-export default function VendorNetwork() {
+export default function VendorNetwork({ isPage = false }) {
   const { coordinateLabels, scopeTitle, verifiedBadge, footerQ, footerSub, footerPrimaryCta, footerSecondaryCta } = data.vendorNetwork;
   const [activeSection, setActiveSection] = useState(0);
 
@@ -58,7 +58,7 @@ export default function VendorNetwork() {
   return (
     <section
       id="vendor-network"
-      className="relative text-white py-24 lg:py-32 border-b border-white/[0.04]"
+      className="relative text-white py-12 lg:py-16 border-b border-white/[0.04]"
       style={{ background: "radial-gradient(ellipse at 50% 0%, #052946 0%, #031b31 65%, #020c18 100%)" }}
     >
       {/* Modern High-Tech Architectural Grid Background */}
@@ -73,7 +73,7 @@ export default function VendorNetwork() {
           <rect width="100%" height="100%" fill="url(#bg-grid-lines)" />
         </svg>
 
-        {/* Diagonal Light Beam Mesh */}
+        {/* Diagonal Light Mesh */}
         <div 
           className="absolute inset-0 opacity-[0.02] pointer-events-none"
           style={{
@@ -81,14 +81,8 @@ export default function VendorNetwork() {
           }}
         />
 
-        {/* Glow Masking (fades grid toward edges for premium vignette look) */}
+        {/* Glow Masking */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#020c18_95%)]" />
-
-        {/* Golden glowing coordinate crosses at grid intersections */}
-        <div className="absolute top-[18%] left-[12%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[0]}</div>
-        <div className="absolute top-[42%] right-[18%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[1]}</div>
-        <div className="absolute bottom-[35%] left-[28%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[2]}</div>
-        <div className="absolute bottom-[12%] right-[8%] text-brand-gold/25 font-display text-[10px] tracking-widest pointer-events-none select-none">{coordinateLabels[3]}</div>
       </div>
 
       {/* Radial soft gold and sapphire ambient glows */}
@@ -104,21 +98,22 @@ export default function VendorNetwork() {
           <div className="lg:col-span-7 flex flex-col">
             
             {/* Intro Header */}
-            <div className="mb-14 sm:mb-20 max-w-[580px]">
+            <div className={`mb-14 sm:mb-20 ${isPage ? "max-w-[760px] pt-12" : "max-w-[580px]"}`}>
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-5 h-[1.5px] bg-brand-gold" />
                 <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
-                  {sh.badge}
+                  {isPage ? "Approved Contractor Registry" : sh.badge}
                 </p>
               </div>
-              <h2 className="text-[28px] xs:text-3xl sm:text-4xl md:text-5xl font-bold font-display text-white leading-[1.1] tracking-tight">
+              <h2 className={`font-bold font-display text-white leading-[1.1] tracking-tight uppercase ${isPage ? "text-3.5xl sm:text-5xl lg:text-6.5xl" : "text-[28px] xs:text-3xl sm:text-4xl md:text-5xl"}`}>
+                {isPage && <span className="font-serif italic font-normal text-[var(--brand-gold)] lowercase tracking-normal block mb-1">Professional</span>}
                 {sh.heading1}{" "}
-                <br />
+                <br className={isPage ? "hidden sm:inline" : "inline"} />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
                   {sh.heading2}
                 </span>
               </h2>
-              <p className="text-[13px] sm:text-[14px] md:text-[14.5px] text-white/65 leading-relaxed mt-4 sm:mt-6 font-sans">
+              <p className="text-[13.5px] sm:text-[14.5px] md:text-[15.5px] text-white/75 leading-relaxed mt-4 sm:mt-6 font-sans max-w-[660px]">
                 {sh.description}
               </p>
             </div>

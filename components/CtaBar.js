@@ -26,7 +26,7 @@ export default function CtaBar() {
   return (
     <section 
       id="cta-bar" 
-      className="relative overflow-hidden bg-gradient-to-br from-[#031b31] via-[#04203a] to-[#021324] px-6 py-20 sm:py-24 lg:py-28 text-white"
+      className="relative overflow-hidden bg-gradient-to-br from-[#031b31] via-[#04203a] to-[#021324] px-6 py-12 sm:py-16 lg:py-20 text-white"
     >
       {/* CtaBar animation classes (gradient-shine, gold-shimmer, btn-shimmer) are defined in app/globals.css */}
 
@@ -63,16 +63,16 @@ export default function CtaBar() {
         </svg>
       </div>
 
-      {/* Radial soft ambient glows */}
-      <div className="absolute top-1/2 left-1/3 w-[500px] h-[300px] bg-[var(--brand-gold)]/[0.05] rounded-full blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-[#052946]/[0.6] rounded-full blur-[90px] pointer-events-none z-0" />
-
       {/* Architectural blueprint lines overlay */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.05]">
         <div className="absolute top-0 bottom-0 left-[20%] w-[1px] bg-gradient-to-b from-transparent via-white to-transparent" />
         <div className="absolute top-0 bottom-0 left-[80%] w-[1px] bg-gradient-to-b from-transparent via-white to-transparent" />
         <div className="absolute left-0 right-0 top-[30%] h-[1px] bg-gradient-to-r from-transparent via-white to-transparent" />
       </div>
+
+      {/* Radial soft ambient glows */}
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[300px] bg-[var(--brand-gold)]/[0.05] rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-[#052946]/[0.6] rounded-full blur-[90px] pointer-events-none z-0" />
 
       <div className="relative mx-auto max-w-[1160px] z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -86,14 +86,10 @@ export default function CtaBar() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 mb-5 border border-[var(--brand-gold)]/35 rounded-full px-3.5 py-1 bg-[var(--brand-gold)]/[0.04] shadow-[0_2px_10px_rgba(201,155,49,0.05)]"
+              className="inline-flex items-center gap-2 mb-5 border border-[var(--brand-gold)]/25 rounded-full px-3.5 py-1 bg-[var(--brand-gold)]/[0.03] shadow-sm"
             >
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--brand-gold)]"></span>
-              </span>
               <p className="text-[9px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">
-                {ctaBar.sectionTag}
+                {ctaBar.sectionTag.replace(/^\d+\s*\/\s*/, "")}
               </p>
             </motion.div>
 
@@ -103,7 +99,7 @@ export default function CtaBar() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-[32px] sm:text-[40px] lg:text-[46px] font-display font-bold leading-[1.12] tracking-tight text-white"
+              className="text-[30px] sm:text-[38px] lg:text-[44px] font-display font-bold leading-[1.12] tracking-tight text-white"
             >
               {ctaBar.heading1} <br className="hidden sm:inline" />
               <span 
@@ -123,18 +119,18 @@ export default function CtaBar() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[14px] sm:text-[15.5px] font-sans font-medium text-white/75 mt-5 leading-relaxed max-w-[580px]"
+              className="text-[13.5px] sm:text-[14.5px] font-sans font-medium text-white/75 mt-4 leading-relaxed max-w-[580px]"
             >
               {ctaBar.description}
             </motion.p>
 
-            {/* Trust Grid with Interactive Micro-states */}
+            {/* Trust Grid */}
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 pt-8 border-t border-white/10 w-full"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6 pt-6 border-t border-white/10 w-full"
             >
               {ctaBar.trustItems.map((item, i) => {
                 const Icon = IconMap[item.icon];
@@ -143,12 +139,12 @@ export default function CtaBar() {
                     key={item.title}
                     className={`group/item flex items-start gap-3.5 transition-all duration-300${i > 0 ? " sm:border-l sm:border-white/10 sm:pl-6" : ""}`}
                   >
-                    <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-[var(--brand-gold)]/10 border border-[var(--brand-gold)]/20 text-[var(--brand-gold)] mt-0.5 transition-all duration-300 group-hover/item:bg-[var(--brand-gold)]/20 group-hover/item:border-[var(--brand-gold)]/40 group-hover/item:scale-105">
-                      {Icon && <Icon size={16} className="transition-transform duration-300 group-hover/item:rotate-12" />}
+                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--brand-gold)]/10 border border-[var(--brand-gold)]/20 text-[var(--brand-gold)] mt-0.5 transition-all duration-300 group-hover/item:bg-[var(--brand-gold)]/20 group-hover/item:border-[var(--brand-gold)]/40 group-hover/item:scale-105">
+                      {Icon && <Icon size={14} className="transition-transform duration-300 group-hover/item:rotate-12" />}
                     </div>
                     <div>
-                      <h4 className="text-[12px] font-bold text-white tracking-wide uppercase transition-colors duration-300 group-hover/item:text-[var(--brand-gold)]">{item.title}</h4>
-                      <p className="text-[11px] text-white/50 font-medium mt-0.5 leading-normal transition-colors duration-300 group-hover/item:text-white/60">{item.desc}</p>
+                      <h4 className="text-[11.5px] font-bold text-white tracking-wide uppercase transition-colors duration-300 group-hover/item:text-[var(--brand-gold)]">{item.title}</h4>
+                      <p className="text-[10.5px] text-white/50 font-medium mt-0.5 leading-normal transition-colors duration-300 group-hover/item:text-white/60">{item.desc}</p>
                     </div>
                   </div>
                 );
@@ -181,13 +177,6 @@ export default function CtaBar() {
                 }}
               />
 
-              {/* Decorative Tech Grid Lines on card */}
-              <div className="absolute inset-0 pointer-events-none select-none opacity-[0.02] z-0">
-                <div className="absolute left-[33%] top-0 bottom-0 w-[1px] bg-white" />
-                <div className="absolute left-[66%] top-0 bottom-0 w-[1px] bg-white" />
-                <div className="absolute top-[50%] left-0 right-0 h-[1px] bg-white" />
-              </div>
-
               {/* Decorative Gold Corners */}
               <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[var(--brand-gold)]/60 rounded-tl-2xl z-10" />
               <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[var(--brand-gold)]/60 rounded-tr-2xl z-10" />
@@ -198,38 +187,37 @@ export default function CtaBar() {
                 
                 {/* Small indicator pill */}
                 <div className="inline-flex items-center gap-1.5 mb-5 border border-white/10 rounded-full px-3 py-1 bg-white/[0.02]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#10b981] animate-pulse" />
                   <span className="text-[9px] font-bold tracking-widest uppercase text-white/60">{ctaBar.cardTag}</span>
                 </div>
 
-                <h3 className="text-[19px] sm:text-[22px] font-display font-bold text-white leading-tight">
+                <h3 className="text-[18px] sm:text-[20px] font-display font-bold text-white leading-tight">
                   {ctaBar.cardHeading}
                 </h3>
-                <p className="text-[13px] text-white/60 mt-2 leading-relaxed">
+                <p className="text-[12.5px] text-white/60 mt-2 leading-relaxed font-sans">
                   {ctaBar.cardDesc}
                 </p>
 
                 {/* Primary CTA (Schedule) */}
                 <Link
                   href={ctaBar.primaryCtaHref}
-                  className="group/btn btn-shimmer relative flex h-[52px] items-center justify-center gap-2.5 bg-[var(--brand-gold)] border border-[var(--brand-gold)] px-8 text-[11px] font-bold uppercase tracking-wider text-white hover:bg-white hover:!text-[#031b31] hover:border-white active:scale-[0.98] rounded-[6px] shadow-lg shadow-black/10 transition-all duration-300 w-full mt-7"
+                  className="group/btn btn-shimmer relative flex h-[46px] items-center justify-center gap-2.5 bg-[var(--brand-gold)] border border-[var(--brand-gold)] px-6 text-[10.5px] font-bold uppercase tracking-wider text-white hover:bg-white hover:!text-[#031b31] hover:border-white active:scale-[0.98] rounded-[4px] shadow-lg shadow-black/10 transition-all duration-300 w-full mt-6"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {ctaBar.primaryCta}
-                    <CalendarDays size={13} className="transition-transform duration-300 group-hover/btn:scale-110" />
+                    <CalendarDays size={12} className="transition-transform duration-300 group-hover/btn:scale-110" />
                   </span>
                 </Link>
 
                 {/* Secondary CTA (Phone) */}
                 <Link
                   href={ctaBar.secondaryCtaHref}
-                  className="group/phone flex h-[52px] items-center justify-center gap-2.5 border border-white/15 hover:border-[var(--brand-gold)]/40 bg-transparent hover:bg-white/[0.04] px-8 text-[11px] font-bold uppercase tracking-wider text-white transition-all duration-300 active:scale-[0.98] rounded-[6px] w-full mt-3 shadow-sm hover:shadow-[0_4px_20px_rgba(201,155,49,0.1)]"
+                  className="group/phone flex h-[46px] items-center justify-center gap-2.5 border border-white/15 hover:border-[var(--brand-gold)]/40 bg-transparent hover:bg-white/[0.04] px-6 text-[10.5px] font-bold uppercase tracking-wider text-white transition-all duration-300 active:scale-[0.98] rounded-[4px] w-full mt-3 shadow-sm hover:shadow-[0_4px_20px_rgba(201,155,49,0.1)]"
                 >
-                  <Phone size={13} className="transition-transform duration-300 group-hover/phone:scale-110 text-[var(--brand-gold)]" />
+                  <Phone size={12} className="transition-transform duration-300 group-hover/phone:scale-110 text-[var(--brand-gold)]" />
                   {ctaBar.secondaryCta}
                 </Link>
 
-                <div className="flex items-center justify-center gap-2 mt-6 w-full text-[10px] text-white/45 font-medium">
+                <div className="flex items-center justify-center gap-2 mt-5 w-full text-[10px] text-white/45 font-medium">
                   <span>{ctaBar.disclaimer1}</span>
                   <span>•</span>
                   <span>{ctaBar.disclaimer2}</span>
@@ -242,10 +230,6 @@ export default function CtaBar() {
 
         </div>
       </div>
-
-      {/* Decorative side coordinates */}
-      <div className="absolute bottom-8 left-8 text-[9px] font-mono text-white/10 pointer-events-none select-none tracking-widest hidden md:block">{ctaBar.coordLat}</div>
-      <div className="absolute bottom-8 right-8 text-[9px] font-mono text-white/10 pointer-events-none select-none tracking-widest hidden md:block">{ctaBar.coordLng}</div>
     </section>
   );
 }

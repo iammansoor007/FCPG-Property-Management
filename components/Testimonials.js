@@ -108,9 +108,8 @@ function MarqueeColumn({ list, direction = "up", speed = "45s", className = "" }
   return (
     <div className={`relative overflow-hidden h-full ${className}`}>
       <div
-        className={`marquee-track flex flex-col gap-6 py-3 cursor-pointer ${
-          direction === "up" ? "animate-scroll-up" : "animate-scroll-down"
-        }`}
+        className={`marquee-track flex flex-col gap-6 py-3 cursor-pointer ${direction === "up" ? "animate-scroll-up" : "animate-scroll-down"
+          }`}
         style={{
           "--duration": speed,
         }}
@@ -128,7 +127,7 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="relative bg-white overflow-hidden"
       style={{ borderTop: "1px solid #eceae4" }}>
-      
+
       {/* Animation keyframes are defined globally in app/globals.css for performance */}
 
       {/* ── Tilted grid lines background ── */}
@@ -149,7 +148,7 @@ export default function Testimonials() {
       />
 
       {/* ── Background Ambient Glow Blobs (Drifting Fluid Motion) ── */}
-      <motion.div 
+      <motion.div
         animate={{
           scale: [1, 1.12, 0.92, 1],
           x: [0, 25, -20, 0],
@@ -160,9 +159,9 @@ export default function Testimonials() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-[30%] left-[15%] w-[420px] h-[420px] bg-[var(--brand-gold)]/[0.04] rounded-full blur-[110px] pointer-events-none select-none z-0" 
+        className="absolute top-[30%] left-[15%] w-[420px] h-[420px] bg-[var(--brand-gold)]/[0.04] rounded-full blur-[110px] pointer-events-none select-none z-0"
       />
-      <motion.div 
+      <motion.div
         animate={{
           scale: [1, 0.9, 1.15, 1],
           x: [0, -30, 25, 0],
@@ -173,7 +172,7 @@ export default function Testimonials() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute bottom-[20%] right-[15%] w-[480px] h-[480px] bg-[#052946]/[0.045] rounded-full blur-[130px] pointer-events-none select-none z-0" 
+        className="absolute bottom-[20%] right-[15%] w-[480px] h-[480px] bg-[#052946]/[0.045] rounded-full blur-[130px] pointer-events-none select-none z-0"
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
@@ -194,7 +193,7 @@ export default function Testimonials() {
               </span>
               <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{sh.badge}</p>
             </div>
-            
+
             <h2
               className="font-display font-bold text-[var(--text-navy)] leading-[1.08] tracking-tight"
               style={{ fontSize: "clamp(2rem, 4.5vw, 3.4rem)" }}
@@ -202,7 +201,7 @@ export default function Testimonials() {
               <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
                 {sh.heading1}
               </span>
-              <span 
+              <span
                 className="shimmer-gradient block mt-1"
                 style={{
                   color: "transparent",
@@ -215,7 +214,7 @@ export default function Testimonials() {
                 {sh.heading2}
               </span>
             </h2>
-            
+
             <p className="mt-4 font-sans text-[var(--text-slate)] leading-[1.78]" style={{ fontSize: "14px" }}>
               {sh.description}
             </p>
@@ -223,14 +222,14 @@ export default function Testimonials() {
         </div>
 
         {/* ── Marquee container ── */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           className="relative overflow-hidden w-full h-[640px] rounded-[32px] border border-[rgba(5,41,70,0.05)] bg-white/40 backdrop-blur-[4px] shadow-[0_4px_30px_rgba(8,38,66,0.015)]"
         >
-          
+
           {/* Side, top, and bottom vignettes for dramatic fade effect */}
           <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-20" />
           <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-20" />

@@ -68,12 +68,7 @@ function FullBleedCard({
       {/* Subtle hover tint overlay */}
       <div className="absolute inset-0 bg-[#031b31]/0 group-hover:bg-[#031b31]/15 transition-colors duration-700 z-10 pointer-events-none" />
 
-      {/* Index number badge — solid dark navy pill */}
-      <div className="absolute top-5 right-5 z-20 pointer-events-none">
-        <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-midnight-navy/90 backdrop-blur-sm border border-white/[0.08] text-brand-gold font-display font-black text-[13px] leading-none select-none">
-          {String(index).padStart(2, "0")}
-        </span>
-      </div>
+
 
       {/* Badge pill */}
       {badge && (
@@ -112,7 +107,11 @@ function FullBleedCard({
 
         {/* CTA — always shown */}
         <Link
-          href="#contact"
+          href={title.toLowerCase().includes("hoa") ? "/services/hoa-management" : 
+                title.toLowerCase().includes("residential") ? "/services/residential-management" :
+                title.toLowerCase().includes("commercial") ? "/services/commercial-management" :
+                title.toLowerCase().includes("developer") ? "/services/developer-services" :
+                title.toLowerCase().includes("financial") ? "/services/financial-management" : "#contact"}
           className="inline-flex items-center gap-2 self-start mt-0.5 group/cta"
         >
           <span className="text-[10px] font-bold tracking-[0.16em] uppercase text-brand-gold/90 group-hover/cta:text-brand-gold transition-colors duration-300">
@@ -153,7 +152,7 @@ export default function ServiceDivisions() {
       <div className="absolute top-0 left-0 w-[520px] h-[520px] bg-brand-gold/[0.05] rounded-full blur-[130px] pointer-events-none -translate-x-1/2 -translate-y-1/3" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#052946]/[0.04] rounded-full blur-[150px] pointer-events-none translate-x-1/4 translate-y-1/4" />
 
-      <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+      <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-10 lg:py-14 relative z-10">
 
         {/* ── Section Header ── */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">

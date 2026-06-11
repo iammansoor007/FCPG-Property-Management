@@ -16,28 +16,8 @@ export default function ServiceAreas() {
   const activeCityData = citiesData.find(c => c.id === activeCity);
 
   return (
-    <section id="service-areas" className="relative bg-white overflow-hidden py-20 lg:py-28"
+    <section id="service-areas" className="relative bg-white overflow-hidden py-12 lg:py-16"
       style={{ borderTop: "1px solid #eceae4" }}>
-
-      {/* Network animation classes (active-network-line, travel-pulse-line) are defined in app/globals.css */}
-
-
-      {/* ── Background Grid ── */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute z-0"
-        style={{
-          inset: "-40%",
-          backgroundImage: `
-            linear-gradient(rgba(5,41,70,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(5,41,70,0.035) 1px, transparent 1px)
-          `,
-          backgroundSize: "64px 64px",
-          transform: "rotate(15deg)",
-          maskImage: "radial-gradient(ellipse 60% 60% at 50% 50%, black 30%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 60% 60% at 50% 50%, black 30%, transparent 100%)",
-        }}
-      />
 
       {/* Soft Gold Ambient Glow Blob */}
       <motion.div
@@ -113,12 +93,8 @@ export default function ServiceAreas() {
                         : "bg-white/80 backdrop-blur-sm border-[rgba(5,41,70,0.04)] hover:bg-white hover:border-[rgba(201,155,49,0.2)] hover:shadow-[0_4px_12px_rgba(8,38,66,0.02)]"
                       }`}
                   >
-                    {/* Left side: Index + Dot + Name */}
+                    {/* Left side: Dot + Name */}
                     <div className="flex items-center gap-2">
-                      <span className={`text-[9px] font-mono font-bold tracking-wider transition-colors duration-200 ${isActive ? "text-[var(--brand-gold)]" : "text-black/20 group-hover:text-[var(--brand-gold)]/60"
-                        }`}>
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
                       <span className={`h-1.5 w-1.5 rounded-full transition-colors duration-200 ${isActive ? "bg-[var(--brand-gold)] scale-110 shadow-[0_0_6px_var(--brand-gold)]" : "bg-black/10 group-hover:bg-[var(--brand-gold)]/30"
                         }`} />
                       <h4 className={`font-display font-bold text-[12.5px] transition-colors duration-200 ${isActive ? "text-[var(--text-navy)]" : "text-[var(--text-navy)]/80"
@@ -205,12 +181,6 @@ export default function ServiceAreas() {
                   </motion.div>
                 </AnimatePresence>
               </div>
-
-              {/* Dynamic Technical Blueprints (Crosshairs) */}
-              <div className="absolute top-4 left-4 text-[10px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none">{coordinateLabels[0]}</div>
-              <div className="absolute top-4 right-4 text-[10px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none">{coordinateLabels[1]}</div>
-              <div className="absolute bottom-4 right-4 text-[9px] font-mono text-black/20 pointer-events-none select-none">{mapVersionLabel}</div>
-
               {/* South Carolina Interactive Map */}
               <svg viewBox="0 0 520 390" role="img" aria-label="South Carolina service area map" className="h-auto w-full drop-shadow-md relative z-10 select-none">
                 <defs>
@@ -226,11 +196,6 @@ export default function ServiceAreas() {
                     <stop offset="50%" stopColor="#e8b84b" stopOpacity="0.8" />
                     <stop offset="100%" stopColor="var(--brand-gold)" stopOpacity="0.3" />
                   </linearGradient>
-
-                  {/* High-tech gold dot matrix pattern */}
-                  <pattern id="dot-matrix" width="2.8" height="2.8" patternUnits="userSpaceOnUse">
-                    <circle cx="0.46" cy="0.46" r="0.28" fill="var(--brand-gold)" fillOpacity="0.18" />
-                  </pattern>
                 </defs>
 
                 {/* Transformed Map Group to Center & Scale South Carolina Shape */}
@@ -240,12 +205,6 @@ export default function ServiceAreas() {
                   <path
                     d="M 764.94328,408.16488 L 763.16622,409.13438 L 760.57965,407.84109 L 759.93301,405.7395 L 758.63973,402.18297 L 756.37647,400.08137 L 753.7899,399.43473 L 752.1733,394.58492 L 749.42506,388.60347 L 745.22189,386.66353 L 743.12029,384.72361 L 741.82701,382.13704 L 739.72542,380.1971 L 737.46217,378.90382 L 735.19892,375.99393 L 732.12737,373.73069 L 727.60086,371.95241 L 727.11588,370.49747 L 724.69098,367.58758 L 724.20599,366.13262 L 720.81111,360.95949 L 717.41624,361.12115 L 713.37472,358.69623 L 712.08144,357.40295 L 711.75812,355.62468 L 712.56642,353.68476 L 714.82967,352.71478 L 714.31885,350.4257 L 720.08695,348.08913 L 729.20245,343.50013 L 736.97718,342.69182 L 753.09158,342.26934 L 755.72983,344.14677 L 757.40893,347.50499 L 761.71128,346.89501 L 774.32081,345.44005 L 777.2307,346.24836 L 789.84024,353.84642 L 799.94832,361.9681 L 794.52715,367.42644 L 791.94058,373.56954 L 791.4556,379.8743 L 789.839,380.6826 L 788.70737,383.43083 L 786.28247,384.07747 L 784.18088,387.634 L 781.43265,390.38223 L 779.16941,393.7771 L 777.5528,394.5854 L 773.99627,397.98027 L 771.08638,398.14193 L 772.05635,401.37514 L 767.04487,406.8716 L 764.94328,408.16488 z"
                     fill="url(#map-fill-grad)"
-                  />
-
-                  {/* State outline - Gold dot matrix pattern overlay */}
-                  <path
-                    d="M 764.94328,408.16488 L 763.16622,409.13438 L 760.57965,407.84109 L 759.93301,405.7395 L 758.63973,402.18297 L 756.37647,400.08137 L 753.7899,399.43473 L 752.1733,394.58492 L 749.42506,388.60347 L 745.22189,386.66353 L 743.12029,384.72361 L 743.12029,384.72361 L 741.82701,382.13704 L 739.72542,380.1971 L 737.46217,378.90382 L 735.19892,375.99393 L 732.12737,373.73069 L 727.60086,371.95241 L 727.11588,370.49747 L 724.69098,367.58758 L 724.20599,366.13262 L 720.81111,360.95949 L 717.41624,361.12115 L 713.37472,358.69623 L 712.08144,357.40295 L 711.75812,355.62468 L 712.56642,353.68476 L 714.82967,352.71478 L 714.31885,350.4257 L 720.08695,348.08913 L 729.20245,343.50013 L 736.97718,342.69182 L 753.09158,342.26934 L 755.72983,344.14677 L 757.40893,347.50499 L 761.71128,346.89501 L 774.32081,345.44005 L 777.2307,346.24836 L 789.84024,353.84642 L 799.94832,361.9681 L 794.52715,367.42644 L 791.94058,373.56954 L 791.4556,379.8743 L 789.839,380.6826 L 788.70737,383.43083 L 786.28247,384.07747 L 784.18088,387.634 L 781.43265,390.38223 L 779.16941,393.7771 L 777.5528,394.5854 L 773.99627,397.98027 L 771.08638,398.14193 L 772.05635,401.37514 L 767.04487,406.8716 L 764.94328,408.16488 z"
-                    fill="url(#dot-matrix)"
                   />
 
                   {/* State outline - Glowing border line */}

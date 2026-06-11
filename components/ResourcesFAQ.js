@@ -16,7 +16,7 @@ export default function ResourcesFAQ() {
   };
 
   return (
-    <section id="resources" className="relative bg-gradient-to-b from-white via-[#f7f8fa] to-[#f3f4f7] overflow-hidden py-20 lg:py-28"
+    <section id="resources" className="relative bg-gradient-to-b from-white via-[#f7f8fa] to-[#f3f4f7] overflow-hidden py-12 lg:py-16"
       style={{ borderTop: "1px solid #eceae4" }}>
       
       {/* ── Background Dot Grid ── */}
@@ -32,21 +32,21 @@ export default function ResourcesFAQ() {
         }}
       />
 
-      {/* Soft Ambient Gold Glow */}
-      <div className="absolute top-1/4 right-[5%] w-[450px] h-[450px] bg-[var(--brand-gold)]/[0.06] rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute bottom-1/4 left-[5%] w-[450px] h-[450px] bg-[#052946]/[0.04] rounded-full blur-[120px] pointer-events-none z-0" />
-
       {/* Floating Animated Gold Dashed Outlines */}
       <div className="absolute top-8 left-[6%] w-64 h-64 rounded-full border border-dashed border-[var(--brand-gold)]/8 pointer-events-none animate-[spin_90s_linear_infinite] z-0" />
       <div className="absolute bottom-12 right-[4%] w-80 h-80 rounded-full border border-dashed border-[var(--brand-gold)]/6 pointer-events-none animate-[spin_130s_linear_infinite_reverse] z-0" />
 
+      {/* Soft Ambient Gold Glow */}
+      <div className="absolute top-1/4 right-[5%] w-[450px] h-[450px] bg-[var(--brand-gold)]/[0.06] rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 left-[5%] w-[450px] h-[450px] bg-[#052946]/[0.04] rounded-full blur-[120px] pointer-events-none z-0" />
+
       <div className="relative z-10 mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-8">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
           {/* Left Column: Title + Support Stats Card */}
           <div className="lg:col-span-5 flex flex-col justify-start">
-            
+
             {/* Elegant badge */}
             <div className="inline-flex items-center gap-2 mb-5 border border-[var(--brand-gold)]/25 rounded-full px-3.5 py-1.5 bg-[var(--brand-gold)]/[0.03] shadow-[0_2px_10px_rgba(201,155,49,0.03)] w-fit">
               <span className="relative flex h-2 w-2">
@@ -55,7 +55,7 @@ export default function ResourcesFAQ() {
               </span>
               <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{badge}</p>
             </div>
-            
+
             {/* Title */}
             <h2
               className="font-display font-bold text-[var(--text-navy)] leading-[1.1] tracking-tight mb-5"
@@ -64,7 +64,7 @@ export default function ResourcesFAQ() {
               <span className="font-serif italic font-normal text-[var(--text-navy)]/95 block mb-1">
                 {heading1}
               </span>
-              <span 
+              <span
                 className="shimmer-gradient block mt-1"
                 style={{
                   color: "transparent",
@@ -77,7 +77,7 @@ export default function ResourcesFAQ() {
                 {heading2}
               </span>
             </h2>
-            
+
             <p className="text-[13.5px] font-sans leading-[1.7] text-[var(--text-slate)] mb-6 max-w-[480px]">
               {description}
             </p>
@@ -105,7 +105,7 @@ export default function ResourcesFAQ() {
 
               {/* Gold Ambient Glow Blob */}
               <div className="absolute -top-12 -right-12 w-36 h-36 bg-[var(--brand-gold)]/20 rounded-full blur-[40px] pointer-events-none" />
-              
+
               {/* Card Title Block */}
               <div className="relative z-10 flex items-center gap-3.5">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 border border-white/10 shadow-inner">
@@ -168,28 +168,25 @@ export default function ResourcesFAQ() {
                     >
                       <span className="flex items-start gap-4 pr-6">
                         {/* Serif Gold Counter */}
-                        <span className={`font-serif italic font-normal text-[16px] sm:text-[18px] tracking-wide transition-colors duration-200 mt-0.5 ${
-                          isOpen ? "text-[var(--brand-gold)]" : "text-[var(--brand-gold)]/40"
-                        }`}>
+                        <span className={`font-serif italic font-normal text-[16px] sm:text-[18px] tracking-wide transition-colors duration-200 mt-0.5 ${isOpen ? "text-[var(--brand-gold)]" : "text-[var(--brand-gold)]/40"
+                          }`}>
                           {String(idx + 1).padStart(2, "0")}.
                         </span>
-                        <span className={`transition-all duration-300 block ${
-                          isOpen ? "text-[var(--brand-gold)] translate-x-1" : "group-hover/btn:translate-x-1"
-                        }`}>
+                        <span className={`transition-all duration-300 block ${isOpen ? "text-[var(--brand-gold)] translate-x-1" : "group-hover/btn:translate-x-1"
+                          }`}>
                           {faq.q}
                         </span>
                       </span>
 
                       {/* Rotating Plus SVG */}
-                      <span className={`flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-                        isOpen 
-                          ? "border-[var(--brand-gold)] bg-[var(--brand-gold)] text-white shadow-md shadow-brand-gold/15" 
+                      <span className={`flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${isOpen
+                          ? "border-[var(--brand-gold)] bg-[var(--brand-gold)] text-white shadow-md shadow-brand-gold/15"
                           : "border-[rgba(5,41,70,0.12)] bg-transparent text-[rgba(5,41,70,0.4)] group-hover/btn:border-[var(--brand-gold)]/40 group-hover/btn:text-[var(--brand-gold)]"
-                      }`}>
-                        <svg 
-                          className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-45 text-white" : "text-current"}`} 
-                          fill="none" 
-                          viewBox="0 0 24 24" 
+                        }`}>
+                        <svg
+                          className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-45 text-white" : "text-current"}`}
+                          fill="none"
+                          viewBox="0 0 24 24"
                           stroke="currentColor"
                           strokeWidth={3}
                         >

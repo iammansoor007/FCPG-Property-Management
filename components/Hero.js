@@ -15,7 +15,7 @@ const fadeUp = {
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-[380px] lg:min-h-[460px] overflow-hidden bg-[var(--midnight-navy)] flex items-center text-white">
+    <section id="home" className="relative overflow-hidden bg-[var(--midnight-navy)] flex items-center text-white">
       {/* Background image with Ken Burns slow scale loop */}
       <motion.div
         animate={{ scale: [1, 1.06, 1] }}
@@ -36,7 +36,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-[var(--midnight-navy)] via-[var(--midnight-navy)]/85 to-[var(--midnight-navy)]/15 md:from-[var(--midnight-navy)] md:via-[var(--midnight-navy)]/80 md:to-transparent z-10" />
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--midnight-navy)]/40 via-transparent to-transparent z-10" />
 
-      {/* High-Tech Grid Dot Matrix Overlay */}
+      {/* Grid Dot Matrix Overlay */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-10">
         <svg className="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -46,9 +46,6 @@ export default function Hero() {
           </defs>
           <rect width="100%" height="100%" fill="url(#hero-grid-dots)" />
         </svg>
-        {/* Coordinate blueprint crosshairs */}
-        <div className="absolute top-6 right-8 text-[9px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none tracking-widest">{hero.coordLng}</div>
-        <div className="absolute bottom-6 right-8 text-[9px] font-mono text-[var(--brand-gold)]/35 pointer-events-none select-none tracking-widest">{hero.coordLat}</div>
       </div>
 
       {/* Radial soft gold and sapphire ambient glows */}
@@ -58,7 +55,7 @@ export default function Hero() {
       {/* Premium thin gold bottom fading border line */}
       <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)] to-transparent z-20 opacity-70" />
 
-      <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-4 lg:py-8 z-20">
+      <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 py-10 lg:py-16 z-20">
         <motion.div
           initial="hidden"
           animate="show"

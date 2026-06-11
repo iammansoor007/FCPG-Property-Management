@@ -9,14 +9,14 @@ const { contactForm: cf } = data;
 
 const CardIconMap = { address: MapPin, phone: Phone, email: Mail, hours: Clock };
 
-export default function ContactForm() {
+export default function ContactForm({ defaultService }) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     propertyName: "",
-    serviceType: cf.serviceOptions[0],
+    serviceType: defaultService || cf.serviceOptions[0],
     message: ""
   });
   const [status, setStatus] = useState("idle"); // idle | loading | success
@@ -57,12 +57,8 @@ export default function ContactForm() {
   const progressPercent = Math.min(Math.round((fieldsFilled / 7) * 100), 100);
 
   return (
-    <section id="contact" className="relative bg-white overflow-hidden py-20 lg:py-28"
+    <section id="contact" className="relative bg-white overflow-hidden py-12 lg:py-16"
       style={{ borderTop: "1px solid #eceae4" }}>
-      
-      {/* Contact card shimmer class (premium-shimmer) is defined in app/globals.css */}
-
-
       {/* ── Background Grid ── */}
       <div
         aria-hidden
@@ -88,11 +84,7 @@ export default function ContactForm() {
           <div className="lg:col-span-5 flex flex-col justify-start">
             
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 mb-5 border border-[var(--brand-gold)]/25 rounded-full px-3.5 py-1.5 bg-[var(--brand-gold)]/[0.03] shadow-[0_2px_10px_rgba(201,155,49,0.03)] w-fit">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-gold)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-gold)]"></span>
-              </span>
+            <div className="inline-flex items-center gap-2 mb-5 border border-[var(--brand-gold)]/25 rounded-full px-3.5 py-1.5 bg-[var(--brand-gold)]/[0.03] shadow-sm w-fit">
               <p className="text-[10px] font-black tracking-[0.25em] uppercase text-[var(--brand-gold)]">{cf.badge}</p>
             </div>
 
@@ -142,13 +134,8 @@ export default function ContactForm() {
                       <span className="text-[9.5px] font-black uppercase tracking-wider text-[var(--text-navy)]/40 font-sans">{card.label}</span>
                     </div>
                     <p className={`text-[13.5px] font-bold text-[var(--text-navy)]${isClickable ? " group-hover:text-[var(--brand-gold)] transition-colors duration-200" : ""}`}>{card.line1}</p>
-                    <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight">
-                      {card.type === "phone" || card.type === "email" ? (
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#10b981] animate-pulse shrink-0" />
-                          {card.line2}
-                        </span>
-                      ) : card.line2}
+                    <p className="text-[11.5px] text-[var(--text-slate)] mt-0.5 leading-tight font-sans">
+                      {card.line2}
                     </p>
                   </Tag>
                 );
@@ -197,20 +184,6 @@ export default function ContactForm() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col gap-4.5 relative z-10"
                   >
-                    {/* Dynamic Proposal Progress Tracker */}
-                    <div className="relative w-full mb-2 border-b border-black/5 pb-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[var(--text-navy)]/40">{cf.progressLabel}</span>
-                        <span className="text-[10px] font-mono font-bold text-[var(--brand-gold)]">{progressPercent}%</span>
-                      </div>
-                      <div className="w-full h-1 bg-black/5 rounded-full overflow-hidden">
-                        <motion.div 
-                          className="h-full bg-gradient-to-r from-[var(--brand-gold)] to-[#f1cd7c]"
-                          animate={{ width: `${progressPercent}%` }}
-                          transition={{ duration: 0.35, ease: "easeOut" }}
-                        />
-                      </div>
-                    </div>
 
                     {/* Name grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

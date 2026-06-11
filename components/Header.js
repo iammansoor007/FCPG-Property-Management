@@ -46,8 +46,10 @@ export default function Header() {
   const getNavLink = (item) => {
     if (item === "Home") return "/";
     if (item === "About Us") return "/about";
-    if (item === "Contact") return "/contact";
+    if (item === "Contact" || item === "Contact Us") return "/contact";
     if (item === "FAQ") return "/faq";
+    if (item === "Vendor Network") return "/vendor-network";
+    if (item === "Services") return "/services/hoa-management";
     return `/#${item.toLowerCase().replaceAll(" ", "-")}`;
   };
 
@@ -68,49 +70,39 @@ export default function Header() {
       {/* Elegant thin gold bottom fading accent line */}
       <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)]/80 to-transparent pointer-events-none" />
       
-      {/* Top Bar: Contact info — hidden when scrolled */}
-      <AnimatePresence initial={false}>
-        {!scrolled && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="border-b border-white/10 hidden lg:block overflow-hidden"
+      {/* Top Bar: Contact info */}
+      <div className="border-b border-white/10 hidden lg:block overflow-hidden">
+        <div className="mx-auto max-w-[1160px] px-6 py-2 flex items-center justify-end gap-1 text-[10px] font-semibold uppercase tracking-wider text-white/70">
+          <Link
+            href={contact.phoneHref}
+            className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
           >
-            <div className="mx-auto max-w-[1160px] px-6 py-2 flex items-center justify-end gap-1 text-[10px] font-semibold uppercase tracking-wider text-white/70">
-              <Link
-                href={contact.phoneHref}
-                className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
-              >
-                <Phone size={12} className="text-[var(--brand-gold)] group-hover:scale-110 transition-transform duration-200" strokeWidth={2.5} />
-                {contact.phone}
-              </Link>
-              <span className="text-white/20 select-none">·</span>
-              <Link
-                href={contact.locationHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
-              >
-                <MapPin size={12} className="text-[var(--brand-gold)] group-hover:scale-110 transition-transform duration-200" strokeWidth={2.5} />
-                {contact.location}
-              </Link>
-              <span className="text-white/20 select-none ml-1">·</span>
-              <Link
-                href="#"
-                aria-label="Facebook"
-                className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-white/8 text-white/70 transition-all duration-200 hover:bg-[var(--brand-gold)] hover:text-white hover:scale-110 active:scale-95"
-              >
-                <FacebookIcon className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Phone size={12} className="text-[var(--brand-gold)] group-hover:scale-110 transition-transform duration-200" strokeWidth={2.5} />
+            {contact.phone}
+          </Link>
+          <span className="text-white/20 select-none">·</span>
+          <Link
+            href={contact.locationHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2 px-3 py-1 rounded-[4px] transition-all duration-200 hover:bg-white/8 hover:text-white active:scale-95 active:bg-white/12 cursor-pointer"
+          >
+            <MapPin size={12} className="text-[var(--brand-gold)] group-hover:scale-110 transition-transform duration-200" strokeWidth={2.5} />
+            {contact.location}
+          </Link>
+          <span className="text-white/20 select-none ml-1">·</span>
+          <Link
+            href="#"
+            aria-label="Facebook"
+            className="ml-1 flex h-7 w-7 items-center justify-center rounded-full bg-white/8 text-white/70 transition-all duration-200 hover:bg-[var(--brand-gold)] hover:text-white hover:scale-110 active:scale-95"
+          >
+            <FacebookIcon className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </div>
 
       {/* Main Header Row */}
-      <div className={`mx-auto max-w-[1160px] px-6 transition-all duration-300 relative flex items-center justify-between ${scrolled ? "py-1.5 lg:py-2" : "py-2.5 lg:py-3"}`}>
+      <div className="mx-auto max-w-[1160px] px-6 flex items-center justify-between gap-4 py-2.5">
         {/* Logo */}
         <Link href="#" className="flex items-center gap-3 shrink-0" aria-label={`${brand.first} ${brand.last}`}>
           <LogoMark />
@@ -122,7 +114,7 @@ export default function Header() {
         </Link>
 
         {/* Centered Navigation Links */}
-        <nav className="hidden md:flex items-center gap-3 lg:gap-6 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30">
+        <nav className="hidden lg:flex items-center justify-center flex-grow gap-2 lg:gap-4 z-30">
           {nav.map((item, index) => {
             const hasDropdown = item === "Services" || item === "Resources";
             const dropdownItems = item === "Services" ? servicesDropdownItems : resourcesDropdownItems;
@@ -136,7 +128,7 @@ export default function Header() {
               >
                 <Link
                   href={getNavLink(item)}
-                  className={`relative flex items-center gap-1 px-3 py-1.5 text-[10.5px] font-semibold uppercase tracking-wider transition-colors duration-300 hover:text-[var(--brand-gold)] ${
+                  className={`relative flex items-center gap-1 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors duration-300 hover:text-[var(--brand-gold)] whitespace-nowrap ${
                     hoveredNav === item ? "text-[var(--brand-gold)]" : index === 0 ? "text-[var(--brand-gold)]" : "text-white/90"
                   }`}
                 >
@@ -220,7 +212,7 @@ export default function Header() {
           {/* Mobile Hamburger Menu button */}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="flex md:hidden h-10 w-10 items-center justify-center border border-white/20 hover:bg-white/5 transition cursor-pointer"
+            className="flex lg:hidden h-10 w-10 items-center justify-center border border-white/20 hover:bg-white/5 transition cursor-pointer"
             aria-label="Open menu"
           >
             <Menu size={20} />

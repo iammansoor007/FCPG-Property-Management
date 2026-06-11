@@ -11,28 +11,13 @@ export default function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="relative bg-[#021324] text-white px-6 pt-20 border-t border-white/10 overflow-hidden">
-
-      {/* Blueprint Grid dot overlay */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none opacity-[0.02] z-0">
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="footer-dots" width="40" height="40" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#ffffff" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#footer-dots)" />
-        </svg>
-      </div>
+    <footer className="relative bg-[#021324] text-white px-6 pt-12 border-t border-white/10 overflow-hidden">
 
       {/* Ambient glows at corners */}
       <div className="absolute -bottom-24 -left-24 w-[350px] h-[350px] bg-[#052946]/0.5 rounded-full blur-[80px] pointer-events-none z-0" />
       <div className="absolute -bottom-24 -right-24 w-[300px] h-[300px] bg-[var(--brand-gold)]/[0.04] rounded-full blur-[85px] pointer-events-none z-0" />
 
-      {/* Decorative top coordinate line */}
-      <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--brand-gold)] to-transparent opacity-60 z-10" />
-
-      <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-12 pb-16 max-w-[1160px] relative z-10">
+      <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-12 pb-12 max-w-[1160px] relative z-10">
 
         {/* Brand column */}
         <div className="lg:col-span-4 flex flex-col items-start">
@@ -140,8 +125,6 @@ export default function Footer() {
               <Link href={link.href} className="hover:text-white hover:underline transition-colors duration-200">{link.label}</Link>
             </span>
           ))}
-          <span className="text-white/10">•</span>
-          <span className="text-white/20 font-mono tracking-widest text-[9px]">{footer.versionTag}</span>
         </div>
       </div>
     </footer>

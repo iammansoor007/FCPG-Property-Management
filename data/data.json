@@ -178,36 +178,38 @@
       "Home",
       "About Us",
       "Services",
-      "FAQ"
+      "Vendor Network",
+      "FAQ",
+      "Contact"
     ],
     "servicesDropdownItems": [
       {
         "title": "HOA Management",
-        "href": "/#services",
+        "href": "/services/hoa-management",
         "description": "Expert governance, compliance, and community satisfaction.",
         "icon": "UsersRound"
       },
       {
         "title": "Residential Management",
-        "href": "/#services",
+        "href": "/services/residential-management",
         "description": "Tenant placement, maintenance, and financial oversight.",
         "icon": "Home"
       },
       {
         "title": "Commercial Management",
-        "href": "/#services",
+        "href": "/services/commercial-management",
         "description": "Solutions for office, retail, and mixed-use spaces.",
         "icon": "Building2"
       },
       {
         "title": "Developer Services",
-        "href": "/#services",
+        "href": "/services/developer-services",
         "description": "Interim management from development to governance.",
         "icon": "HardHat"
       },
       {
         "title": "Financial Management",
-        "href": "/#services",
+        "href": "/services/financial-management",
         "description": "Budgeting, reporting, and reserve fund oversight.",
         "icon": "BadgeDollarSign"
       }
@@ -221,7 +223,7 @@
       },
       {
         "title": "FAQs",
-        "href": "/#resources",
+        "href": "/faq",
         "description": "Answers to common association & management questions.",
         "icon": "MessageCircle"
       },
@@ -294,41 +296,41 @@
       },
       {
         "label": "Services",
-        "href": "/#services"
+        "href": "/services/hoa-management"
       },
       {
         "label": "Vendor Network",
-        "href": "/#vendor-network"
+        "href": "/vendor-network"
       },
       {
-        "label": "Resources",
-        "href": "/#resources"
+        "label": "FAQ",
+        "href": "/faq"
       },
       {
-        "label": "Contact Us",
+        "label": "Contact",
         "href": "/contact"
       }
     ],
     "services": [
       {
         "label": "HOA Management",
-        "href": "/#services"
+        "href": "/services/hoa-management"
       },
       {
         "label": "Residential Management",
-        "href": "/#services"
+        "href": "/services/residential-management"
       },
       {
         "label": "Commercial Management",
-        "href": "/#services"
+        "href": "/services/commercial-management"
       },
       {
         "label": "Developer & Builder Services",
-        "href": "/#services"
+        "href": "/services/developer-services"
       },
       {
         "label": "Financial Management",
-        "href": "/#services"
+        "href": "/services/financial-management"
       }
     ],
     "resources": [
