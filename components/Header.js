@@ -47,7 +47,7 @@ export default function Header() {
     if (item === "Home") return "/";
     if (item === "About Us") return "/about";
     if (item === "Contact") return "/contact";
-    if (item === "FAQ") return "/#resources";
+    if (item === "FAQ") return "/faq";
     return `/#${item.toLowerCase().replaceAll(" ", "-")}`;
   };
 
