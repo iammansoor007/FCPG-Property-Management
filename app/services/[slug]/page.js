@@ -4,10 +4,11 @@ import { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   UsersRound, ShieldCheck, BadgeDollarSign, MessageCircle, ClipboardCheck,
   Home, TrendingUp, Wrench, Building2, Cpu, HardHat, Layers, Clock, CalendarDays,
-  ArrowRight, CheckCircle2
+  ArrowRight, CheckCircle2, Award, Sparkles
 } from "lucide-react";
 
 import CtaBar from "@/components/CtaBar";
@@ -82,7 +83,7 @@ const serviceData = {
       {
         title: "Tenant Stability & Retention",
         description: "Building positive relations with residents, offering convenient portal payment options, and securing high lease renewal rates.",
-        icon: "Handshake"
+        icon: "MessageCircle"
       },
       {
         title: "Maintenance Coordination",
@@ -239,57 +240,268 @@ const caseStudies = {
   }
 };
 
-function FocusCard({ point, idx }) {
+
+/* ── Service Focus Card — page-specific premium design ── */
+function ServiceFocusCard({ point, idx }) {
   const Icon = IconMap[point.icon] || ShieldCheck;
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
   return (
-    <div className="group relative bg-white p-7 sm:p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-[var(--brand-gold)]/30 transition-all duration-300 flex flex-col items-start gap-4">
-      {/* Icon Frame */}
-      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#052946]/5 text-[var(--brand-gold)] group-hover:bg-[var(--brand-gold)] group-hover:text-white transition-all duration-300 shrink-0">
-        <Icon size={18} strokeWidth={2.2} />
-      </span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: idx * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={handleMouseMove}
+      className="group relative bg-white p-8 rounded-2xl border border-gray-100 overflow-hidden transition-all duration-400 hover:border-brand-gold/30 hover:shadow-[0_16px_48px_rgba(5,41,70,0.08)] flex flex-col items-start gap-5 cursor-default"
+    >
+      {/* Cursor spotlight */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(300px circle at ${mousePos.x}px ${mousePos.y}px, rgba(201, 155, 49, 0.06), transparent 80%)`
+        }}
+      />
 
-      <div>
-        <h3 className="font-display font-bold text-[16px] text-text-navy uppercase tracking-tight group-hover:text-[var(--brand-gold)] transition duration-200">
-          {point.title}
-        </h3>
-        <p className="text-[13px] text-text-slate leading-[1.6] font-sans mt-2">
-          {point.description}
-        </p>
+      {/* Gold top-sweep */}
+      <span className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-gold/0 via-brand-gold to-brand-gold/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+
+      {/* Top: number + icon */}
+      <div className="flex items-center justify-between w-full relative z-10">
+        <span className="text-[10.5px] font-black tracking-[0.2em] text-brand-gold/50 group-hover:text-brand-gold transition-colors duration-300">
+          {String(idx + 1).padStart(2, "0")}
+        </span>
+        <div className="flex items-center justify-center w-11 h-11 rounded-xl border border-gray-200 bg-white text-text-slate shadow-[0_2px_8px_rgba(8,38,66,0.05)] transition-all duration-400 group-hover:bg-brand-gold group-hover:text-white group-hover:border-brand-gold group-hover:shadow-[0_6px_20px_rgba(201,155,49,0.25)]">
+          <Icon size={19} strokeWidth={1.85} />
+        </div>
       </div>
-    </div>
+
+      {/* Title */}
+      <h3 className="text-[16px] font-display font-bold text-text-navy tracking-tight group-hover:text-brand-gold transition-colors duration-300 relative z-10">
+        {point.title}
+      </h3>
+
+      {/* Description */}
+      <p className="text-[13px] text-text-slate leading-[1.72] font-sans flex-1 relative z-10">
+        {point.description}
+      </p>
+    </motion.div>
   );
 }
 
-function DynamicServiceCaseStudy({ slug }) {
+
+/* ── Case Study — Contained Premium Card ── */
+function ServiceCaseStudy({ slug }) {
   const study = caseStudies[slug];
   if (!study) return null;
 
   return (
-    <section className="relative bg-[#021324] text-white py-10 lg:py-12 overflow-hidden">
-      <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          {/* Left Column: Metric */}
-          <div className="lg:col-span-4 flex flex-col justify-center items-start border-l-2 border-[var(--brand-gold)] pl-6">
-            <span className="font-display font-black text-5xl lg:text-6.5xl text-[var(--brand-gold)] tracking-tight leading-none mb-2">{study.metric}</span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-white/50">{study.metricLabel}</span>
+    <section className="py-16 lg:py-20 bg-white">
+      <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8">
+
+        {/* Contained dark card */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="relative rounded-2xl overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #031b31 0%, #052946 100%)" }}
+        >
+          {/* Dot overlay */}
+          <div className="absolute inset-0 pointer-events-none">
+            <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="cs-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <circle cx="1.5" cy="1.5" r="0.8" fill="#ffffff" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#cs-dots)" />
+            </svg>
           </div>
 
-          {/* Right Column: Case study copy */}
-          <div className="lg:col-span-8 flex flex-col justify-center">
-            <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-brand-gold mb-2">CASE STUDY</span>
-            <h3 className="text-xl sm:text-2xl font-display font-bold text-white uppercase tracking-tight mb-3">{study.heading}</h3>
-            <p className="text-[13px] text-white/70 leading-relaxed max-w-[680px] font-sans mb-3">{study.desc}</p>
-            <div className="flex items-center gap-2 text-[11px] font-bold text-[var(--brand-gold)]">
-              <CheckCircle2 size={13} className="shrink-0" />
-              <span>{study.result}</span>
+          {/* Gold corner accents */}
+          <div className="absolute top-0 left-0 w-10 h-10 border-t-[2px] border-l-[2px] border-brand-gold/50 rounded-tl-2xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-10 h-10 border-t-[2px] border-r-[2px] border-brand-gold/50 rounded-tr-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-10 h-10 border-b-[2px] border-l-[2px] border-brand-gold/50 rounded-bl-2xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-10 h-10 border-b-[2px] border-r-[2px] border-brand-gold/50 rounded-br-2xl pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-8 sm:p-10 lg:p-14 items-center">
+
+            {/* Left: Metric */}
+            <div className="lg:col-span-4 flex flex-col items-start lg:items-center lg:text-center">
+              <span className="text-[9px] font-black tracking-[0.28em] uppercase text-brand-gold mb-3">Case Study</span>
+              <span className="font-display font-black text-[52px] sm:text-[64px] text-transparent bg-clip-text leading-none tracking-tight"
+                style={{ backgroundImage: "linear-gradient(135deg, #c99b31 0%, #f1cd7c 50%, #c99b31 100%)" }}
+              >
+                {study.metric}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-white/40 mt-2">
+                {study.metricLabel}
+              </span>
             </div>
+
+            {/* Divider */}
+            <div className="hidden lg:flex lg:col-span-1 justify-center">
+              <div className="w-[1px] h-28 bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+            </div>
+            <div className="lg:hidden h-[1px] w-full bg-white/10" />
+
+            {/* Right: Narrative */}
+            <div className="lg:col-span-7 flex flex-col">
+              <h3 className="text-xl sm:text-2xl font-display font-bold text-white tracking-tight leading-[1.2] mb-3">
+                {study.heading}
+              </h3>
+              <p className="text-[13.5px] text-white/55 leading-[1.7] font-sans mb-5 max-w-[540px]">
+                {study.desc}
+              </p>
+              <div className="flex items-center gap-2.5 mb-5">
+                <CheckCircle2 size={14} className="text-brand-gold shrink-0" />
+                <span className="text-[12px] font-bold text-brand-gold">{study.result}</span>
+              </div>
+              <Link
+                href="#contact"
+                className="group inline-flex items-center gap-2 h-10 px-5 rounded-[4px] font-bold text-[10px] uppercase tracking-wider transition-all duration-300 active:scale-[0.97] w-fit"
+                style={{ backgroundColor: "var(--brand-gold)", color: "#ffffff" }}
+                onMouseEnter={e => e.currentTarget.style.backgroundColor = "var(--tagline-gold)"}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = "var(--brand-gold)"}
+              >
+                Discuss Your Property
+                <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+
           </div>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+}
+
+
+/* ── Compliance & Standards — Premium editorial with floating cards ── */
+function ServiceCompliance({ service }) {
+  const standards = [
+    "24-Hour Urgent Response SLA",
+    "Double-Authorization Accounting",
+    "Annual Reserve Account Audits",
+    "CMCA / AMS Certified Managers",
+    "Fully Vetted Contractor Network",
+    "Direct Partner Advisory"
+  ];
+
+  return (
+    <section className="bg-white py-20 lg:py-28 relative overflow-hidden">
+      {/* Subtle dot pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <svg className="absolute inset-0 w-full h-full opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="comp-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="0.6" fill="#052946" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#comp-dots)" />
+        </svg>
+      </div>
+
+      <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column: Copy & standards grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-6 flex flex-col justify-start"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-5 h-[1.5px] bg-brand-gold" />
+              <span className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">
+                South Carolina Standards
+              </span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-text-navy leading-[1.1] tracking-tight mb-4">
+              Certified Compliance{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
+                & SLAs
+              </span>
+            </h2>
+
+            <p className="text-[14px] text-text-slate leading-[1.75] font-sans mb-8 max-w-[500px]">
+              As a fully certified and licensed property management firm in South Carolina, we combine local field knowledge with advanced property systems to deliver optimal outcomes.
+            </p>
+
+            {/* Standards grid with premium styling */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {standards.map((item, idx) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="group flex items-center gap-3 p-3 rounded-xl border border-gray-100 bg-white hover:border-brand-gold/30 hover:shadow-[0_4px_16px_rgba(5,41,70,0.05)] transition-all duration-300"
+                >
+                  <div className="w-7 h-7 rounded-lg bg-brand-gold/10 flex items-center justify-center shrink-0 group-hover:bg-brand-gold/20 transition-colors duration-300">
+                    <CheckCircle2 size={13} className="text-brand-gold" />
+                  </div>
+                  <span className="text-[12.5px] font-semibold text-text-navy leading-snug">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right Column: Photo with premium framing */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-6 w-full"
+          >
+            <div className="relative">
+              {/* Gold accent frame offset */}
+              <div className="absolute -top-3 -right-3 w-full h-full rounded-2xl border-2 border-brand-gold/20 pointer-events-none" />
+              
+              <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(5,41,70,0.1)] border border-gray-100">
+                <Image 
+                  src={service.sideImage} 
+                  alt="Management Compliance" 
+                  fill 
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover" 
+                />
+                {/* Subtle vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              </div>
+
+              {/* Floating certification badge */}
+              <div className="absolute -bottom-4 -left-4 bg-white rounded-xl px-5 py-3 shadow-[0_8px_30px_rgba(5,41,70,0.1)] border border-gray-100 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-brand-gold/10 flex items-center justify-center">
+                  <Award size={16} className="text-brand-gold" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-bold text-text-navy">SC Licensed & Certified</p>
+                  <p className="text-[9px] text-text-slate font-medium">CMCA · AMS · PCAM</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          
         </div>
       </div>
     </section>
   );
 }
+
 
 export default function ServicePage({ params }) {
   const { slug } = use(params);
@@ -359,83 +571,54 @@ export default function ServicePage({ params }) {
         </div>
       </section>
 
-      {/* ── FOCUS PILLARS GRID ── */}
-      <section className="py-10 lg:py-14 bg-gray-50/50">
+      {/* ── FOCUS PILLARS GRID — Premium border-sharing design ── */}
+      <section className="py-20 lg:py-28 bg-gray-50/50">
         <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="text-center max-w-[600px] mx-auto mb-12">
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-text-navy uppercase tracking-tight">
-              Our Core Focus Areas
-            </h2>
-            <div className="h-[1.5px] w-12 bg-[var(--brand-gold)] mx-auto mt-3" />
+          {/* Section Header — split layout */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="max-w-[480px]"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-5 h-[1.5px] bg-brand-gold" />
+                <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">Core Focus</p>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-text-navy leading-[1.1] tracking-tight">
+                Our Core{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
+                  Focus Areas
+                </span>
+              </h2>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[14px] text-text-slate leading-[1.75] font-sans md:max-w-[340px]"
+            >
+              Every service pillar is designed to protect your investment, streamline operations, and exceed industry standards.
+            </motion.p>
           </div>
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {service.focusPoints.map((point, idx) => (
-              <FocusCard key={point.title} point={point} idx={idx} />
+              <ServiceFocusCard key={point.title} point={point} idx={idx} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── DYNAMIC CASE STUDY SECTION ── */}
-      <DynamicServiceCaseStudy slug={slug} />
+      {/* ── AWWWARD-LEVEL CASE STUDY ── */}
+      <ServiceCaseStudy slug={slug} />
 
-      {/* ── COMPLIANCE SPLIT SECTION WITH PHOTO ── */}
-      <section className="bg-white py-10 lg:py-14 border-t border-gray-100">
-        <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            
-            {/* Left Column: Details & Bullet List */}
-            <div className="lg:col-span-6 flex flex-col justify-start">
-              <div className="inline-flex items-center gap-2 mb-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-gold)]" />
-                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-brand-gold font-sans">
-                  SOUTH CAROLINA STANDARDS
-                </span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-text-navy uppercase tracking-tight">
-                CERTIFIED COMPLIANCE & SLAs
-              </h2>
-              <p className="mt-3 text-[13px] text-text-slate leading-relaxed">
-                As a fully certified and licensed property management firm in South Carolina, we combine local field knowledge with advanced property systems to deliver optimal outcomes.
-              </p>
-
-              {/* Bullet Grid */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {[
-                  "24-Hour Urgent Response SLA",
-                  "Double-Authorization Accounting",
-                  "Annual Reserve Account Audits",
-                  "CMCA / AMS Certified Managers",
-                  "Fully Vetted Contractor Network",
-                  "Direct Partner Advisory"
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <CheckCircle2 size={14} className="text-[var(--brand-gold)] mt-0.5 shrink-0" />
-                    <span className="text-[12px] font-semibold text-text-navy leading-snug">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Column: Large Photo Section */}
-            <div className="lg:col-span-6 w-full">
-              <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-xl border border-gray-100">
-                <Image 
-                  src={service.sideImage} 
-                  alt="Management Compliance" 
-                  fill 
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover" 
-                />
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </section>
+      {/* ── COMPLIANCE & STANDARDS — PREMIUM EDITORIAL ── */}
+      <ServiceCompliance service={service} />
 
       {/* ── CTA BAR & CONTACT FORMS ── */}
       <CtaBar />

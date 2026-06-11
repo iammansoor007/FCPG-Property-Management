@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { HelpCircle, Phone, Mail, ChevronDown, ArrowRight } from "lucide-react";
+import { HelpCircle, Phone, Mail, ChevronDown, ArrowRight, Users, Cpu, Layers, ShieldCheck } from "lucide-react";
 
 import data from "@/data/data.json";
 import CtaBar from "@/components/CtaBar";
@@ -13,54 +13,144 @@ import ContactForm from "@/components/ContactForm";
 const { resourcesFAQ } = data;
 const { badge, heading1, heading2, description, supportCard, faqs } = resourcesFAQ;
 
-function FAQOnboardingRoadmap() {
+/* ── Premium Onboarding Path — border-sharing grid, page-specific ── */
+function FAQOnboardingPath() {
   const steps = [
     {
-      num: "01 / INTAKE",
+      num: "01",
       title: "Intake & Advisory",
-      desc: "We analyze your existing association covenants, financial statements, and reserve studies to understand your community's profile."
+      desc: "We analyze your existing association covenants, financial statements, and reserve studies to understand your community's profile.",
+      icon: Users,
     },
     {
-      num: "02 / TRANSITION",
+      num: "02",
       title: "Database Transition",
-      desc: "Our transition experts import resident histories, ledger balances, and audit documents into our secure management platform."
+      desc: "Our transition experts import resident histories, ledger balances, and audit documents into our secure management platform.",
+      icon: Cpu,
     },
     {
-      num: "03 / PORTAL",
+      num: "03",
       title: "Platform Launch",
-      desc: "We configure custom board and resident portals, distribute onboarding guides, and activate digital lockbox dues payments."
+      desc: "We configure custom board and resident portals, distribute onboarding guides, and activate digital lockbox dues payments.",
+      icon: Layers,
     },
     {
-      num: "04 / STEWARDSHIP",
+      num: "04",
       title: "Active Stewardship",
-      desc: "A dedicated CMCA/AMS accredited manager assumes physical oversight, activates vendor SLAs, and initiates scheduled inspections."
+      desc: "A dedicated CMCA/AMS accredited manager assumes physical oversight, activates vendor SLAs, and initiates scheduled inspections.",
+      icon: ShieldCheck,
     }
   ];
 
   return (
-    <section className="py-10 lg:py-14 bg-white border-t border-b border-gray-100 relative overflow-hidden text-[#072642]">
-      <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8">
-        <div className="text-center max-w-[600px] mx-auto mb-12">
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-gold">ONBOARDING PATH</span>
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-text-navy uppercase tracking-tight mt-2">
-            How We Transition Your Property
-          </h2>
-          <div className="h-[1.5px] w-12 bg-[var(--brand-gold)] mx-auto mt-3" />
+    <section className="py-20 lg:py-28 bg-white relative overflow-hidden border-t border-gray-100">
+      <div className="relative mx-auto w-full max-w-[1160px] px-6 lg:px-8 z-10">
+        {/* Section header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-[480px]"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-5 h-[1.5px] bg-brand-gold" />
+              <p className="text-[10px] font-black tracking-[0.28em] uppercase text-brand-gold">Onboarding Path</p>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-text-navy leading-[1.1] tracking-tight">
+              How We Transition{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-tagline-gold">
+                Your Property
+              </span>
+            </h2>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[14px] text-text-slate leading-[1.75] font-sans md:max-w-[340px]"
+          >
+            A structured four-phase transition ensures zero data loss, full compliance continuity, and a seamless experience for your residents.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((step) => (
-            <div key={step.num} className="group p-6 rounded-2xl border border-gray-100 bg-[#f8f9fb]/50 hover:bg-white hover:border-[var(--brand-gold)]/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[200px]">
-              <div>
-                <span className="font-mono text-[var(--brand-gold)] font-bold text-xs block mb-3">{step.num}</span>
-                <h3 className="font-display font-bold text-[15px] text-text-navy uppercase tracking-tight mb-2 group-hover:text-[var(--brand-gold)] transition duration-200">{step.title}</h3>
-                <p className="text-[12.5px] text-text-slate leading-relaxed font-sans">{step.desc}</p>
-              </div>
-            </div>
-          ))}
+        {/* Border-sharing grid — 4 columns, 1 row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl border border-[#e8ecf0] overflow-hidden">
+          {steps.map((step, idx) => {
+            const Icon = step.icon;
+            const isLastCol = (idx % 4) === 3;
+
+            return (
+              <OnboardingCell
+                key={step.num}
+                num={step.num}
+                title={step.title}
+                desc={step.desc}
+                icon={Icon}
+                index={idx}
+                isLastCol={isLastCol}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
+  );
+}
+
+function OnboardingCell({ num, title, desc, icon: Icon, index, isLastCol }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: index * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={handleMouseMove}
+      className={[
+        "group relative flex flex-col gap-5 p-8 cursor-default overflow-hidden",
+        "transition-all duration-300 hover:bg-[rgba(201,155,49,0.02)]",
+        !isLastCol ? "sm:border-r border-b sm:border-b lg:border-b-0 border-[rgba(201,155,49,0.18)]" : "border-b sm:border-b lg:border-b-0 border-[rgba(201,155,49,0.18)]",
+      ].join(" ")}
+    >
+      {/* Cursor spotlight */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, rgba(201, 155, 49, 0.075), transparent 80%)`
+        }}
+      />
+
+      {/* Gold top-sweep */}
+      <span className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-gold/0 via-brand-gold to-brand-gold/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+
+      {/* Number + icon row */}
+      <div className="flex items-center justify-between relative z-10">
+        <span className="text-[10.5px] font-black tracking-[0.2em] text-brand-gold/60 group-hover:text-brand-gold transition-colors duration-300">
+          {num}
+        </span>
+        <div className="flex items-center justify-center w-11 h-11 rounded-xl border border-gray-200 bg-white text-text-slate shadow-[0_2px_8px_rgba(8,38,66,0.05)] transition-all duration-400 group-hover:bg-brand-gold group-hover:text-white group-hover:border-brand-gold group-hover:shadow-[0_6px_20px_rgba(201,155,49,0.25)]">
+          <Icon size={19} strokeWidth={1.85} />
+        </div>
+      </div>
+
+      {/* Title */}
+      <h3 className="text-[15px] font-bold text-text-navy leading-snug tracking-tight group-hover:text-brand-gold transition-colors duration-300 relative z-10">
+        {title}
+      </h3>
+
+      {/* Description */}
+      <p className="text-[13px] text-text-slate leading-[1.72] font-sans flex-1 relative z-10">
+        {desc}
+      </p>
+    </motion.div>
   );
 }
 
@@ -131,7 +221,7 @@ export default function FAQPage() {
         <div className="mx-auto w-full max-w-[1160px] px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             
-            {/* Left Column: Sticky Category Selector Console */}
+            {/* Left Column: Sticky Category Selector */}
             <div className="lg:col-span-4 lg:sticky lg:top-36 flex flex-col gap-6">
               <div>
                 <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-brand-gold">TOPICS</span>
@@ -263,8 +353,8 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* ── ONBOARDING PATH ROADMAP ── */}
-      <FAQOnboardingRoadmap />
+      {/* ── ONBOARDING PATH — PREMIUM DARK ── */}
+      <FAQOnboardingPath />
 
       {/* ── CTA BAR & FOOTER FUNNEL ── */}
       <CtaBar />
